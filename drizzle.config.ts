@@ -1,4 +1,6 @@
-import 'dotenv/config';
+// dotenv-flow loads .env, .env.local, .env.development, etc — matches Next.js precedence
+// so the CLI tools (drizzle-kit, seeds, manual SQL) see the same vars the dev server sees.
+import 'dotenv-flow/config';
 import { defineConfig } from 'drizzle-kit';
 
 // drizzle-kit migrations and introspection prefer the direct (unpooled) connection

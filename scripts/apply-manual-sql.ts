@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import 'dotenv-flow/config';
 import { neon } from '@neondatabase/serverless';
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';

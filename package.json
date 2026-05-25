@@ -55,6 +55,7 @@
     "@vercel/config": "^0.5.0",
     "@vitest/coverage-v8": "^4.1.7",
     "dotenv": "^17.4.2",
+    "dotenv-flow": "^4.1.0",
     "drizzle-kit": "^0.31.10",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.6",

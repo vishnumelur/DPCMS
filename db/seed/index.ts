@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import 'dotenv-flow/config';
 import { seedOrgAndRoles } from './org-and-roles';
 import { seedRfpMatrix } from './rfp-matrix';
 
