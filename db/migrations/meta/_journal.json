@@ -43,6 +43,13 @@
       "when": 1779701418563,
       "tag": "0005_p0_user_role_pk_rework",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1779705525855,
+      "tag": "0006_p1_consent_core",
+      "breakpoints": true
     }
   ]
 }
