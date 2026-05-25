@@ -1,10 +1,29 @@
 # DPCMS — Data Privacy & Consent Management System
 
+> 🟢 **Live demo:** [https://dpcms-sigma.vercel.app](https://dpcms-sigma.vercel.app)
+> Sign in with `dpcmsadmin` / `dpcms@2026` — full DPO role, global scope.
+> Start at `/rfp-matrix` to see every KSCB RFP line item mapped to a working demo screen.
+
 POC for the Kerala State Cooperative Bank (KSCB) DPCMS bid, in compliance with the
 Digital Personal Data Protection Act, 2023.
 
 > See [the design spec](docs/superpowers/specs/2026-05-25-dpcms-poc-design.md) for the
 > full architecture and phasing. This is **Phase P0 — Foundation**.
+
+## Demo flow for evaluators
+
+1. **Public surface** — `/` landing · `/rfp-matrix` (live RFP compliance status) · `/notices` (sample privacy notice)
+2. **Sign in** — `/signin` → `dpcmsadmin` / `dpcms@2026` → lands on `/admin`
+3. **Compliance dashboard** — live KPIs from Neon, "What's live in P0" link map
+4. **Walk the sidebar** — every module is a real page, not a mock
+   - Overview: Audit chain (live SHA-256 chain verifier) · RBAC viewer · Settings · SBOM
+   - Consent & notices: M1 · M2 · M8
+   - Rights & breach: M5 DSR queue with SLA flags · M9 incident lifecycle
+   - Assessments: M3 RoPA · M6 PIA · M7 DPIA with **AI prefill**
+   - Integrations: M4 — 6 connectors with realistic payloads
+   - Reporting & research: M10 with **live recharts** · M11 corpus search
+5. **Customer side** — top-bar "My Portal" → consent grant/withdraw, DSR raising, nominee management
+6. **22 languages** — top-bar language switcher (en/ml/hi authored; rest fall back)
 
 ## Stack
 
@@ -98,6 +117,9 @@ single squash commit on `main`:
   POC-grade SBOM with CycloneDX 1.5 JSON export. Routes: `/admin/reporting`,
   `/admin/research`, `/admin/sbom`, `/me/nominees`,
   `/api/reports/board-pack`, `/api/reports/sbom`.
+- **Production.** Live at [https://dpcms-sigma.vercel.app](https://dpcms-sigma.vercel.app).
+  Source at [https://github.com/vishnumelur/DPCMS](https://github.com/vishnumelur/DPCMS).
+  Auto-deploys from `main` via the Vercel GitHub integration.
 
 ### Final RFP matrix totals
 
