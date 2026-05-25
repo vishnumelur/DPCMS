@@ -5,3 +5,4 @@ export * from './system';
 export * from './consent';
 export * from './rights';
 export * from './breach';
+export * from './assessment';

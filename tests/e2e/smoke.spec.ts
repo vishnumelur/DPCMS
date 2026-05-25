@@ -183,6 +183,68 @@ test('admin can see DSR queue and transition a request', async ({ page }) => {
   });
 });
 
+test('admin can create a RoPA activity and see it listed', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/admin/data-mapping');
+  await expect(page.getByRole('heading', { name: /M3 · Data mapping/i })).toBeVisible();
+
+  const name = `E2E activity ${Date.now()}`;
+  await page.getByLabel('Name').fill(name);
+  await page.getByLabel('Description').fill('Created by Playwright E2E.');
+  await page.getByLabel('Data categories (comma-separated)').fill('identity, contact');
+  await page.getByLabel('Data subjects (comma-separated)').fill('customer');
+  await page.getByLabel('Recipients (comma-separated)').fill('NPCI');
+  await page.getByLabel('System of record').fill('Finacle');
+  await page.getByLabel('Retention (months)').fill('60');
+  await page.getByLabel('Retention rationale').fill('RBI KYC §7');
+  await page.getByRole('button', { name: /Add activity/i }).click();
+
+  await page.waitForLoadState('networkidle');
+  await expect(page.getByText(name)).toBeVisible();
+  await page.screenshot({
+    path: 'test-results/screenshots/16-admin-ropa-created.png',
+    fullPage: true,
+  });
+});
+
+test('admin can open seeded DPIA, see questions, and trigger AI prefill (offline path)', async ({
+  page,
+}) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/admin/dpia');
+  await expect(page.getByRole('heading', { name: /M7 · Data protection/i })).toBeVisible();
+
+  // Open the seeded DPIA.
+  const seededRow = page.getByRole('row', { name: /DPIA — Customer KYC processing/i });
+  await expect(seededRow).toBeVisible();
+  await seededRow.getByRole('link', { name: /Open/i }).click();
+
+  await expect(
+    page.getByRole('heading', { name: /DPIA — Customer KYC processing/i }),
+  ).toBeVisible();
+  // First DPIA question should be rendered (in read mode because status=in_review).
+  await expect(page.getByText(/What is the purpose of this processing\?/)).toBeVisible();
+  // AI prefill button surfaces on every DPIA.
+  await expect(page.getByRole('button', { name: /AI prefill/i })).toBeVisible();
+
+  await page.screenshot({
+    path: 'test-results/screenshots/17-admin-dpia-detail.png',
+    fullPage: true,
+  });
+});
+
 test('customer can grant and withdraw consent', async ({ page }) => {
   await page.goto('/signin');
   await page.getByLabel('Username').fill('dpcmsadmin');

@@ -21,7 +21,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M2.C.1', module: 'Cookie Consent', section: 'GTM Integration', number: '1', text: 'IAB TCF-compliant cookie banner.', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
 
   // M3 Data Mapping
-  { id: 'M3.1.1', module: 'Data Mapping Automation', section: 'Core', number: '1', text: 'Automated mapping of data processing activities to purpose, legal basis, retention.', status: 'NA', phase: 'P3' },
+  { id: 'M3.1.1', module: 'Data Mapping Automation', section: 'Core', number: '1', text: 'Automated mapping of data processing activities to purpose, legal basis, retention.', status: 'RA', demoPath: '/admin/data-mapping', evidencePath: '/admin/audit', phase: 'P3' },
 
   // M4 Integrations
   { id: 'M4.1', module: 'Integrations', section: 'Structured Data', number: '1', text: 'Metadata interoperability via standard APIs/connectors.', status: 'NA', phase: 'P4' },
@@ -34,13 +34,13 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M5.D.1', module: 'Data Principal Rights Management', section: 'Tracking', number: '1', text: 'Centralised register of requests + resolution times.', status: 'RA', demoPath: '/admin/dsr', evidencePath: '/admin/audit', phase: 'P2' },
 
   // M6 PIA
-  { id: 'M6.A.1', module: 'Privacy Assessment', section: 'Core', number: '1', text: 'Privacy Impact Assessment workflows + risk scoring.', status: 'NA', phase: 'P3' },
-  { id: 'M6.A.2', module: 'Privacy Assessment', section: 'Core', number: '2', text: 'AI/ML-powered scanning of structured and unstructured data.', status: 'NA', phase: 'P3' },
+  { id: 'M6.A.1', module: 'Privacy Assessment', section: 'Core', number: '1', text: 'Privacy Impact Assessment workflows + risk scoring.', status: 'RA', demoPath: '/admin/pia', evidencePath: '/admin/audit', phase: 'P3' },
+  { id: 'M6.A.2', module: 'Privacy Assessment', section: 'Core', number: '2', text: 'AI/ML-powered scanning of structured and unstructured data. (Customisable — full discovery scan deferred; AI prefill ships in DPIA editor.)', status: 'CA', demoPath: '/admin/pia', evidencePath: '/admin/audit', phase: 'P3' },
 
   // M7 DPIA
-  { id: 'M7.A.1.1', module: 'Data Protection Impact Assessment', section: 'Templates', number: '1.1', text: 'Description of processing activities including third-party involvement.', status: 'NA', phase: 'P3' },
-  { id: 'M7.A.1.16', module: 'Data Protection Impact Assessment', section: 'Smart Assessments', number: '1.16', text: 'Auto-fill assessments using AI leveraging consent artefacts and discovery findings.', status: 'NA', phase: 'P3' },
-  { id: 'M7.2.1', module: 'Data Protection Impact Assessment', section: 'Controls', number: '2.1', text: 'Real-time dashboard for DPIA initiation/review/approval across branches.', status: 'NA', phase: 'P3' },
+  { id: 'M7.A.1.1', module: 'Data Protection Impact Assessment', section: 'Templates', number: '1.1', text: 'Description of processing activities including third-party involvement.', status: 'RA', demoPath: '/admin/dpia', evidencePath: '/admin/audit', phase: 'P3' },
+  { id: 'M7.A.1.16', module: 'Data Protection Impact Assessment', section: 'Smart Assessments', number: '1.16', text: 'Auto-fill assessments using AI leveraging consent artefacts and discovery findings.', status: 'RA', demoPath: '/admin/dpia', evidencePath: '/admin/audit', phase: 'P3' },
+  { id: 'M7.2.1', module: 'Data Protection Impact Assessment', section: 'Controls', number: '2.1', text: 'Real-time dashboard for DPIA initiation/review/approval across branches.', status: 'RA', demoPath: '/admin/dpia', evidencePath: '/admin/audit', phase: 'P3' },
   { id: 'M7.2.2', module: 'Data Protection Impact Assessment', section: 'Controls', number: '2.2', text: 'SLA-based time tracking with red/yellow/green flags.', status: 'RA', demoPath: '/admin/dsr', evidencePath: '/admin/audit', phase: 'P2' },
 
   // M8 Privacy Notices

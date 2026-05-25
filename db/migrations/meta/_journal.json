@@ -57,6 +57,13 @@
       "when": 1779707368514,
       "tag": "0007_p2_rights_breach",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1779709218683,
+      "tag": "0008_p3_assessments",
+      "breakpoints": true
     }
   ]
 }

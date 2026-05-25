@@ -1,19 +1,39 @@
-import { ComingSoon } from '@/components/app-shell/coming-soon';
+import { auth } from '@/auth';
+import { db } from '@/db/client';
+import { user } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import { AssessmentListView } from '@/components/assessment/list-view';
+import { listAssessments } from '@/modules/assessment/service';
+import { listActivities } from '@/modules/ropa/service';
 
-export default function AdminDpiaPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function AdminDpiaPage() {
+  const session = await auth();
+  const email = session?.user?.email;
+  if (!email) return <p className="text-sm">Sign in.</p>;
+  const userRows = await db.select().from(user).where(eq(user.email, email)).limit(1);
+  const u = userRows[0];
+  if (!u?.orgId) return <p className="text-sm">No org.</p>;
+
+  const [rows, activities] = await Promise.all([
+    listAssessments(u.orgId, 'dpia'),
+    listActivities(u.orgId),
+  ]);
+
   return (
-    <ComingSoon
-      title="M7 · Data Protection Impact Assessments"
-      phase="P3"
-      description="DPIAs for high-risk processing — branch-level visibility with SLA-tracked initiation, review, approval."
-      rfpRefs={['M7.A.1.1', 'M7.A.1.16', 'M7.2.1', 'M7.2.2']}
-      features={[
-        'Standardised DPIA templates per business unit',
-        'AI auto-fill from consent artefacts + processing activity inventory',
-        'Real-time branch/region dashboard with SLA flags (red/yellow/green)',
-        'Smart escalation to DPO on stalls',
-        'Periodic re-assessment scheduler',
-      ]}
+    <AssessmentListView
+      kind="dpia"
+      rows={rows.map((r) => ({
+        id: r.id,
+        title: r.title,
+        status: r.status,
+        riskScore: r.riskScore,
+        riskLevel: r.riskLevel,
+        aiPrefilled: r.aiPrefilled,
+        createdAt: r.createdAt,
+      }))}
+      activities={activities.map((a) => ({ id: a.id, name: a.name }))}
     />
   );
 }

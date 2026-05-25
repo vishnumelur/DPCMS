@@ -1,19 +1,39 @@
-import { ComingSoon } from '@/components/app-shell/coming-soon';
+import { auth } from '@/auth';
+import { db } from '@/db/client';
+import { user } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import { AssessmentListView } from '@/components/assessment/list-view';
+import { listAssessments } from '@/modules/assessment/service';
+import { listActivities } from '@/modules/ropa/service';
 
-export default function AdminPiaPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function AdminPiaPage() {
+  const session = await auth();
+  const email = session?.user?.email;
+  if (!email) return <p className="text-sm">Sign in.</p>;
+  const userRows = await db.select().from(user).where(eq(user.email, email)).limit(1);
+  const u = userRows[0];
+  if (!u?.orgId) return <p className="text-sm">No org.</p>;
+
+  const [rows, activities] = await Promise.all([
+    listAssessments(u.orgId, 'pia'),
+    listActivities(u.orgId),
+  ]);
+
   return (
-    <ComingSoon
-      title="M6 · Privacy Impact Assessments"
-      phase="P3"
-      description="Templated PIAs with risk scoring, assignment, and approval workflows."
-      rfpRefs={['M6.A.1', 'M6.A.2']}
-      features={[
-        'Built-in templates aligned with DPDP Act + RBI guidance',
-        'Risk scoring matrix with mitigation recommendations',
-        'AI-prefill from RoPA + connector configs',
-        'Multi-level review/approval chain',
-        'Exportable PIA report (PDF)',
-      ]}
+    <AssessmentListView
+      kind="pia"
+      rows={rows.map((r) => ({
+        id: r.id,
+        title: r.title,
+        status: r.status,
+        riskScore: r.riskScore,
+        riskLevel: r.riskLevel,
+        aiPrefilled: r.aiPrefilled,
+        createdAt: r.createdAt,
+      }))}
+      activities={activities.map((a) => ({ id: a.id, name: a.name }))}
     />
   );
 }

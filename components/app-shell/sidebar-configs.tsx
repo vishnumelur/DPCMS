@@ -48,9 +48,9 @@ export const ADMIN_SIDEBAR: SidebarSection[] = [
   {
     title: 'Assessments & mapping',
     items: [
-      { label: 'M3 · Data mapping (RoPA)', href: '/admin/data-mapping', phase: 'P3' },
-      { label: 'M6 · Privacy assessments', href: '/admin/pia', phase: 'P3' },
-      { label: 'M7 · DPIA', href: '/admin/dpia', phase: 'P3' },
+      { label: 'M3 · Data mapping (RoPA)', href: '/admin/data-mapping', live: true },
+      { label: 'M6 · Privacy assessments', href: '/admin/pia', live: true },
+      { label: 'M7 · DPIA', href: '/admin/dpia', live: true },
     ],
   },
   {
