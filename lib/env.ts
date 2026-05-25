@@ -1,19 +1,25 @@
 import { z } from 'zod';
 
+// Treat empty-string env vars as absent. process.env entries that are unset come
+// through as undefined, but entries declared without a value in .env files arrive
+// as "" — which would defeat .optional() unless we normalise first.
+const emptyToUndefined = (v: unknown) => (typeof v === 'string' && v === '' ? undefined : v);
+
 const EnvSchema = z.object({
   // Database
   DATABASE_URL: z.string().url(),
 
   // NextAuth
   AUTH_SECRET: z.string().min(32),
-  AUTH_URL: z.string().url().optional(),
+  AUTH_URL: z.preprocess(emptyToUndefined, z.string().url().optional()),
 
-  // Email
+  // Email — EMAIL_FROM accepts both a bare address and the RFC 5322
+  // "Display Name <addr@host>" form that Resend uses.
   RESEND_API_KEY: z.string().startsWith('re_'),
-  EMAIL_FROM: z.string().email(),
+  EMAIL_FROM: z.string().min(3),
 
   // AI
-  AI_GATEWAY_API_KEY: z.string().min(1).optional(),
+  AI_GATEWAY_API_KEY: z.preprocess(emptyToUndefined, z.string().min(1).optional()),
   AI_MODEL: z.string().default('google/gemini-2.5-flash'),
 
   // Cron
