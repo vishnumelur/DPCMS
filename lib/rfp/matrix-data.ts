@@ -28,10 +28,10 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M4.2', module: 'Integrations', section: 'Structured Data', number: '2', text: 'Governance alignment with existing data lineage, classifications, business glossaries.', status: 'NA', phase: 'P4' },
 
   // M5 DSR
-  { id: 'M5.A.1', module: 'Data Principal Rights Management', section: 'Rights Handling', number: '1', text: 'User-friendly portal to view and manage consents.', status: 'NA', phase: 'P2' },
-  { id: 'M5.A.3', module: 'Data Principal Rights Management', section: 'Rights Handling', number: '3', text: 'All DPDP rights: access, revoke, correction, erasure, grievance, nominate.', status: 'NA', phase: 'P2' },
-  { id: 'M5.B.1', module: 'Data Principal Rights Management', section: 'Workflow', number: '1', text: 'Receive, verify, respond to, and process requests.', status: 'NA', phase: 'P2' },
-  { id: 'M5.D.1', module: 'Data Principal Rights Management', section: 'Tracking', number: '1', text: 'Centralised register of requests + resolution times.', status: 'NA', phase: 'P2' },
+  { id: 'M5.A.1', module: 'Data Principal Rights Management', section: 'Rights Handling', number: '1', text: 'User-friendly portal to view and manage consents.', status: 'RA', demoPath: '/admin/dsr', evidencePath: '/admin/audit', phase: 'P2' },
+  { id: 'M5.A.3', module: 'Data Principal Rights Management', section: 'Rights Handling', number: '3', text: 'All DPDP rights: access, revoke, correction, erasure, grievance, nominate.', status: 'RA', demoPath: '/admin/dsr', evidencePath: '/admin/audit', phase: 'P2' },
+  { id: 'M5.B.1', module: 'Data Principal Rights Management', section: 'Workflow', number: '1', text: 'Receive, verify, respond to, and process requests.', status: 'RA', demoPath: '/admin/dsr', evidencePath: '/admin/audit', phase: 'P2' },
+  { id: 'M5.D.1', module: 'Data Principal Rights Management', section: 'Tracking', number: '1', text: 'Centralised register of requests + resolution times.', status: 'RA', demoPath: '/admin/dsr', evidencePath: '/admin/audit', phase: 'P2' },
 
   // M6 PIA
   { id: 'M6.A.1', module: 'Privacy Assessment', section: 'Core', number: '1', text: 'Privacy Impact Assessment workflows + risk scoring.', status: 'NA', phase: 'P3' },
@@ -41,7 +41,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M7.A.1.1', module: 'Data Protection Impact Assessment', section: 'Templates', number: '1.1', text: 'Description of processing activities including third-party involvement.', status: 'NA', phase: 'P3' },
   { id: 'M7.A.1.16', module: 'Data Protection Impact Assessment', section: 'Smart Assessments', number: '1.16', text: 'Auto-fill assessments using AI leveraging consent artefacts and discovery findings.', status: 'NA', phase: 'P3' },
   { id: 'M7.2.1', module: 'Data Protection Impact Assessment', section: 'Controls', number: '2.1', text: 'Real-time dashboard for DPIA initiation/review/approval across branches.', status: 'NA', phase: 'P3' },
-  { id: 'M7.2.2', module: 'Data Protection Impact Assessment', section: 'Controls', number: '2.2', text: 'SLA-based time tracking with red/yellow/green flags.', status: 'NA', phase: 'P3' },
+  { id: 'M7.2.2', module: 'Data Protection Impact Assessment', section: 'Controls', number: '2.2', text: 'SLA-based time tracking with red/yellow/green flags.', status: 'RA', demoPath: '/admin/dsr', evidencePath: '/admin/audit', phase: 'P2' },
 
   // M8 Privacy Notices
   { id: 'M8.A.1', module: 'Privacy Notice Management', section: 'Notice', number: '1', text: 'Customisable, dynamic notices per product/journey.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P1' },
@@ -49,9 +49,9 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M8.B.1', module: 'Privacy Notice Management', section: 'Version control', number: '1', text: 'Maintain version control for all notices.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P1' },
 
   // M9 Breach
-  { id: 'M9.A.1', module: 'Data Breach Management', section: 'Reporting', number: '1', text: 'Breach reporting mechanism in place.', status: 'NA', phase: 'P2' },
-  { id: 'M9.A.2', module: 'Data Breach Management', section: 'Reporting', number: '2', text: 'Breach investigation workflow per DPDP Act rules; reporting to DPB and Principals.', status: 'NA', phase: 'P2' },
-  { id: 'M9.B.2', module: 'Data Breach Management', section: 'Documentation', number: '2', text: 'Audit trail of all breach-related actions.', status: 'NA', phase: 'P2' },
+  { id: 'M9.A.1', module: 'Data Breach Management', section: 'Reporting', number: '1', text: 'Breach reporting mechanism in place.', status: 'RA', demoPath: '/admin/breach', evidencePath: '/admin/audit', phase: 'P2' },
+  { id: 'M9.A.2', module: 'Data Breach Management', section: 'Reporting', number: '2', text: 'Breach investigation workflow per DPDP Act rules; reporting to DPB and Principals.', status: 'RA', demoPath: '/admin/breach', evidencePath: '/admin/audit', phase: 'P2' },
+  { id: 'M9.B.2', module: 'Data Breach Management', section: 'Documentation', number: '2', text: 'Audit trail of all breach-related actions.', status: 'RA', demoPath: '/admin/breach', evidencePath: '/admin/audit', phase: 'P2' },
 
   // M10 Reporting
   { id: 'M10.B.1', module: 'Controls, Reporting and Dashboard', section: 'Operational', number: '1', text: 'Role-Based Access & Governance: Privacy Curator, Data Curator, Privacy Reader roles.', status: 'NA', phase: 'P5' },

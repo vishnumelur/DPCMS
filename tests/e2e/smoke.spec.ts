@@ -118,6 +118,71 @@ test('admin can navigate to consent management and see purposes', async ({ page 
   await page.screenshot({ path: 'test-results/screenshots/11-admin-consents-live.png', fullPage: true });
 });
 
+test('customer can raise a DSR and see it in their list', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/me/requests');
+  await expect(page.getByRole('heading', { name: /My data principal requests/i })).toBeVisible();
+
+  const subject = `E2E test — please export my data ${Date.now()}`;
+  await page.getByLabel('Subject (short)').fill(subject);
+  await page.getByLabel('Details').fill('Automated test request created by playwright.');
+  await page.getByRole('button', { name: /Submit request/i }).click();
+
+  await page.waitForLoadState('networkidle');
+  await expect(page).toHaveURL(/\/me\/requests$/);
+  await expect(page.getByText(subject)).toBeVisible();
+  // SLA badge for a fresh request should be green.
+  await expect(page.getByText('green', { exact: false }).first()).toBeVisible();
+  await page.screenshot({
+    path: 'test-results/screenshots/14-customer-dsr-created.png',
+    fullPage: true,
+  });
+});
+
+test('admin can see DSR queue and transition a request', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/admin/dsr');
+  await expect(page.getByRole('heading', { name: /M5 · Data principal rights/i })).toBeVisible();
+  await expect(page.getByText(/Queue \(/)).toBeVisible();
+
+  // Open the first DSR in the queue.
+  await page.getByRole('link', { name: 'Open →' }).first().click();
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.getByText(/Timeline \(/).first()).toBeVisible();
+  const beforeText = (await page.getByText(/Timeline \(/).first().textContent()) ?? '';
+  const beforeCount = Number.parseInt(beforeText.match(/\((\d+)\)/)?.[1] ?? '0', 10);
+
+  await page.getByRole('button', { name: /Transition/i }).click();
+
+  // Poll for the timeline to update — server actions revalidate without firing a load event.
+  await expect
+    .poll(
+      async () => {
+        const t = (await page.getByText(/Timeline \(/).first().textContent()) ?? '';
+        return Number.parseInt(t.match(/\((\d+)\)/)?.[1] ?? '0', 10);
+      },
+      { timeout: 10_000 },
+    )
+    .toBeGreaterThan(beforeCount);
+
+  await page.screenshot({
+    path: 'test-results/screenshots/15-admin-dsr-transitioned.png',
+    fullPage: true,
+  });
+});
+
 test('customer can grant and withdraw consent', async ({ page }) => {
   await page.goto('/signin');
   await page.getByLabel('Username').fill('dpcmsadmin');

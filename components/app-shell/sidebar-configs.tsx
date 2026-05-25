@@ -13,7 +13,7 @@ export const CUSTOMER_SIDEBAR: SidebarSection[] = [
   {
     title: 'Rights & requests',
     items: [
-      { label: 'Raise a request (DSR)', href: '/me/requests', phase: 'P2' },
+      { label: 'Raise a request (DSR)', href: '/me/requests', live: true },
       { label: 'Nominees', href: '/me/nominees', phase: 'P2' },
       { label: 'Activity log', href: '/me/activity', phase: 'P0', live: true },
     ],
@@ -41,8 +41,8 @@ export const ADMIN_SIDEBAR: SidebarSection[] = [
   {
     title: 'Rights & breach',
     items: [
-      { label: 'M5 · Data principal rights', href: '/admin/dsr', phase: 'P2' },
-      { label: 'M9 · Breach management', href: '/admin/breach', phase: 'P2' },
+      { label: 'M5 · Data principal rights', href: '/admin/dsr', live: true },
+      { label: 'M9 · Breach management', href: '/admin/breach', live: true },
     ],
   },
   {
