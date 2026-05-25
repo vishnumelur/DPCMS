@@ -41,13 +41,22 @@ async function getLatestArtefact(orgId: string, principalUserId: string, purpose
   return rows[0] ?? null;
 }
 
+export type GuardianEvidence = {
+  guardianName: string;
+  guardianEmail: string;
+  guardianRelation: string;
+  declaredAt: string;
+};
+
 export async function grantConsent(params: {
   orgId: string;
   principalUserId: string;
   purposeId: string;
   audit: AuditContext;
+  /** Optional guardian metadata stored verbatim on the artefact. */
+  parentalEvidence?: GuardianEvidence;
 }) {
-  const { orgId, principalUserId, purposeId, audit } = params;
+  const { orgId, principalUserId, purposeId, audit, parentalEvidence } = params;
 
   const p = await getPurposeById(orgId, purposeId);
   if (!p) throw new Error('purpose_not_found');
@@ -68,6 +77,13 @@ export async function grantConsent(params: {
     exp: now + 60 * 60 * 24 * 365, // 1 year
     templateVersion: tpl.version,
     templateLang: tpl.languageCode,
+    parentalConsent: parentalEvidence
+      ? {
+          name: parentalEvidence.guardianName,
+          relation: parentalEvidence.guardianRelation,
+          declaredAt: parentalEvidence.declaredAt,
+        }
+      : undefined,
   };
 
   const { jws, bodyHash } = await signConsentBody(orgId, body);
@@ -86,6 +102,9 @@ export async function grantConsent(params: {
       prevArtefactId: prev?.id ?? null,
       jws,
       bodyHash,
+      parentalConsentEvidence: parentalEvidence
+        ? JSON.stringify(parentalEvidence)
+        : null,
     })
     .returning();
   if (!artefact) throw new Error('artefact_insert_failed');
@@ -107,9 +126,21 @@ export async function grantConsent(params: {
 
   await appendAudit(audit, {
     stream: 'consent',
-    action: 'consent.granted',
+    action: parentalEvidence ? 'consent.granted_by_guardian' : 'consent.granted',
     target: purposeId,
-    payload: { purposeCode: p.code, artefactId: artefact.id, kind: 'granted', bodyHash },
+    payload: {
+      purposeCode: p.code,
+      artefactId: artefact.id,
+      kind: 'granted',
+      bodyHash,
+      ...(parentalEvidence
+        ? {
+            guardianRelation: parentalEvidence.guardianRelation,
+            // Note: name + email are PII; we hash them rather than persisting in the audit payload.
+            guardianNameHash: hashPrincipalId(parentalEvidence.guardianName, saltHex),
+          }
+        : {}),
+    },
   });
 
   return artefact;

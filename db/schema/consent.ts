@@ -5,6 +5,7 @@ import {
   timestamp,
   integer,
   boolean,
+  date,
   uniqueIndex,
   index,
 } from 'drizzle-orm/pg-core';
@@ -98,6 +99,12 @@ export const consentArtefact = pgTable(
     prevArtefactId: uuid('prev_artefact_id'),
     jws: text('jws').notNull(),
     bodyHash: text('body_hash').notNull(),
+    /**
+     * When the principal is a minor, captures guardian metadata (name,
+     * relation, email — JSON-ish text) attached at the moment of grant.
+     * NULL for adult self-grants.
+     */
+    parentalConsentEvidence: text('parental_consent_evidence'),
     grantedAt: timestamp('granted_at', { withTimezone: true }).defaultNow().notNull(),
     revokedAt: timestamp('revoked_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
@@ -108,6 +115,35 @@ export const consentArtefact = pgTable(
       t.principalUserId,
       t.purposeId,
     ),
+  }),
+);
+
+/**
+ * Per-principal minor flag. When isMinor=true, all consent grants for this
+ * principal must be issued via the guardian flow with evidence attached;
+ * self-grants from the customer portal are rejected.
+ */
+export const principalMinorFlag = pgTable(
+  'principal_minor_flag',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => org.id, { onDelete: 'cascade' }),
+    principalUserId: uuid('principal_user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    declaredDateOfBirth: date('declared_date_of_birth').notNull(),
+    isMinor: boolean('is_minor').notNull(),
+    guardianName: text('guardian_name'),
+    guardianEmail: text('guardian_email'),
+    guardianRelation: text('guardian_relation'),
+    verificationMethod: text('verification_method').notNull().default('declared'), // 'declared' | 'aadhaar' | 'documentary'
+    verifiedAt: timestamp('verified_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => ({
+    principalUx: uniqueIndex('principal_minor_flag_principal_ux').on(t.principalUserId),
   }),
 );
 

@@ -92,6 +92,13 @@
       "when": 1779729369956,
       "tag": "0012_p5plus_cookie_scanner",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1779729774739,
+      "tag": "0013_p5plus_parental_consent",
+      "breakpoints": true
     }
   ]
 }

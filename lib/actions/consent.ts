@@ -16,6 +16,7 @@ import { and, eq } from 'drizzle-orm';
 import { appendAudit } from '@/lib/audit/with-audit';
 import { grantConsent, withdrawConsent } from '@/modules/consent/artefacts';
 import { translateNoticeViaGemini } from '@/modules/consent/notice-translate';
+import { declareMinor, getMinorFlag } from '@/modules/consent/parental';
 import { LOCALES, type Locale } from '@/i18n/routing';
 
 async function getActorContext() {
@@ -36,12 +37,93 @@ export async function grantConsentAction(formData: FormData) {
   const purposeId = String(formData.get('purposeId') ?? '');
   if (!purposeId) throw new Error('purposeId_required');
   const ctx = await getActorContext();
+
+  // DPDP §9: a minor cannot self-consent — the guardian flow is required.
+  const flag = await getMinorFlag(ctx.orgId, ctx.actorUserId);
+  if (flag?.isMinor) {
+    throw new Error(
+      'minor_cannot_self_consent — use grantConsentByGuardianAction with guardian details',
+    );
+  }
+
   await grantConsent({
     orgId: ctx.orgId,
     principalUserId: ctx.actorUserId,
     purposeId,
     audit: { orgId: ctx.orgId, actorUserId: ctx.actorUserId, actorLabel: ctx.actorLabel },
   });
+  revalidatePath('/me/consents');
+}
+
+export async function grantConsentByGuardianAction(formData: FormData) {
+  const purposeId = String(formData.get('purposeId') ?? '').trim();
+  const guardianName = String(formData.get('guardianName') ?? '').trim();
+  const guardianEmail = String(formData.get('guardianEmail') ?? '').trim();
+  const guardianRelation = String(formData.get('guardianRelation') ?? '').trim();
+  if (!purposeId) throw new Error('purposeId_required');
+  if (!guardianName || !guardianEmail || !guardianRelation) {
+    throw new Error('guardian_name_email_relation_required');
+  }
+
+  const ctx = await getActorContext();
+  const flag = await getMinorFlag(ctx.orgId, ctx.actorUserId);
+  if (!flag?.isMinor) {
+    throw new Error('not_a_minor — adult principals should use grantConsentAction');
+  }
+
+  await grantConsent({
+    orgId: ctx.orgId,
+    principalUserId: ctx.actorUserId,
+    purposeId,
+    audit: { orgId: ctx.orgId, actorUserId: ctx.actorUserId, actorLabel: ctx.actorLabel },
+    parentalEvidence: {
+      guardianName,
+      guardianEmail,
+      guardianRelation,
+      declaredAt: new Date().toISOString(),
+    },
+  });
+  revalidatePath('/me/consents');
+}
+
+export async function declareMinorAction(formData: FormData) {
+  const dobRaw = String(formData.get('dob') ?? '').trim();
+  const guardianName = String(formData.get('guardianName') ?? '').trim();
+  const guardianEmail = String(formData.get('guardianEmail') ?? '').trim();
+  const guardianRelation = String(formData.get('guardianRelation') ?? '').trim();
+  if (!dobRaw) throw new Error('dob_required');
+
+  const dob = new Date(dobRaw);
+  if (Number.isNaN(dob.getTime())) throw new Error('invalid_dob');
+
+  const ctx = await getActorContext();
+
+  const guardian =
+    guardianName && guardianEmail && guardianRelation
+      ? { name: guardianName, email: guardianEmail, relation: guardianRelation }
+      : undefined;
+
+  const { isMinor } = await declareMinor({
+    orgId: ctx.orgId,
+    principalUserId: ctx.actorUserId,
+    dob,
+    guardian,
+  });
+
+  await appendAudit(
+    { orgId: ctx.orgId, actorUserId: ctx.actorUserId, actorLabel: ctx.actorLabel },
+    {
+      stream: 'consent',
+      action: 'principal.age_declared',
+      target: ctx.actorUserId,
+      payload: {
+        isMinor,
+        dob: dob.toISOString().slice(0, 10),
+        guardianProvided: Boolean(guardian),
+      },
+    },
+  );
+
   revalidatePath('/me/consents');
 }
 

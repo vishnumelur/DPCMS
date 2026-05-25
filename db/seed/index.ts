@@ -6,6 +6,7 @@ import { seedRightsAndBreach } from './rights-and-breach';
 import { seedAssessmentsP3 } from './assessments';
 import { seedConnectorsP4 } from './connectors';
 import { seedResearchP5 } from './research';
+import { seedMinorPrincipal } from './minor-principal';
 
 async function main() {
   const orgRow = await seedOrgAndRoles();
@@ -15,6 +16,7 @@ async function main() {
   await seedAssessmentsP3(orgRow.id);
   await seedConnectorsP4(orgRow.id);
   await seedResearchP5(orgRow.id);
+  await seedMinorPrincipal(orgRow.id);
   process.exit(0);
 }
 
