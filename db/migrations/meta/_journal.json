@@ -29,6 +29,20 @@
       "when": 1779696874062,
       "tag": "0003_p0_system_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1779700644622,
+      "tag": "0004_p0_user_password",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779701418563,
+      "tag": "0005_p0_user_role_pk_rework",
+      "breakpoints": true
     }
   ]
 }

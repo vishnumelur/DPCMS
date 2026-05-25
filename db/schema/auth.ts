@@ -28,9 +28,13 @@ export const user = pgTable('user', {
   id: uuid('id').primaryKey().defaultRandom(),
   orgId: uuid('org_id').references(() => org.id, { onDelete: 'cascade' }),
   name: text('name'),
+  // `email` doubles as the login identifier; for the admin seed it holds 'dpcmsadmin'
+  // (not RFC-5322), which Postgres accepts as plain text.
   email: text('email').notNull().unique(),
   emailVerified: timestamp('email_verified', { withTimezone: true }),
   image: text('image'),
+  // Nullable: only set for credential-login users; magic-link users leave it NULL.
+  passwordHash: text('password_hash'),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
@@ -106,20 +110,20 @@ export const rolePermission = pgTable(
   (t) => ({ pk: primaryKey({ columns: [t.roleId, t.permissionId] }) }),
 );
 
-export const userRole = pgTable(
-  'user_role',
-  {
-    userId: uuid('user_id')
-      .notNull()
-      .references(() => user.id, { onDelete: 'cascade' }),
-    roleId: uuid('role_id')
-      .notNull()
-      .references(() => role.id, { onDelete: 'cascade' }),
-    scopeKind: scopeKindEnum('scope_kind').notNull().default('global'),
-    branchId: uuid('branch_id').references(() => branch.id, { onDelete: 'cascade' }),
-  },
-  (t) => ({ pk: primaryKey({ columns: [t.userId, t.roleId, t.scopeKind, t.branchId] }) }),
-);
+export const userRole = pgTable('user_role', {
+  // Synthetic PK so branch_id can stay nullable (global scope).
+  // Uniqueness across (user_id, role_id, scope_kind, branch_id) is enforced by
+  // two partial indexes added in the manual SQL block below.
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  roleId: uuid('role_id')
+    .notNull()
+    .references(() => role.id, { onDelete: 'cascade' }),
+  scopeKind: scopeKindEnum('scope_kind').notNull().default('global'),
+  branchId: uuid('branch_id').references(() => branch.id, { onDelete: 'cascade' }),
+});
 
 // --- MFA ---
 export const mfaFactor = pgTable('mfa_factor', {
