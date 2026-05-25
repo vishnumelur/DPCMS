@@ -6,8 +6,11 @@ import { z } from 'zod';
 const emptyToUndefined = (v: unknown) => (typeof v === 'string' && v === '' ? undefined : v);
 
 const EnvSchema = z.object({
-  // Database
+  // Database — pooled is used by the runtime client (neon-http);
+  // unpooled is used by drizzle-kit migrations and the seed scripts.
+  // If only one is set, it'll serve both roles (degraded for migrations).
   DATABASE_URL: z.string().url(),
+  DATABASE_URL_UNPOOLED: z.preprocess(emptyToUndefined, z.string().url().optional()),
 
   // NextAuth
   AUTH_SECRET: z.string().min(32),

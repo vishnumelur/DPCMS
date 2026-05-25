@@ -3,12 +3,15 @@ import { neon } from '@neondatabase/serverless';
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
-if (!process.env.DATABASE_URL) {
-  console.error('DATABASE_URL is not set. Aborting.');
+// Prefer the unpooled connection for DDL — pooled (PgBouncer) drops session state
+// between statements which trips up `DO $$ ... $$` blocks and role management.
+const connectionUrl = process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL;
+if (!connectionUrl) {
+  console.error('DATABASE_URL or DATABASE_URL_UNPOOLED is not set. Aborting.');
   process.exit(1);
 }
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = neon(connectionUrl);
 const dir = path.resolve('db/migrations/_manual');
 
 /**
