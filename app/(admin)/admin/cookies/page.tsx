@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { auth } from '@/auth';
 import { db } from '@/db/client';
 import { user, cookieCategory, cookieConsentRecord } from '@/db/schema';
@@ -16,6 +17,8 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import { createCookieCategoryAction } from '@/lib/actions/consent';
+import { runCookieScanAction } from '@/lib/actions/cookies';
+import { listRecentScans } from '@/modules/cookies/scanner';
 
 export const dynamic = 'force-dynamic';
 
@@ -45,6 +48,8 @@ export default async function AdminCookiesPage() {
     .where(eq(cookieConsentRecord.orgId, orgId))
     .orderBy(desc(cookieConsentRecord.createdAt))
     .limit(10);
+
+  const recentScans = await listRecentScans(orgId, 5);
 
   return (
     <div className="space-y-6">
@@ -90,6 +95,76 @@ export default async function AdminCookiesPage() {
               ))}
             </TableBody>
           </Table>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Scan a URL for cookies</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="mb-3 text-xs text-muted-foreground">
+            Paste any HTTPS URL — DPCMS fetches it server-side (single request, no crawl), parses
+            the <code>Set-Cookie</code> headers and proposes categories using a pattern-based
+            heuristic (Google Analytics, Meta Pixel, Microsoft, etc.). Max 30 cookies / 10 s.
+          </p>
+          <form action={runCookieScanAction} className="grid gap-3 md:grid-cols-3">
+            <div className="md:col-span-2 space-y-1">
+              <Label htmlFor="targetUrl">Target URL</Label>
+              <Input
+                id="targetUrl"
+                name="targetUrl"
+                required
+                placeholder="https://www.example.com"
+                defaultValue="https://www.example.com"
+              />
+            </div>
+            <div className="flex items-end">
+              <Button type="submit">Run scan</Button>
+            </div>
+          </form>
+          {recentScans.length > 0 ? (
+            <div className="mt-4">
+              <p className="mb-2 text-xs text-muted-foreground">Recent scans</p>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>When</TableHead>
+                    <TableHead>Target</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Cookies</TableHead>
+                    <TableHead></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {recentScans.map((s) => (
+                    <TableRow key={s.id}>
+                      <TableCell className="font-mono text-xs">
+                        {s.scannedAt.toISOString().slice(0, 19).replace('T', ' ')}
+                      </TableCell>
+                      <TableCell className="font-mono text-xs">
+                        <span title={s.targetUrl}>{s.targetUrl.slice(0, 40)}{s.targetUrl.length > 40 ? '…' : ''}</span>
+                      </TableCell>
+                      <TableCell className="text-xs">
+                        {s.errorMessage ? (
+                          <Badge variant="destructive" className="text-[10px]">{s.errorMessage.slice(0, 24)}</Badge>
+                        ) : (
+                          <Badge variant="default" className="text-[10px]">{s.statusCode ?? '—'}</Badge>
+                        )}
+                      </TableCell>
+                      <TableCell>{s.foundCount}</TableCell>
+                      <TableCell>
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                        <Link href={`/admin/cookies/scans/${s.id}` as any} className="text-xs underline">
+                          View →
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          ) : null}
         </CardContent>
       </Card>
 

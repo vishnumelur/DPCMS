@@ -85,6 +85,13 @@
       "when": 1779728657619,
       "tag": "0011_p5plus_notice_translation",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1779729369956,
+      "tag": "0012_p5plus_cookie_scanner",
+      "breakpoints": true
     }
   ]
 }

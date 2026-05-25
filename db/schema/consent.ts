@@ -252,3 +252,52 @@ export const cookieConsentRecord = pgTable('cookie_consent_record', {
   ipHash: text('ip_hash'),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });
+
+/**
+ * One row per "scan a URL for cookies" run. Captures the target, the time,
+ * how many cookies the response set, and the failure message (if any).
+ */
+export const cookieScanRun = pgTable(
+  'cookie_scan_run',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => org.id, { onDelete: 'cascade' }),
+    targetUrl: text('target_url').notNull(),
+    scannedAt: timestamp('scanned_at', { withTimezone: true }).defaultNow().notNull(),
+    foundCount: integer('found_count').notNull().default(0),
+    statusCode: integer('status_code'),
+    errorMessage: text('error_message'),
+  },
+  (t) => ({
+    orgScannedIdx: index('cookie_scan_run_org_scanned_idx').on(t.orgId, t.scannedAt),
+  }),
+);
+
+/**
+ * Individual cookie row produced by a scan. The heuristic categoriser
+ * proposes a category + a short human-readable rationale; an admin can
+ * promote any finding to a real cookie_category for the org.
+ */
+export const cookieScanFinding = pgTable(
+  'cookie_scan_finding',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    scanRunId: uuid('scan_run_id')
+      .notNull()
+      .references(() => cookieScanRun.id, { onDelete: 'cascade' }),
+    cookieName: text('cookie_name').notNull(),
+    domain: text('domain'),
+    path: text('path'),
+    secure: boolean('secure').notNull().default(false),
+    httpOnly: boolean('http_only').notNull().default(false),
+    sameSite: text('same_site'),
+    suggestedCategoryKey: text('suggested_category_key').notNull(),
+    suggestedRationale: text('suggested_rationale').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => ({
+    scanRunIdx: index('cookie_scan_finding_run_idx').on(t.scanRunId),
+  }),
+);

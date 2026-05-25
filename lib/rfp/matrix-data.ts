@@ -17,7 +17,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M1.A.2', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '2', text: 'Interoperable with the national MeitY consent stack. (Customisable — connector ready; awaiting GoI release of the production endpoint.)', status: 'CA', demoPath: '/admin/integrations/meity_consent_stack', evidencePath: '/admin/integrations/meity_consent_stack', phase: 'P4' },
 
   // M2 Cookie Consent
-  { id: 'M2.A.1', module: 'Cookie Consent', section: 'Scanning', number: '1', text: 'Auto-scanning of sub-folders/sub-domains and cookie categorisation. (Customisable — crawler deferred.)', status: 'CA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
+  { id: 'M2.A.1', module: 'Cookie Consent', section: 'Scanning', number: '1', text: 'Auto-scanning + cookie categorisation — paste any HTTPS URL, server parses Set-Cookie and proposes essential/functional/analytics/marketing via heuristic patterns (GA, Meta Pixel, Microsoft, etc.).', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P5' },
   { id: 'M2.B.2', module: 'Cookie Consent', section: 'Banner', number: '2', text: 'Auto-translation of cookie banner into 22 languages (in-banner locale selector + i18n strings).', status: 'RA', demoPath: '/', evidencePath: '/admin/cookies', phase: 'P5' },
   { id: 'M2.C.1', module: 'Cookie Consent', section: 'GTM Integration', number: '1', text: 'IAB TCF-compliant cookie banner.', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
 
