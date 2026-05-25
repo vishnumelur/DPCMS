@@ -153,12 +153,26 @@ test('admin can see DSR queue and transition a request', async ({ page }) => {
     page.waitForURL(/\/admin/, { timeout: 10_000 }),
     page.getByRole('button', { name: /^Sign in$/ }).click(),
   ]);
+
+  // Self-contained: raise a brand-new DSR as the signed-in principal so the test never
+  // depends on the queue ordering, seed state, or whatever prior test runs may have
+  // already advanced to a terminal state (where no Transition button exists).
+  const subject = `E2E transition target — ${Date.now()}`;
+  await page.goto('/me/requests');
+  await page.getByLabel('Subject (short)').fill(subject);
+  await page.getByLabel('Details').fill('Created by playwright to exercise an admin transition.');
+  await page.getByRole('button', { name: /Submit request/i }).click();
+  await page.waitForLoadState('networkidle');
+
+  // Switch back to admin and locate the row by our unique subject.
   await page.goto('/admin/dsr');
   await expect(page.getByRole('heading', { name: /M5 · Data principal rights/i })).toBeVisible();
   await expect(page.getByText(/Queue \(/)).toBeVisible();
 
-  // Open the first DSR in the queue.
-  await page.getByRole('link', { name: 'Open →' }).first().click();
+  const targetRow = page.getByRole('row', { name: new RegExp(subject) });
+  await expect(targetRow).toBeVisible();
+  await targetRow.getByRole('link', { name: /Open/ }).click();
+
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(page.getByText(/Timeline \(/).first()).toBeVisible();
   const beforeText = (await page.getByText(/Timeline \(/).first().textContent()) ?? '';
