@@ -14,7 +14,8 @@
     "test:coverage": "vitest run --coverage",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:manual": "tsx scripts/apply-manual-sql.ts"
   },
   "keywords": [],
   "author": "",
