@@ -22,6 +22,13 @@
       "when": 1779693575358,
       "tag": "0002_p0_audit_log",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1779696874062,
+      "tag": "0003_p0_system_tables",
+      "breakpoints": true
     }
   ]
 }
