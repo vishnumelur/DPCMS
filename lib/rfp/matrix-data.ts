@@ -6,19 +6,19 @@ import type { RfpRequirement, RfpStatus } from './types';
  */
 export const RFP_REQUIREMENTS: RfpRequirement[] = [
   // M1 Universal Consent Management
-  { id: 'M1.A.1', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '1', text: 'Aligned to NEGD/MeitY Business Requirements Document for Consent Management.', status: 'CA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
+  { id: 'M1.A.1', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '1', text: 'Aligned to NEGD/MeitY Business Requirements Document for Consent Management — DEPA-style RS256-signed artefacts + 22 Schedule-8 notice translations via Gemini.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P5' },
   { id: 'M1.A.3', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '3', text: 'Granular consent at the UCIC/Customer ID level, purpose-specific per DPDP Act 2023.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.4', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '4', text: 'Consent collection across digital, physical, and third-party channels.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.8', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '8', text: 'Parental/Guardian consent for minors per DPDP Act. (Customisable — workflow deferred to P2.)', status: 'CA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.12', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '12', text: 'Consent record with timestamp, purpose, and data shared.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.16', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '16', text: 'Audit trail of consent records per DPDP Act 2023.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.17', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '17', text: 'Consent artefacts immutable, admissible in court, per MeitY Electronic Consent Framework.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
-  { id: 'M1.A.23', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '23', text: 'Privacy Notices in all 22 Schedule-8 regional languages.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/rfp-matrix', phase: 'P5' },
+  { id: 'M1.A.23', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '23', text: 'Privacy Notices in all 22 Schedule-8 regional languages (live Gemini pipeline + DPO review gate).', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P5' },
   { id: 'M1.A.2', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '2', text: 'Interoperable with the national MeitY consent stack. (Customisable — connector ready; awaiting GoI release of the production endpoint.)', status: 'CA', demoPath: '/admin/integrations/meity_consent_stack', evidencePath: '/admin/integrations/meity_consent_stack', phase: 'P4' },
 
   // M2 Cookie Consent
   { id: 'M2.A.1', module: 'Cookie Consent', section: 'Scanning', number: '1', text: 'Auto-scanning of sub-folders/sub-domains and cookie categorisation. (Customisable — crawler deferred.)', status: 'CA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
-  { id: 'M2.B.2', module: 'Cookie Consent', section: 'Banner', number: '2', text: 'Auto-translation of cookie banner into 22 languages (locale switcher + AI gateway fallback).', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/rfp-matrix', phase: 'P5' },
+  { id: 'M2.B.2', module: 'Cookie Consent', section: 'Banner', number: '2', text: 'Auto-translation of cookie banner into 22 languages (in-banner locale selector + i18n strings).', status: 'RA', demoPath: '/', evidencePath: '/admin/cookies', phase: 'P5' },
   { id: 'M2.C.1', module: 'Cookie Consent', section: 'GTM Integration', number: '1', text: 'IAB TCF-compliant cookie banner.', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
 
   // M3 Data Mapping
@@ -46,7 +46,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
 
   // M8 Privacy Notices
   { id: 'M8.A.1', module: 'Privacy Notice Management', section: 'Notice', number: '1', text: 'Customisable, dynamic notices per product/journey.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P1' },
-  { id: 'M8.A.3', module: 'Privacy Notice Management', section: 'Notice', number: '3', text: 'Translation/transliteration of notices into all 22 Indian languages (locale switcher + AI gateway fallback).', status: 'RA', demoPath: '/admin/notices', evidencePath: '/rfp-matrix', phase: 'P5' },
+  { id: 'M8.A.3', module: 'Privacy Notice Management', section: 'Notice', number: '3', text: 'Translation/transliteration of notices into all 22 Indian languages (live Gemini via lib/ai/gateway.ts, DPO approval before publish).', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P5' },
   { id: 'M8.B.1', module: 'Privacy Notice Management', section: 'Version control', number: '1', text: 'Maintain version control for all notices.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P1' },
 
   // M9 Breach

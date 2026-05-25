@@ -1,5 +1,29 @@
 {
   "app": { "name": "DPCMS", "tagline": "Data Privacy & Consent Management System" },
   "nav": { "signIn": "Sign in", "rfpMatrix": "RFP Compliance Matrix" },
-  "matrix": { "title": "RFP Compliance Matrix", "subtitle": "Live mapping of KSCB RFP requirements to demo screens" }
+  "matrix": { "title": "RFP Compliance Matrix", "subtitle": "Live mapping of KSCB RFP requirements to demo screens" },
+  "cookies": {
+    "title": "Cookie preferences",
+    "description": "We use essential cookies to make this site work. With your consent we also use optional cookies for the categories below. You can change your choice any time.",
+    "accept": "Accept all",
+    "reject": "Reject all",
+    "savePreferences": "Save choices",
+    "auditNote": "Decisions logged in the immutable audit chain.",
+    "essential": {
+      "name": "Essential",
+      "description": "Auth, security, session. Always on."
+    },
+    "functional": {
+      "name": "Functional",
+      "description": "Language, theme, preferences."
+    },
+    "analytics": {
+      "name": "Analytics",
+      "description": "Aggregate page-view metrics."
+    },
+    "marketing": {
+      "name": "Marketing",
+      "description": "Personalised promotional content."
+    }
+  }
 }

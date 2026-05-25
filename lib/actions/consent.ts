@@ -3,10 +3,20 @@
 import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import { db } from '@/db/client';
-import { user, purpose as purposeTable, consentTemplate, notice, noticeAck, cookieCategory } from '@/db/schema';
+import {
+  user,
+  purpose as purposeTable,
+  consentTemplate,
+  notice,
+  noticeAck,
+  noticeTranslation,
+  cookieCategory,
+} from '@/db/schema';
 import { and, eq } from 'drizzle-orm';
 import { appendAudit } from '@/lib/audit/with-audit';
 import { grantConsent, withdrawConsent } from '@/modules/consent/artefacts';
+import { translateNoticeViaGemini } from '@/modules/consent/notice-translate';
+import { LOCALES, type Locale } from '@/i18n/routing';
 
 async function getActorContext() {
   const session = await auth();
@@ -213,4 +223,78 @@ export async function createNoticeAction(formData: FormData) {
   );
 
   revalidatePath('/admin/notices');
+}
+
+/**
+ * Generate translations for a notice into the locales submitted via the form.
+ * Form field "locales" is a comma-separated list of language codes; an empty
+ * value means "all 22 locales except English and any already translated".
+ */
+export async function translateNoticeAction(formData: FormData) {
+  const noticeId = String(formData.get('noticeId') ?? '').trim();
+  if (!noticeId) throw new Error('noticeId_required');
+
+  const ctx = await getActorContext();
+
+  const validLocales = new Set<string>(LOCALES);
+  const checked = formData.getAll('localeCheck').map((v) => String(v).trim());
+  const requested: Locale[] =
+    checked.length > 0
+      ? (checked.filter((s) => validLocales.has(s)) as Locale[])
+      : (LOCALES.filter((l) => l !== 'en') as Locale[]);
+
+  const result = await translateNoticeViaGemini(ctx.orgId, noticeId, requested);
+
+  await appendAudit(
+    { orgId: ctx.orgId, actorUserId: ctx.actorUserId, actorLabel: ctx.actorLabel },
+    {
+      stream: 'consent',
+      action: 'notice.translations_generated',
+      target: noticeId,
+      payload: {
+        requested: requested.length,
+        created: result.created,
+        skipped: result.skipped,
+        source: result.source,
+      },
+    },
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  revalidatePath(`/admin/notices/${noticeId}` as any);
+  revalidatePath('/admin/notices');
+}
+
+export async function approveNoticeTranslationAction(formData: FormData) {
+  const translationId = String(formData.get('translationId') ?? '').trim();
+  if (!translationId) throw new Error('translationId_required');
+
+  const ctx = await getActorContext();
+
+  const rows = await db
+    .select()
+    .from(noticeTranslation)
+    .where(eq(noticeTranslation.id, translationId))
+    .limit(1);
+  const row = rows[0];
+  if (!row) throw new Error('translation_not_found');
+  if (row.orgId !== ctx.orgId) throw new Error('org_mismatch');
+
+  await db
+    .update(noticeTranslation)
+    .set({ reviewed: true, reviewedAt: new Date() })
+    .where(eq(noticeTranslation.id, translationId));
+
+  await appendAudit(
+    { orgId: ctx.orgId, actorUserId: ctx.actorUserId, actorLabel: ctx.actorLabel },
+    {
+      stream: 'consent',
+      action: 'notice.translation_approved',
+      target: row.noticeId,
+      payload: { languageCode: row.languageCode, translationId },
+    },
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  revalidatePath(`/admin/notices/${row.noticeId}` as any);
 }

@@ -78,6 +78,13 @@
       "when": 1779712417914,
       "tag": "0010_p5_research_nominees",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1779728657619,
+      "tag": "0011_p5plus_notice_translation",
+      "breakpoints": true
     }
   ]
 }

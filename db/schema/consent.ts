@@ -191,6 +191,35 @@ export const noticeAck = pgTable(
   }),
 );
 
+/**
+ * Per-language translation of a notice's body. Inserted on demand by the
+ * "Generate translations" action (via Gemini or deterministic fallback);
+ * flipped to reviewed=true when a DPO signs off. Customer-facing pages
+ * render the translated body when their locale matches a reviewed row, else
+ * fall back to the English original with a "translation pending" notice.
+ */
+export const noticeTranslation = pgTable(
+  'notice_translation',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => org.id, { onDelete: 'cascade' }),
+    noticeId: uuid('notice_id')
+      .notNull()
+      .references(() => notice.id, { onDelete: 'cascade' }),
+    languageCode: text('language_code').notNull(),
+    bodyMarkdown: text('body_markdown').notNull(),
+    source: text('source').notNull().default('ai'), // 'ai' | 'fallback' | 'human'
+    reviewed: boolean('reviewed').notNull().default(false),
+    reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => ({
+    noticeLangUx: uniqueIndex('notice_translation_notice_lang_ux').on(t.noticeId, t.languageCode),
+  }),
+);
+
 /** Cookie categories ('essential', 'functional', 'analytics', 'marketing'). */
 export const cookieCategory = pgTable(
   'cookie_category',
