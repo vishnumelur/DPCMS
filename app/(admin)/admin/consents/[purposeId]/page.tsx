@@ -4,6 +4,7 @@ import { auth } from '@/auth';
 import { db } from '@/db/client';
 import { user, consentArtefact } from '@/db/schema';
 import { and, eq, desc } from 'drizzle-orm';
+import { CheckCircle2, XCircle, Circle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -97,9 +98,18 @@ export default async function AdminPurposeDetailPage({
                   <TableRow key={pr.id}>
                     <TableCell>{label(pr.principalUserId)}</TableCell>
                     <TableCell>
-                      <Badge variant={pr.status === 'active' ? 'default' : 'secondary'}>
-                        {pr.status}
-                      </Badge>
+                      <span className="inline-flex items-center gap-1.5">
+                        {pr.status === 'active' ? (
+                          <CheckCircle2 className="h-4 w-4 text-primary" aria-hidden="true" />
+                        ) : pr.status === 'withdrawn' ? (
+                          <XCircle className="h-4 w-4 text-destructive" aria-hidden="true" />
+                        ) : (
+                          <Circle className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                        )}
+                        <Badge variant={pr.status === 'active' ? 'default' : 'secondary'}>
+                          {pr.status}
+                        </Badge>
+                      </span>
                     </TableCell>
                     <TableCell className="font-mono text-xs">
                       {pr.currentArtefactId.slice(0, 8)}…

@@ -12,17 +12,32 @@ export async function TopBar({ variant = 'public' }: { variant?: 'public' | 'aut
   const email = session?.user?.email;
   const cookieStore = await cookies();
   const localeCookie = cookieStore.get('locale')?.value;
-  const initialLocale: Locale = (LOCALES as readonly string[]).includes(localeCookie ?? '')
-    ? (localeCookie as Locale)
-    : DEFAULT_LOCALE;
+  const cookieSet = (LOCALES as readonly string[]).includes(localeCookie ?? '');
+  const initialLocale: Locale = cookieSet ? (localeCookie as Locale) : DEFAULT_LOCALE;
 
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4">
         <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 text-sm font-bold">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded bg-primary text-primary-foreground">D</span>
-            DPCMS
+          <Link href="/" className="flex items-center gap-2 text-sm font-bold" aria-label="DPCMS · KSCB home">
+            <svg
+              viewBox="0 0 28 28"
+              className="h-7 w-7"
+              fill="none"
+              role="img"
+              aria-label="KSCB"
+            >
+              <circle cx="14" cy="14" r="13" className="fill-primary" />
+              <path
+                d="M9 8 L9 20 M9 14 L15 8 M9 14 L15 20"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="stroke-primary-foreground"
+              />
+              <circle cx="20" cy="9" r="1.5" className="fill-primary-foreground" />
+            </svg>
+            <span>DPCMS · KSCB</span>
           </Link>
           <Badge variant="outline" className="hidden text-[10px] sm:inline-flex">
             POC · DPDP Act 2023
@@ -53,7 +68,14 @@ export async function TopBar({ variant = 'public' }: { variant?: 'public' | 'aut
         </nav>
 
         <div className="flex items-center gap-3">
-          <LanguageSwitcher initial={initialLocale} />
+          <div className="flex flex-col items-end gap-0.5">
+            <LanguageSwitcher initial={initialLocale} />
+            {!cookieSet ? (
+              <p className="hidden text-[10px] text-muted-foreground md:block">
+                ml is the default for KSCB customers — change anytime
+              </p>
+            ) : null}
+          </div>
           {email ? (
             <UserMenu email={email} />
           ) : variant === 'public' ? (

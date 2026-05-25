@@ -2,6 +2,7 @@ import { auth } from '@/auth';
 import { db } from '@/db/client';
 import { user } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { CheckCircle2, XCircle, Circle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -121,13 +122,24 @@ export default async function MyConsentsPage() {
                       <Badge variant="outline" className="text-[10px]">{row.purpose.lawfulBasis}</Badge>
                     </p>
                   </div>
-                  {active ? (
-                    <Badge variant="default">Active</Badge>
-                  ) : status === 'withdrawn' ? (
-                    <Badge variant="destructive">Withdrawn</Badge>
-                  ) : (
-                    <Badge variant="outline">Not granted</Badge>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {active ? (
+                      <>
+                        <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden="true" />
+                        <Badge variant="default">Active</Badge>
+                      </>
+                    ) : status === 'withdrawn' ? (
+                      <>
+                        <XCircle className="h-5 w-5 text-destructive" aria-hidden="true" />
+                        <Badge variant="destructive">Withdrawn</Badge>
+                      </>
+                    ) : (
+                      <>
+                        <Circle className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
+                        <Badge variant="outline">Not granted</Badge>
+                      </>
+                    )}
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">

@@ -47,6 +47,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   // M8 Privacy Notices
   { id: 'M8.A.1', module: 'Privacy Notice Management', section: 'Notice', number: '1', text: 'Customisable, dynamic notices per product/journey.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M8.A.3', module: 'Privacy Notice Management', section: 'Notice', number: '3', text: 'Translation/transliteration of notices into all 22 Indian languages (live Gemini via lib/ai/gateway.ts, DPO approval before publish).', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P5' },
+  { id: 'M8.A.4', module: 'Privacy Notice Management', section: 'Notice', number: '4', text: "Banking options (logos & themes) aligned to the Bank's design language — KSCB-aligned deep teal palette, K-in-circle brand mark, Malayalam-first locale default.", status: 'RA', demoPath: '/', evidencePath: '/', phase: 'P5' },
   { id: 'M8.B.1', module: 'Privacy Notice Management', section: 'Version control', number: '1', text: 'Maintain version control for all notices.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P1' },
 
   // M9 Breach
@@ -82,6 +83,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'P5.3', module: 'POC Foundation', section: 'Research', number: '5.4', text: 'Searchable research repository: DPDP Act, DPDP Rules, IT Act, SPDI Rules, GDPR.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/DPDP_2023', phase: 'P5' },
   { id: 'P5.4', module: 'POC Foundation', section: 'i18n', number: '5.5', text: 'Top-bar language switcher across all 22 Schedule-8 locales.', status: 'RA', demoPath: '/', evidencePath: '/rfp-matrix', phase: 'P5' },
   { id: 'P5.5', module: 'Data Breach Management', section: 'Reporting', number: '5.6', text: 'DPB notification rendered as real PDF (DPDP Rules 2025 placeholder) — KSCB letterhead, severity badge, timeline, signature block. PDF generation server-side via @react-pdf/renderer.', status: 'RA', demoPath: '/admin/breach', evidencePath: '/admin/audit', phase: 'P5' },
+  { id: 'P5.6', module: 'POC Foundation', section: 'Design', number: '5.7', text: 'Design language + accessibility (UX for rural / low-literacy users) — KSCB brand theme, Malayalam-first default, Web Speech read-aloud on notices, large tap targets in customer portal, skip-to-content links, lang attribute on translated bodies, lucide consent-state icons.', status: 'RA', demoPath: '/', evidencePath: '/me/notices', phase: 'P5' },
 ];
 
 export function summariseStatus() {

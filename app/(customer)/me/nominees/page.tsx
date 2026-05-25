@@ -118,47 +118,49 @@ export default async function MyNomineesPage() {
         <CardContent>
           <form action={addNomineeAction} className="grid gap-3 md:grid-cols-2">
             <div className="space-y-1">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" placeholder="e.g. Asha Verghese" required />
+              <Label htmlFor="name" className="text-base">Name</Label>
+              <Input id="name" name="name" placeholder="e.g. Asha Verghese" required className="h-11 text-base" />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-base">Email</Label>
               <Input
                 id="email"
                 name="email"
                 type="email"
                 placeholder="e.g. asha@example.com"
                 required
+                className="h-11 text-base"
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="relation">Relation</Label>
+              <Label htmlFor="relation" className="text-base">Relation</Label>
               <Input
                 id="relation"
                 name="relation"
                 placeholder="spouse / child / sibling / parent"
                 required
+                className="h-11 text-base"
               />
             </div>
             <div className="space-y-1">
-              <Label>Permissions</Label>
+              <Label className="text-base">Permissions</Label>
               <div className="flex flex-wrap gap-3 pt-1">
-                <label className="flex items-center gap-1 text-xs">
-                  <input type="checkbox" name="permissions" value="view" defaultChecked />
+                <label className="flex items-center gap-1.5 text-sm">
+                  <input type="checkbox" name="permissions" value="view" defaultChecked className="h-4 w-4" />
                   view
                 </label>
-                <label className="flex items-center gap-1 text-xs">
-                  <input type="checkbox" name="permissions" value="withdraw" />
+                <label className="flex items-center gap-1.5 text-sm">
+                  <input type="checkbox" name="permissions" value="withdraw" className="h-4 w-4" />
                   withdraw
                 </label>
-                <label className="flex items-center gap-1 text-xs">
-                  <input type="checkbox" name="permissions" value="erase" />
+                <label className="flex items-center gap-1.5 text-sm">
+                  <input type="checkbox" name="permissions" value="erase" className="h-4 w-4" />
                   erase
                 </label>
               </div>
             </div>
             <div className="md:col-span-2">
-              <Button type="submit">Add nominee</Button>
+              <Button type="submit" size="lg" className="h-11">Add nominee</Button>
             </div>
           </form>
           <p className="mt-3 text-[10px] text-muted-foreground">

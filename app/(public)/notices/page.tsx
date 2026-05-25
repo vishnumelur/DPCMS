@@ -1,5 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { ReadAloudButton } from '@/components/notice/read-aloud-button';
+
+const SAMPLE_NOTICE_SPOKEN = `Kerala State Cooperative Bank — Privacy Notice. Effective date 25 May 2026. We collect personal data, financial data, and KYC artefacts under the Banking Regulation Act and process them per the DPDP Act 2023. You have rights to access, correction, erasure, consent withdrawal, grievance, and nomination. Contact our Data Protection Officer at dpo at kscb dot in.`;
 
 export default function PublicNoticesPage() {
   return (
@@ -7,7 +10,10 @@ export default function PublicNoticesPage() {
       <header className="space-y-2">
         <div className="flex items-center justify-between gap-4">
           <h1 className="text-2xl font-semibold tracking-tight">Privacy notices</h1>
-          <Badge variant="outline">Sample · v0</Badge>
+          <div className="flex items-center gap-3">
+            <ReadAloudButton text={SAMPLE_NOTICE_SPOKEN} locale="en" />
+            <Badge variant="outline">Sample · v0</Badge>
+          </div>
         </div>
         <p className="text-sm text-muted-foreground">
           Sample notice rendered to demonstrate the public surface. The real notice authoring +

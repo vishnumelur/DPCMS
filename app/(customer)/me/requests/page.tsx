@@ -139,11 +139,11 @@ export default async function MyRequestsPage() {
         <CardContent>
           <form action={createDsrAction} className="grid gap-3 md:grid-cols-2">
             <div className="space-y-1">
-              <Label htmlFor="kind">Right you are exercising</Label>
+              <Label htmlFor="kind" className="text-base">Right you are exercising</Label>
               <select
                 id="kind"
                 name="kind"
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
+                className="flex h-11 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm"
                 defaultValue="access"
               >
                 {DSR_KINDS.map((k) => (
@@ -154,27 +154,28 @@ export default async function MyRequestsPage() {
               </select>
             </div>
             <div className="space-y-1">
-              <Label htmlFor="subject">Subject (short)</Label>
+              <Label htmlFor="subject" className="text-base">Subject (short)</Label>
               <Input
                 id="subject"
                 name="subject"
                 required
                 placeholder="Please send me a copy of my data"
+                className="h-11 text-base"
               />
             </div>
             <div className="space-y-1 md:col-span-2">
-              <Label htmlFor="details">Details</Label>
+              <Label htmlFor="details" className="text-base">Details</Label>
               <textarea
                 id="details"
                 name="details"
                 required
                 rows={4}
-                className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm"
+                className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm"
                 placeholder="Describe the request in your own words."
               />
             </div>
             <div className="md:col-span-2">
-              <Button type="submit">Submit request</Button>
+              <Button type="submit" size="lg" className="h-11">Submit request</Button>
             </div>
           </form>
         </CardContent>

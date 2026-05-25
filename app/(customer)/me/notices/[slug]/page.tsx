@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { LOCALES, LOCALE_LABELS, DEFAULT_LOCALE, type Locale } from '@/i18n/routing';
 import { getReviewedTranslation } from '@/modules/consent/notice-translate';
+import { ReadAloudButton } from '@/components/notice/read-aloud-button';
 
 export const dynamic = 'force-dynamic';
 
@@ -76,7 +77,10 @@ export default async function MyNoticeViewPage({
               · {translated ? `Translated → ${LOCALE_LABELS[locale]}` : `English`}
             </p>
           </div>
-          <Badge variant="default">Published</Badge>
+          <div className="flex items-center gap-3">
+            <ReadAloudButton text={`${n.title}. ${renderedBody}`} locale={translated ? locale : 'en'} />
+            <Badge variant="default">Published</Badge>
+          </div>
         </div>
       </header>
 
@@ -95,7 +99,10 @@ export default async function MyNoticeViewPage({
           <CardTitle className="text-base">Notice body</CardTitle>
         </CardHeader>
         <CardContent>
-          <article className="prose prose-sm max-w-none whitespace-pre-wrap">
+          <article
+            lang={translated ? locale : 'en'}
+            className="prose prose-sm max-w-none whitespace-pre-wrap"
+          >
             {renderedBody}
           </article>
         </CardContent>

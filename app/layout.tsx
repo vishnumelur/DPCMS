@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Geist } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
@@ -8,8 +8,16 @@ import { cn } from '@/lib/utils';
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'DPCMS — Data Privacy & Consent Management System',
-  description: 'DPDP Act 2023 compliance platform for Kerala State Cooperative Bank',
+  title: 'DPCMS — Kerala State Cooperative Bank',
+  description: 'Data Privacy & Consent Management System aligned to DPDP Act 2023',
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+  },
+};
+
+// Next 16: themeColor must live on `viewport`, not `metadata`.
+export const viewport: Viewport = {
+  themeColor: '#1d6470',
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
