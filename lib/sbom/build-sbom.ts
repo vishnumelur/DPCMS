@@ -1,6 +1,3 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
-
 type PkgEntry = {
   name: string;
   version: string;
@@ -12,6 +9,13 @@ type LockEntry = { version?: string; resolved?: string; dev?: boolean };
 
 type LockFile = {
   packages?: Record<string, LockEntry>;
+};
+
+type PackageJson = {
+  name: string;
+  version: string;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
 };
 
 export type SbomEntry = {
@@ -30,23 +34,12 @@ export type SbomBundle = {
   totals: { direct: number; transitive: number; all: number };
 };
 
-async function readJson<T>(filename: string): Promise<T> {
-  const raw = await readFile(
-    path.join(/*turbopackIgnore: true*/ process.cwd(), filename),
-    'utf8',
-  );
-  return JSON.parse(raw) as T;
-}
-
-export async function buildSbom(): Promise<SbomBundle> {
-  const pkg = await readJson<{
-    name: string;
-    version: string;
-    dependencies?: Record<string, string>;
-    devDependencies?: Record<string, string>;
-  }>('package.json');
-  const lock = await readJson<LockFile>('package-lock.json');
-
+/**
+ * Pure: builds the SBOM bundle from already-loaded package.json + package-lock.json.
+ * Callers do the static import (Next.js bundles JSON imported by literal path —
+ * no fs reads needed, works in Vercel serverless without outputFileTracingIncludes).
+ */
+export function buildSbom(pkg: PackageJson, lock: LockFile): SbomBundle {
   const directDeps = Object.keys(pkg.dependencies ?? {});
   const directDev = Object.keys(pkg.devDependencies ?? {});
   const directSet = new Set<string>([...directDeps, ...directDev]);
@@ -58,10 +51,9 @@ export async function buildSbom(): Promise<SbomBundle> {
     if (lockPath === '') continue; // root
     if (!lockPath.startsWith('node_modules/')) continue;
     const rest = lockPath.slice('node_modules/'.length);
-    // Skip nested transitive entries (path contains another node_modules/).
     if (rest.includes('node_modules/')) continue;
     const name = rest;
-    if (!directSet.has(name)) continue; // restrict to direct deps for the table
+    if (!directSet.has(name)) continue;
     const scope: 'prod' | 'dev' = entry.dev || directDev.includes(name) ? 'dev' : 'prod';
     entries.push({
       name,
@@ -71,7 +63,6 @@ export async function buildSbom(): Promise<SbomBundle> {
     });
   }
 
-  // Sort prod first, then alphabetic by name.
   entries.sort((a, b) => {
     if (a.scope !== b.scope) return a.scope === 'prod' ? -1 : 1;
     return a.name.localeCompare(b.name);
@@ -114,11 +105,7 @@ export function toCycloneDx(bundle: SbomBundle): object {
     metadata: {
       timestamp: bundle.generatedAt,
       tools: [
-        {
-          vendor: 'dpcms',
-          name: 'dpcms-sbom',
-          version: bundle.toolVersion,
-        },
+        { vendor: 'dpcms', name: 'dpcms-sbom', version: bundle.toolVersion },
       ],
       component: {
         type: 'application',

@@ -12,6 +12,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { buildSbom } from '@/lib/sbom/build-sbom';
+// Static JSON imports bundle the file into the function payload at build time
+// (works in Vercel serverless without outputFileTracingIncludes).
+import pkg from '../../../../package.json';
+import lock from '../../../../package-lock.json';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +23,7 @@ export default async function AdminSbomPage() {
   const session = await auth();
   if (!session?.user?.email) return <p className="text-sm">Sign in.</p>;
 
-  const bundle = await buildSbom();
+  const bundle = buildSbom(pkg, lock);
 
   return (
     <div className="space-y-6">

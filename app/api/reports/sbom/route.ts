@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { buildSbom, toCycloneDx } from '@/lib/sbom/build-sbom';
+import pkg from '../../../../package.json';
+import lock from '../../../../package-lock.json';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,7 +11,7 @@ export async function GET() {
   if (!session?.user?.email) {
     return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
   }
-  const bundle = await buildSbom();
+  const bundle = buildSbom(pkg, lock);
   const cyclonedx = toCycloneDx(bundle);
   const filename = `dpcms-sbom-${bundle.generatedAt.slice(0, 10)}.cdx.json`;
   return new NextResponse(JSON.stringify(cyclonedx, null, 2), {
