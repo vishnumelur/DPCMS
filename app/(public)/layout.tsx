@@ -1,3 +1,5 @@
+import { PublicShell } from '@/components/app-shell/public-shell';
+
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
-  return <main style={{ padding: 24 }}>{children}</main>;
+  return <PublicShell>{children}</PublicShell>;
 }

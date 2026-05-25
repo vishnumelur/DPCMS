@@ -12,3 +12,7 @@ coverage
 playwright-report
 test-results
 db/migrations/meta/_journal.json.bak
+
+# MCP playwright session cache + one-off live screenshots
+.playwright-mcp/
+live-*.png

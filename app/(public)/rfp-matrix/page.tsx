@@ -21,7 +21,7 @@ export default function RfpMatrixPage() {
   }, {});
 
   return (
-    <div className="mx-auto max-w-6xl py-10 space-y-8 px-4">
+    <div className="space-y-8 py-6">
       <header className="space-y-2">
         <h1 className="text-3xl font-bold">RFP Compliance Matrix</h1>
         <p className="text-muted-foreground">
