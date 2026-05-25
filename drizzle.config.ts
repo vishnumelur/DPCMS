@@ -1,5 +1,6 @@
-// dotenv-flow loads .env, .env.local, .env.development, etc — matches Next.js precedence
-// so the CLI tools (drizzle-kit, seeds, manual SQL) see the same vars the dev server sees.
+// `dotenv-flow/config` is a side-effect import: loading it populates process.env
+// BEFORE any other module evaluates (including lib/env.ts). The /config subpath
+// has no upstream types, so types/dotenv-flow-config.d.ts declares it locally.
 import 'dotenv-flow/config';
 import { defineConfig } from 'drizzle-kit';
 

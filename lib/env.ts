@@ -16,10 +16,10 @@ const EnvSchema = z.object({
   AUTH_SECRET: z.string().min(32),
   AUTH_URL: z.preprocess(emptyToUndefined, z.string().url().optional()),
 
-  // Email — EMAIL_FROM accepts both a bare address and the RFC 5322
-  // "Display Name <addr@host>" form that Resend uses.
-  RESEND_API_KEY: z.string().startsWith('re_'),
-  EMAIL_FROM: z.string().min(3),
+  // Email — entirely optional. If RESEND_API_KEY is set, the magic-link provider is
+  // wired up. Otherwise sign-in falls back to username/password (Credentials).
+  RESEND_API_KEY: z.preprocess(emptyToUndefined, z.string().startsWith('re_').optional()),
+  EMAIL_FROM: z.preprocess(emptyToUndefined, z.string().min(3).optional()),
 
   // AI
   AI_GATEWAY_API_KEY: z.preprocess(emptyToUndefined, z.string().min(1).optional()),
