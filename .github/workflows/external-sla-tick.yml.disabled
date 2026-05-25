@@ -1,0 +1,19 @@
+# Disabled by default. Rename to `external-sla-tick.yml` if you need sub-daily SLA
+# notifications (Vercel Hobby cron is once-per-day). Hits the daily-tick endpoint
+# every 15 minutes from a GitHub-hosted runner — totally free for public repos.
+name: External SLA Tick
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit daily-tick endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          BASE_URL: ${{ secrets.PROD_BASE_URL }}
+        run: |
+          curl -fsS -H "Authorization: Bearer $CRON_SECRET" "$BASE_URL/api/cron/daily-tick"

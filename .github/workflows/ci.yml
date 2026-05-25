@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+        env:
+          DATABASE_URL: postgres://stub:stub@localhost:5432/stub
+          AUTH_SECRET: ci-secret-32-bytes-padding-padding-padding
+          RESEND_API_KEY: re_ci_placeholder
+          EMAIL_FROM: ci@example.com
+          CRON_SECRET: ci-cron-secret-padding-padding
