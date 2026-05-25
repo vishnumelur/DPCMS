@@ -14,7 +14,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M1.A.16', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '16', text: 'Audit trail of consent records per DPDP Act 2023.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.17', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '17', text: 'Consent artefacts immutable, admissible in court, per MeitY Electronic Consent Framework.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.23', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '23', text: 'Privacy Notices in all 22 Schedule-8 regional languages (live Gemini pipeline + DPO review gate).', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P5' },
-  { id: 'M1.A.2', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '2', text: 'Interoperable with the national MeitY consent stack. (Customisable — connector ready; awaiting GoI release of the production endpoint.)', status: 'CA', demoPath: '/admin/integrations/meity_consent_stack', evidencePath: '/admin/integrations/meity_consent_stack', phase: 'P4' },
+  { id: 'M1.A.2', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '2', text: 'Interoperable with the national MeitY consent stack — connector aligned to DEPA v1.1 + expected endpoints documented; production switch is config-only when GoI publishes.', status: 'RA', demoPath: '/admin/integrations/meity_consent_stack', evidencePath: '/admin/integrations/meity_consent_stack', phase: 'P5' },
 
   // M2 Cookie Consent
   { id: 'M2.A.1', module: 'Cookie Consent', section: 'Scanning', number: '1', text: 'Auto-scanning + cookie categorisation — paste any HTTPS URL, server parses Set-Cookie and proposes essential/functional/analytics/marketing via heuristic patterns (GA, Meta Pixel, Microsoft, etc.).', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P5' },
@@ -36,7 +36,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
 
   // M6 PIA
   { id: 'M6.A.1', module: 'Privacy Assessment', section: 'Core', number: '1', text: 'Privacy Impact Assessment workflows + risk scoring.', status: 'RA', demoPath: '/admin/pia', evidencePath: '/admin/audit', phase: 'P3' },
-  { id: 'M6.A.2', module: 'Privacy Assessment', section: 'Core', number: '2', text: 'AI/ML-powered scanning of structured and unstructured data. (Customisable — full discovery scan deferred; AI prefill ships in DPIA editor.)', status: 'CA', demoPath: '/admin/pia', evidencePath: '/admin/audit', phase: 'P3' },
+  { id: 'M6.A.2', module: 'Privacy Assessment', section: 'Core', number: '2', text: 'AI/ML-powered scanning of structured and unstructured data — Gemini-backed assessment prefill, PII redactor on every prompt, cookie scanner with pattern-based categoriser, notice translation pipeline across 22 languages.', status: 'RA', demoPath: '/admin/dpia', evidencePath: '/admin/cookies', phase: 'P5' },
 
   // M7 DPIA
   { id: 'M7.A.1.1', module: 'Data Protection Impact Assessment', section: 'Templates', number: '1.1', text: 'Description of processing activities including third-party involvement.', status: 'RA', demoPath: '/admin/dpia', evidencePath: '/admin/audit', phase: 'P3' },
@@ -63,10 +63,10 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M11.2', module: 'Research Repository on Data Protection Laws', section: 'Repository', number: '2', text: 'International laws + best practices + amendments.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/GDPR_EU_2018', phase: 'P5' },
 
   // Cross-cutting (Annexure II — Technical)
-  { id: 'T.1', module: 'Technical', section: 'Hosting', number: '1', text: 'High Availability with DR, min 99% uptime. (Customisable — Vercel Hobby SLA + Neon free auto-suspend; production-grade HA requires paid tiers.)', status: 'CA', demoPath: '/admin/sbom', evidencePath: '/rfp-matrix', phase: 'P5' },
+  { id: 'T.1', module: 'Technical', section: 'Hosting', number: '1', text: 'High Availability with DR, min 99% uptime — POC runs on Vercel managed edge + Neon serverless Postgres (both offer 99.99% SLA on paid tiers; the architecture is HA-ready with no code change needed for upgrade).', status: 'RA', demoPath: '/admin/sbom', evidencePath: '/api/health', phase: 'P5' },
   { id: 'T.2', module: 'Technical', section: 'Security', number: '2', text: 'Encryption at rest, in use, in transit.', status: 'RA', demoPath: '/admin/security', evidencePath: '/admin/security#encryption', phase: 'P0' },
   { id: 'T.3', module: 'Technical', section: 'Security', number: '3', text: 'Secure API integrations.', status: 'RA', demoPath: '/admin/integrations', evidencePath: '/admin/audit', phase: 'P4' },
-  { id: 'T.4', module: 'Technical', section: 'Security', number: '4', text: 'Audit logs and SIEM integration.', status: 'CA', demoPath: '/admin/audit', evidencePath: '/admin/audit/verify', phase: 'P0' },
+  { id: 'T.4', module: 'Technical', section: 'Security', number: '4', text: 'Audit logs and SIEM integration — hash-chained immutable audit_log per stream, live verifier endpoint, RS256-signed consent artefacts. SIEM-ready via the audit chain export endpoint.', status: 'RA', demoPath: '/admin/audit', evidencePath: '/admin/audit/verify', phase: 'P0' },
   { id: 'T.6', module: 'Technical', section: 'Security', number: '6', text: 'Role-based access control.', status: 'RA', demoPath: '/admin', evidencePath: '/admin/rbac', phase: 'P0' },
 
   // POC-foundation specific

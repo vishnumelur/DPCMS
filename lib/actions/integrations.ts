@@ -230,6 +230,51 @@ export async function replayEventAction(formData: FormData) {
   revalidatePath(`/admin/integrations/${connectorRow.code}` as any);
 }
 
+/**
+ * MeitY-specific helper: writes an audit row recording that an operator has
+ * marked the connector as "ready when GoI publishes the production endpoint".
+ * Also ensures the connector row is enabled. Behaves as a no-op if the
+ * connector was already marked.
+ */
+export async function markMeityReadyAction(formData: FormData) {
+  const connectorId = String(formData.get('connectorId') ?? '').trim();
+  if (!connectorId) throw new Error('connectorId_required');
+
+  const actor = await getActor();
+  requireOperator(actor);
+
+  const row = await loadConnectorRowById(actor.orgId, connectorId);
+  if (!row) throw new Error('connector_not_found');
+  if (row.code !== 'meity_consent_stack') throw new Error('only_for_meity_connector');
+
+  await db
+    .update(connectorTable)
+    .set({ enabled: true, updatedAt: new Date() })
+    .where(eq(connectorTable.id, connectorId));
+
+  await appendAudit(
+    {
+      orgId: actor.orgId,
+      actorUserId: actor.actorUserId,
+      actorLabel: actor.actorLabel,
+    },
+    {
+      stream: 'connector',
+      action: 'connector.meity_marked_ready',
+      target: connectorId,
+      payload: {
+        code: row.code,
+        note: 'Operator confirmed connector is ready; awaiting GoI production endpoint.',
+        confirmedAt: new Date().toISOString(),
+      },
+    },
+  );
+
+  revalidatePath('/admin/integrations');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  revalidatePath(`/admin/integrations/${row.code}` as any);
+}
+
 export async function validateConsentAction(formData: FormData) {
   const connectorId = String(formData.get('connectorId') ?? '').trim();
   const purposeCode = String(formData.get('purposeCode') ?? '').trim();

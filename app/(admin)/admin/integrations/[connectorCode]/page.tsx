@@ -29,6 +29,7 @@ import {
   setConnectorModeAction,
   replayEventAction,
   validateConsentAction,
+  markMeityReadyAction,
 } from '@/lib/actions/integrations';
 import { CONNECTOR_FACTORIES } from '@/modules/integrations/registry';
 
@@ -197,6 +198,68 @@ export default async function AdminIntegrationDetailPage({ params }: PageProps) 
           </CardContent>
         </Card>
       </div>
+
+      {c.code === 'meity_consent_stack' && (
+        <Card className="border-amber-500/40 bg-amber-500/5">
+          <CardHeader>
+            <CardTitle className="text-base">
+              MeitY National Consent Stack — ready when GoI publishes
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm">
+            <p className="text-muted-foreground">
+              The Government of India has published the Business Requirements Document for a
+              national consent stack under the Digital Personal Data Protection Act 2023. The
+              production endpoint is not yet live. This connector is wired and aligned to the
+              expected DEPA v1.1 artefact contract so production switchover is config-only — no
+              code change required when the endpoint becomes available.
+            </p>
+
+            <div className="grid gap-3 md:grid-cols-2">
+              <div className="rounded border bg-background p-3">
+                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  Expected endpoints (pending GoI publication)
+                </p>
+                <ul className="mt-2 space-y-1 font-mono text-[11px]">
+                  <li><span className="text-muted-foreground">POST</span> /consent/notice/publish</li>
+                  <li><span className="text-muted-foreground">POST</span> /consent/request</li>
+                  <li><span className="text-muted-foreground">GET</span>  /consent/{'{consentId}'}</li>
+                  <li><span className="text-muted-foreground">POST</span> /consent/{'{consentId}'}/revoke</li>
+                  <li><span className="text-muted-foreground">POST</span> /consent/handle/resolve</li>
+                  <li><span className="text-muted-foreground">GET</span>  /artefact/{'{consentId}'}/signed</li>
+                </ul>
+              </div>
+              <div className="rounded border bg-background p-3">
+                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  DPCMS alignment (DEPA v1.1)
+                </p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs">
+                  <li>Consent artefact: <code>ver: &quot;1.0&quot;</code>, RS256-signed JWS</li>
+                  <li>
+                    Principal identifier: <code>id_hash</code> (SHA-256 of UCIC + org salt) — no raw UCIC over the wire
+                  </li>
+                  <li>Data fiduciary: KSCB org slug + signing kid</li>
+                  <li>Purpose + lawful basis embedded per DPDP §6/§7</li>
+                  <li>Audit chain hash threaded through every state change</li>
+                  <li>Notice translations in all 22 Schedule-8 languages already published</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-xs text-muted-foreground">
+              When GoI publishes the endpoint, an it_admin will update the
+              <code className="mx-1 rounded bg-muted px-1">baseUrl</code> + credentials, switch the
+              connector to <code>sandbox</code>, validate, then promote to <code>live</code> — all
+              from <code>/admin/integrations/meity_consent_stack</code>, no deploy needed.
+            </p>
+
+            <form action={markMeityReadyAction}>
+              <input type="hidden" name="connectorId" value={c.id} />
+              <Button type="submit">Mark ready (audit-stamp the readiness)</Button>
+            </form>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>
