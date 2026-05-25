@@ -1,0 +1,5 @@
+{
+  "app": { "name": "DPCMS", "tagline": "Data Privacy & Consent Management System" },
+  "nav": { "signIn": "Sign in", "rfpMatrix": "RFP Compliance Matrix" },
+  "matrix": { "title": "RFP Compliance Matrix", "subtitle": "Live mapping of KSCB RFP requirements to demo screens" }
+}
