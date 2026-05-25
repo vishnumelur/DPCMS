@@ -79,11 +79,11 @@ test('dpcmsadmin signs in, lands on compliance dashboard, and can traverse the s
   await expect(page.getByText(/^dpo$/)).toBeVisible();
   await page.screenshot({ path: 'test-results/screenshots/06-admin-rbac.png', fullPage: true });
 
-  // Navigate to a module placeholder (M1)
+  // Navigate to the live M1 Consent management module
   await page.getByRole('link', { name: /M1 · Consent management/ }).click();
-  await expect(page.getByRole('heading', { name: /M1 · Universal Consent Management/i })).toBeVisible();
-  await expect(page.getByText(/RFP requirements covered/i)).toBeVisible();
-  await page.screenshot({ path: 'test-results/screenshots/07-admin-m1-stub.png', fullPage: true });
+  await expect(page.getByRole('heading', { name: /M1 · Consent management/i })).toBeVisible();
+  await expect(page.getByText(/Purposes \(/)).toBeVisible();
+  await page.screenshot({ path: 'test-results/screenshots/07-admin-m1-live.png', fullPage: true });
 
   // Cross-portal: switch to /me
   await page.getByRole('link', { name: 'My Portal' }).click();
@@ -99,4 +99,56 @@ test('landing screenshot for evidence', async ({ page }) => {
 test('rfp matrix screenshot for evidence', async ({ page }) => {
   await page.goto('/rfp-matrix');
   await page.screenshot({ path: 'test-results/screenshots/10-rfp-matrix.png', fullPage: true });
+});
+
+test('admin can navigate to consent management and see purposes', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/admin/consents');
+  await expect(page.getByRole('heading', { name: /M1 · Consent management/i })).toBeVisible();
+  // Five seeded purposes should appear by code (font-mono code cells).
+  for (const code of ['ACCOUNT_OPENING', 'KYC', 'TRANSACTIONS', 'MARKETING_EMAIL', 'ANALYTICS_COOKIES']) {
+    await expect(page.getByText(code).first()).toBeVisible();
+  }
+  await page.screenshot({ path: 'test-results/screenshots/11-admin-consents-live.png', fullPage: true });
+});
+
+test('customer can grant and withdraw consent', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/me/consents');
+  await expect(page.getByRole('heading', { name: /My consents/i })).toBeVisible();
+
+  // MARKETING_EMAIL is the safest purpose to toggle (pure consent basis, no
+  // legal_obligation downstream). Find its card and click Grant or Withdraw.
+  const card = page
+    .locator('div')
+    .filter({ has: page.getByText('MARKETING_EMAIL') })
+    .first();
+
+  // If we previously granted (e.g. flaky test reuse), toggle off first.
+  if (await card.getByRole('button', { name: /Withdraw/i }).isVisible().catch(() => false)) {
+    await card.getByRole('button', { name: /Withdraw/i }).click();
+    await page.waitForLoadState('networkidle');
+  }
+
+  await page.getByRole('button', { name: /^Grant$/i }).first().click();
+  await page.waitForLoadState('networkidle');
+  await expect(page.getByText('Active').first()).toBeVisible();
+  await page.screenshot({ path: 'test-results/screenshots/12-customer-consent-active.png', fullPage: true });
+
+  await page.getByRole('button', { name: /^Withdraw$/i }).first().click();
+  await page.waitForLoadState('networkidle');
+  await expect(page.getByText('Withdrawn').first()).toBeVisible();
+  await page.screenshot({ path: 'test-results/screenshots/13-customer-consent-withdrawn.png', fullPage: true });
 });

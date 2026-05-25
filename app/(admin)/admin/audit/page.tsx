@@ -1,6 +1,6 @@
 import { db } from '@/db/client';
 import { auditLog, auditChainHead, org } from '@/db/schema';
-import { desc, eq } from 'drizzle-orm';
+import { desc } from 'drizzle-orm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { verifyStream } from '@/lib/audit/verifier';

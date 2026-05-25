@@ -70,7 +70,7 @@ export default async function AdminHome() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">What's live in P0</CardTitle>
+            <CardTitle className="text-base">What&apos;s live in P0</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 text-sm">
@@ -78,7 +78,7 @@ export default async function AdminHome() {
               <li>✔ RBAC roles + permissions — <Link href="/admin/rbac" className="underline">viewer</Link></li>
               <li>✔ Tenancy + branches — <Link href="/admin/settings" className="underline">settings</Link></li>
               <li>✔ Credentials auth + JWT sessions</li>
-              <li>✔ Generic workflow engine (TDD'd, awaiting flow definitions in P2)</li>
+              <li>✔ Generic workflow engine (TDD&apos;d, awaiting flow definitions in P2)</li>
               <li>✔ AI gateway wrapper + PII redactor (gated by AI_GATEWAY_API_KEY)</li>
               <li>✔ next-intl with 22 locale skeleton (en · ml · hi authored)</li>
             </ul>

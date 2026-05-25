@@ -5,8 +5,8 @@ export const CUSTOMER_SIDEBAR: SidebarSection[] = [
     title: 'My account',
     items: [
       { label: 'Dashboard', href: '/me', phase: 'P0', live: true },
-      { label: 'My consents', href: '/me/consents', phase: 'P1' },
-      { label: 'Privacy notices', href: '/me/notices', phase: 'P1' },
+      { label: 'My consents', href: '/me/consents', live: true },
+      { label: 'Privacy notices', href: '/me/notices', live: true },
       { label: 'My data', href: '/me/data', phase: 'P3' },
     ],
   },
@@ -33,9 +33,9 @@ export const ADMIN_SIDEBAR: SidebarSection[] = [
   {
     title: 'Consent & notices',
     items: [
-      { label: 'M1 · Consent management', href: '/admin/consents', phase: 'P1' },
-      { label: 'M2 · Cookie consent', href: '/admin/cookies', phase: 'P1' },
-      { label: 'M8 · Privacy notices', href: '/admin/notices', phase: 'P1' },
+      { label: 'M1 · Consent management', href: '/admin/consents', live: true },
+      { label: 'M2 · Cookie consent', href: '/admin/cookies', live: true },
+      { label: 'M8 · Privacy notices', href: '/admin/notices', live: true },
     ],
   },
   {
