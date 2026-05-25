@@ -35,6 +35,80 @@ Digital Personal Data Protection Act, 2023.
 - Vercel AI Gateway (free tier, Gemini 2.5 Flash via `google/gemini-2.5-flash`) via AI SDK v6
 - Vitest + Playwright
 
+## Architecture
+
+```mermaid
+flowchart TB
+  subgraph Browser
+    Public[Public surface<br/>/ /signin /rfp-matrix /notices]
+    Customer[Customer portal<br/>/me/*]
+    Admin[Compliance portal<br/>/admin/*]
+  end
+
+  subgraph "Next.js 16 App Router"
+    PS[Public Shell]
+    AS[Auth Shell + Sidebar]
+    PX[proxy.ts auth gate]
+  end
+
+  subgraph "Server Actions + API"
+    Mods[/11 modules<br/>consent · cookies · notices · dsr · breach · ropa · pia · dpia · integrations · reporting · research/]
+    Aud[lib/audit<br/>SHA-256 hash chain]
+    Workflow[lib/workflow<br/>state machine]
+    AI[lib/ai/gateway<br/>+ PII redactor]
+    JWS[lib/consent-artefact<br/>JWS RS256]
+  end
+
+  subgraph "Data layer"
+    Drizzle[(Drizzle ORM)]
+    Neon[(Neon Postgres<br/>aws-ap-south-1)]
+  end
+
+  subgraph "External (mocks + real)"
+    Finacle[Finacle CBS mock]
+    NPCI[NPCI mock]
+    Aadhaar[Aadhaar e-KYC mock]
+    DigiLocker[DigiLocker — real sandbox ready]
+    AA[Account Aggregator — real sandbox ready]
+    MeitY[MeitY Consent Stack — ready when GoI publishes]
+    Gemini[Gemini 2.5 Flash<br/>via Vercel AI Gateway]
+    Resend[Resend email<br/>optional/conditional]
+  end
+
+  Public --> PS
+  Customer --> AS
+  Admin --> AS
+  PS --> PX
+  AS --> PX
+  PX --> Mods
+  Mods --> Aud
+  Mods --> Workflow
+  Mods --> AI
+  Mods --> JWS
+  Mods --> Drizzle
+  Drizzle --> Neon
+  Mods -.-> Finacle
+  Mods -.-> NPCI
+  Mods -.-> Aadhaar
+  Mods -.-> DigiLocker
+  Mods -.-> AA
+  Mods -.-> MeitY
+  AI --> Gemini
+  Mods -.-> Resend
+```
+
+### Module map
+
+| Layer | Lives in |
+|---|---|
+| Public + portals | `app/(public)`, `app/(customer)`, `app/(admin)` |
+| Module logic | `modules/{consent,ropa,assessment,rights,breach,integrations}/*` |
+| Server actions | `lib/actions/*` |
+| Shared libs | `lib/{audit,workflow,ai,consent-artefact,sbom,reporting}/*` |
+| DB schemas | `db/schema/*` (11 files, one per concern) |
+| Seeds | `db/seed/*` |
+| Connectors | `modules/integrations/connectors/*` (Finacle, NPCI, Aadhaar, DigiLocker, AA, MeitY) |
+
 ## Free-tier signups required (one-time)
 
 | Service | URL | Env var |
