@@ -245,6 +245,52 @@ test('admin can open seeded DPIA, see questions, and trigger AI prefill (offline
   });
 });
 
+test('admin can see connectors panel with 6 connectors', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/admin/integrations');
+  await expect(page.getByRole('heading', { name: /M4 · Integrations/i })).toBeVisible();
+
+  for (const code of ['finacle', 'npci', 'aadhaar', 'digilocker', 'aa', 'meity_consent_stack']) {
+    await expect(page.getByText(code, { exact: false }).first()).toBeVisible();
+  }
+  await page.screenshot({
+    path: 'test-results/screenshots/18-admin-integrations-list.png',
+    fullPage: true,
+  });
+});
+
+test('admin can trigger a sample event and see it in the recent log', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/admin/integrations');
+  await expect(page.getByRole('heading', { name: /M4 · Integrations/i })).toBeVisible();
+
+  await page.locator('select#connectorCode').selectOption('finacle');
+  await page.locator('select#eventKind').selectOption('customer.profile.fetched');
+  await page.locator('textarea#payload').fill('{}');
+  await page.getByRole('button', { name: /^Trigger event$/i }).click();
+
+  // We land on the detail page for finacle after the action redirects.
+  await page.waitForURL(/\/admin\/integrations\/finacle/, { timeout: 10_000 });
+  await expect(page.getByRole('heading', { name: /Infosys Finacle/i })).toBeVisible();
+  await expect(page.getByText('customer.profile.fetched').first()).toBeVisible();
+  await page.screenshot({
+    path: 'test-results/screenshots/19-admin-integrations-event.png',
+    fullPage: true,
+  });
+});
+
 test('customer can grant and withdraw consent', async ({ page }) => {
   await page.goto('/signin');
   await page.getByLabel('Username').fill('dpcmsadmin');

@@ -56,7 +56,7 @@ export const ADMIN_SIDEBAR: SidebarSection[] = [
   {
     title: 'Integrations',
     items: [
-      { label: 'M4 · Connectors', href: '/admin/integrations', phase: 'P4' },
+      { label: 'M4 · Connectors', href: '/admin/integrations', live: true },
     ],
   },
   {

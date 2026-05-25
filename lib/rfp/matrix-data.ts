@@ -14,6 +14,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M1.A.16', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '16', text: 'Audit trail of consent records per DPDP Act 2023.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.17', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '17', text: 'Consent artefacts immutable, admissible in court, per MeitY Electronic Consent Framework.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.23', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '23', text: 'Privacy Notices in all 22 Schedule-8 regional languages. (Customisable — AI translation gateway deferred.)', status: 'CA', demoPath: '/admin/notices', evidencePath: '/rfp-matrix', phase: 'P1' },
+  { id: 'M1.A.2', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '2', text: 'Interoperable with the national MeitY consent stack. (Customisable — connector ready; awaiting GoI release of the production endpoint.)', status: 'CA', demoPath: '/admin/integrations/meity_consent_stack', evidencePath: '/admin/integrations/meity_consent_stack', phase: 'P4' },
 
   // M2 Cookie Consent
   { id: 'M2.A.1', module: 'Cookie Consent', section: 'Scanning', number: '1', text: 'Auto-scanning of sub-folders/sub-domains and cookie categorisation. (Customisable — crawler deferred.)', status: 'CA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
@@ -24,8 +25,8 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M3.1.1', module: 'Data Mapping Automation', section: 'Core', number: '1', text: 'Automated mapping of data processing activities to purpose, legal basis, retention.', status: 'RA', demoPath: '/admin/data-mapping', evidencePath: '/admin/audit', phase: 'P3' },
 
   // M4 Integrations
-  { id: 'M4.1', module: 'Integrations', section: 'Structured Data', number: '1', text: 'Metadata interoperability via standard APIs/connectors.', status: 'NA', phase: 'P4' },
-  { id: 'M4.2', module: 'Integrations', section: 'Structured Data', number: '2', text: 'Governance alignment with existing data lineage, classifications, business glossaries.', status: 'NA', phase: 'P4' },
+  { id: 'M4.1', module: 'Integrations', section: 'Structured Data', number: '1', text: 'Metadata interoperability via standard APIs/connectors.', status: 'RA', demoPath: '/admin/integrations', evidencePath: '/admin/audit', phase: 'P4' },
+  { id: 'M4.2', module: 'Integrations', section: 'Structured Data', number: '2', text: 'Governance alignment with existing data lineage, classifications, business glossaries.', status: 'RA', demoPath: '/admin/integrations', evidencePath: '/admin/integrations/finacle', phase: 'P4' },
 
   // M5 DSR
   { id: 'M5.A.1', module: 'Data Principal Rights Management', section: 'Rights Handling', number: '1', text: 'User-friendly portal to view and manage consents.', status: 'RA', demoPath: '/admin/dsr', evidencePath: '/admin/audit', phase: 'P2' },
@@ -64,7 +65,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   // Cross-cutting (Annexure II — Technical)
   { id: 'T.1', module: 'Technical', section: 'Hosting', number: '1', text: 'High Availability with DR, min 99% uptime.', status: 'NA', phase: 'P5' },
   { id: 'T.2', module: 'Technical', section: 'Security', number: '2', text: 'Encryption at rest, in use, in transit.', status: 'RA', demoPath: '/admin/security', evidencePath: '/admin/security#encryption', phase: 'P0' },
-  { id: 'T.3', module: 'Technical', section: 'Security', number: '3', text: 'Secure API integrations.', status: 'NA', phase: 'P4' },
+  { id: 'T.3', module: 'Technical', section: 'Security', number: '3', text: 'Secure API integrations.', status: 'RA', demoPath: '/admin/integrations', evidencePath: '/admin/audit', phase: 'P4' },
   { id: 'T.4', module: 'Technical', section: 'Security', number: '4', text: 'Audit logs and SIEM integration.', status: 'CA', demoPath: '/admin/audit', evidencePath: '/admin/audit/verify', phase: 'P0' },
   { id: 'T.6', module: 'Technical', section: 'Security', number: '6', text: 'Role-based access control.', status: 'RA', demoPath: '/admin', evidencePath: '/admin/rbac', phase: 'P0' },
 
