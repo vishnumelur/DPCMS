@@ -8,6 +8,13 @@
       "when": 1779692573803,
       "tag": "0000_p0_org_branch",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1779692926830,
+      "tag": "0001_p0_auth_rbac_mfa",
+      "breakpoints": true
     }
   ]
 }
