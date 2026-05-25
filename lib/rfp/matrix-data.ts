@@ -81,6 +81,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'P5.2', module: 'POC Foundation', section: 'Reporting', number: '5.3', text: 'KPI dashboards (6 cards + 4 charts) with Board-pack JSON export.', status: 'RA', demoPath: '/admin/reporting', evidencePath: '/api/reports/board-pack', phase: 'P5' },
   { id: 'P5.3', module: 'POC Foundation', section: 'Research', number: '5.4', text: 'Searchable research repository: DPDP Act, DPDP Rules, IT Act, SPDI Rules, GDPR.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/DPDP_2023', phase: 'P5' },
   { id: 'P5.4', module: 'POC Foundation', section: 'i18n', number: '5.5', text: 'Top-bar language switcher across all 22 Schedule-8 locales.', status: 'RA', demoPath: '/', evidencePath: '/rfp-matrix', phase: 'P5' },
+  { id: 'P5.5', module: 'Data Breach Management', section: 'Reporting', number: '5.6', text: 'DPB notification rendered as real PDF (DPDP Rules 2025 placeholder) — KSCB letterhead, severity badge, timeline, signature block. PDF generation server-side via @react-pdf/renderer.', status: 'RA', demoPath: '/admin/breach', evidencePath: '/admin/audit', phase: 'P5' },
 ];
 
 export function summariseStatus() {

@@ -173,16 +173,30 @@ export default async function AdminBreachDetailPage({ params, searchParams }: Pa
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Generate DPB report</CardTitle>
+              <CardTitle className="text-base">DPB report</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="mb-3 text-sm text-muted-foreground">
+            <CardContent className="space-y-3">
+              <p className="text-sm text-muted-foreground">
                 Renders the draft notification per DPDP Rules 2025 (POC placeholder).
               </p>
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <Link href={`/admin/breach/${incident.id}?generate=1` as any}>
-                <Button>Generate DPB report</Button>
-              </Link>
+              <div className="flex flex-wrap gap-2">
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                <Link href={`/admin/breach/${incident.id}?generate=1` as any}>
+                  <Button variant="outline">Preview Markdown</Button>
+                </Link>
+                <a
+                  href={`/api/breach/${incident.id}/dpb-report`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button>Download PDF</Button>
+                </a>
+              </div>
+              <p className="text-[10px] text-muted-foreground">
+                The PDF is rendered server-side via @react-pdf/renderer. Every download is logged
+                to the breach audit stream (stream=&apos;breach&apos;,
+                action=&apos;breach.dpb_pdf_downloaded&apos;).
+              </p>
             </CardContent>
           </Card>
 
