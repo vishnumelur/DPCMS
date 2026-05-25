@@ -291,6 +291,93 @@ test('admin can trigger a sample event and see it in the recent log', async ({ p
   });
 });
 
+test('admin reporting page renders charts with data', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/admin/reporting');
+  await expect(page.getByRole('heading', { name: /M10 · Reports & dashboards/i })).toBeVisible();
+
+  // KPI cards rendered.
+  await expect(page.getByTestId('reporting-kpis')).toBeVisible();
+  // At least one KPI value is a stringified number.
+  const consentCard = page.getByTestId('kpi-consent-artefacts');
+  await expect(consentCard).toBeVisible();
+  const consentText = (await consentCard.textContent()) ?? '';
+  expect(/^\d+$/.test(consentText.trim())).toBe(true);
+
+  // Chart titles indicate that the 4 chart cards rendered.
+  await expect(page.getByText('Consent state')).toBeVisible();
+  await expect(page.getByText('DSRs by kind')).toBeVisible();
+  await expect(page.getByText('Breach severity')).toBeVisible();
+  await expect(page.getByText('Connector events (last 7 days)')).toBeVisible();
+  await expect(page.getByText('RFP coverage progress')).toBeVisible();
+
+  await page.screenshot({
+    path: 'test-results/screenshots/20-admin-reporting.png',
+    fullPage: true,
+  });
+});
+
+test('research repo lists DPDP Act 2023 document', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/admin/research');
+  await expect(page.getByRole('heading', { name: /M11 · Research repository/i })).toBeVisible();
+
+  const dpdpLink = page.getByRole('link', {
+    name: /Digital Personal Data Protection Act, 2023/i,
+  });
+  await expect(dpdpLink).toBeVisible();
+  await dpdpLink.click();
+
+  await expect(
+    page.getByRole('heading', { name: /Digital Personal Data Protection Act, 2023/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/Sections \(/)).toBeVisible();
+  // At least one seeded section number should be linked.
+  await expect(page.getByRole('link', { name: /§ 6 — Consent/ })).toBeVisible();
+
+  await page.screenshot({
+    path: 'test-results/screenshots/21-admin-research-detail.png',
+    fullPage: true,
+  });
+});
+
+test('customer can add a nominee', async ({ page }) => {
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  await page.goto('/me/nominees');
+  await expect(page.getByRole('heading', { name: /^Nominees$/i })).toBeVisible();
+
+  const nomineeName = `E2E Nominee ${Date.now()}`;
+  await page.getByLabel('Name').fill(nomineeName);
+  await page.getByLabel('Email').fill('e2e-nominee@example.com');
+  await page.getByLabel('Relation').fill('sibling');
+  await page.getByRole('button', { name: /Add nominee/i }).click();
+
+  await page.waitForLoadState('networkidle');
+  await expect(page.getByText(nomineeName)).toBeVisible();
+  await page.screenshot({
+    path: 'test-results/screenshots/22-customer-nominee-added.png',
+    fullPage: true,
+  });
+});
+
 test('customer can grant and withdraw consent', async ({ page }) => {
   await page.goto('/signin');
   await page.getByLabel('Username').fill('dpcmsadmin');

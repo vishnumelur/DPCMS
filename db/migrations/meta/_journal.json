@@ -71,6 +71,13 @@
       "when": 1779711580706,
       "tag": "0009_p4_integrations",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1779712417914,
+      "tag": "0010_p5_research_nominees",
+      "breakpoints": true
     }
   ]
 }

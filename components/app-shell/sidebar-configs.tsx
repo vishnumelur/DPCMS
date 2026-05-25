@@ -14,7 +14,7 @@ export const CUSTOMER_SIDEBAR: SidebarSection[] = [
     title: 'Rights & requests',
     items: [
       { label: 'Raise a request (DSR)', href: '/me/requests', live: true },
-      { label: 'Nominees', href: '/me/nominees', phase: 'P2' },
+      { label: 'Nominees', href: '/me/nominees', live: true },
       { label: 'Activity log', href: '/me/activity', phase: 'P0', live: true },
     ],
   },
@@ -55,15 +55,17 @@ export const ADMIN_SIDEBAR: SidebarSection[] = [
   },
   {
     title: 'Integrations',
-    items: [
-      { label: 'M4 · Connectors', href: '/admin/integrations', live: true },
-    ],
+    items: [{ label: 'M4 · Connectors', href: '/admin/integrations', live: true }],
   },
   {
     title: 'Reporting & research',
     items: [
-      { label: 'M10 · Reports & dashboards', href: '/admin/reporting', phase: 'P5' },
-      { label: 'M11 · Research repository', href: '/admin/research', phase: 'P5' },
+      { label: 'M10 · Reports & dashboards', href: '/admin/reporting', live: true },
+      { label: 'M11 · Research repository', href: '/admin/research', live: true },
     ],
+  },
+  {
+    title: 'Settings & policy',
+    items: [{ label: 'SBOM / CBOM', href: '/admin/sbom', live: true }],
   },
 ];

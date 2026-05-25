@@ -13,12 +13,12 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M1.A.12', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '12', text: 'Consent record with timestamp, purpose, and data shared.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.16', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '16', text: 'Audit trail of consent records per DPDP Act 2023.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
   { id: 'M1.A.17', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '17', text: 'Consent artefacts immutable, admissible in court, per MeitY Electronic Consent Framework.', status: 'RA', demoPath: '/admin/consents', evidencePath: '/admin/audit', phase: 'P1' },
-  { id: 'M1.A.23', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '23', text: 'Privacy Notices in all 22 Schedule-8 regional languages. (Customisable — AI translation gateway deferred.)', status: 'CA', demoPath: '/admin/notices', evidencePath: '/rfp-matrix', phase: 'P1' },
+  { id: 'M1.A.23', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '23', text: 'Privacy Notices in all 22 Schedule-8 regional languages.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/rfp-matrix', phase: 'P5' },
   { id: 'M1.A.2', module: 'Universal Consent Management', section: 'Consent Management Platform', number: '2', text: 'Interoperable with the national MeitY consent stack. (Customisable — connector ready; awaiting GoI release of the production endpoint.)', status: 'CA', demoPath: '/admin/integrations/meity_consent_stack', evidencePath: '/admin/integrations/meity_consent_stack', phase: 'P4' },
 
   // M2 Cookie Consent
   { id: 'M2.A.1', module: 'Cookie Consent', section: 'Scanning', number: '1', text: 'Auto-scanning of sub-folders/sub-domains and cookie categorisation. (Customisable — crawler deferred.)', status: 'CA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
-  { id: 'M2.B.2', module: 'Cookie Consent', section: 'Banner', number: '2', text: 'Auto-translation of cookie banner into 22 languages. (Customisable — AI translation deferred.)', status: 'CA', demoPath: '/admin/cookies', evidencePath: '/rfp-matrix', phase: 'P1' },
+  { id: 'M2.B.2', module: 'Cookie Consent', section: 'Banner', number: '2', text: 'Auto-translation of cookie banner into 22 languages (locale switcher + AI gateway fallback).', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/rfp-matrix', phase: 'P5' },
   { id: 'M2.C.1', module: 'Cookie Consent', section: 'GTM Integration', number: '1', text: 'IAB TCF-compliant cookie banner.', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
 
   // M3 Data Mapping
@@ -46,7 +46,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
 
   // M8 Privacy Notices
   { id: 'M8.A.1', module: 'Privacy Notice Management', section: 'Notice', number: '1', text: 'Customisable, dynamic notices per product/journey.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P1' },
-  { id: 'M8.A.3', module: 'Privacy Notice Management', section: 'Notice', number: '3', text: 'Translation/transliteration of notices into all 22 Indian languages. (Customisable — AI translation deferred.)', status: 'CA', demoPath: '/admin/notices', evidencePath: '/rfp-matrix', phase: 'P1' },
+  { id: 'M8.A.3', module: 'Privacy Notice Management', section: 'Notice', number: '3', text: 'Translation/transliteration of notices into all 22 Indian languages (locale switcher + AI gateway fallback).', status: 'RA', demoPath: '/admin/notices', evidencePath: '/rfp-matrix', phase: 'P5' },
   { id: 'M8.B.1', module: 'Privacy Notice Management', section: 'Version control', number: '1', text: 'Maintain version control for all notices.', status: 'RA', demoPath: '/admin/notices', evidencePath: '/admin/audit', phase: 'P1' },
 
   // M9 Breach
@@ -55,15 +55,15 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M9.B.2', module: 'Data Breach Management', section: 'Documentation', number: '2', text: 'Audit trail of all breach-related actions.', status: 'RA', demoPath: '/admin/breach', evidencePath: '/admin/audit', phase: 'P2' },
 
   // M10 Reporting
-  { id: 'M10.B.1', module: 'Controls, Reporting and Dashboard', section: 'Operational', number: '1', text: 'Role-Based Access & Governance: Privacy Curator, Data Curator, Privacy Reader roles.', status: 'NA', phase: 'P5' },
-  { id: 'M10.B.3', module: 'Controls, Reporting and Dashboard', section: 'Operational', number: '3', text: 'Dashboards for privacy metrics, compliance status, exportable reports.', status: 'NA', phase: 'P5' },
+  { id: 'M10.B.1', module: 'Controls, Reporting and Dashboard', section: 'Operational', number: '1', text: 'Role-Based Access & Governance: Privacy Curator, Data Curator, Privacy Reader roles.', status: 'RA', demoPath: '/admin/reporting', evidencePath: '/admin/rbac', phase: 'P5' },
+  { id: 'M10.B.3', module: 'Controls, Reporting and Dashboard', section: 'Operational', number: '3', text: 'Dashboards for privacy metrics, compliance status, exportable reports.', status: 'RA', demoPath: '/admin/reporting', evidencePath: '/api/reports/board-pack', phase: 'P5' },
 
   // M11 Research Repository
-  { id: 'M11.1', module: 'Research Repository on Data Protection Laws', section: 'Repository', number: '1', text: 'Secure, user-friendly repository of Indian data protection laws (DPDP Act 2023, DPDP Rules 2025, IT Act, SPDI Rules).', status: 'NA', phase: 'P5' },
-  { id: 'M11.2', module: 'Research Repository on Data Protection Laws', section: 'Repository', number: '2', text: 'International laws + best practices + amendments.', status: 'NA', phase: 'P5' },
+  { id: 'M11.1', module: 'Research Repository on Data Protection Laws', section: 'Repository', number: '1', text: 'Secure, user-friendly repository of Indian data protection laws (DPDP Act 2023, DPDP Rules 2025, IT Act, SPDI Rules).', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/DPDP_2023', phase: 'P5' },
+  { id: 'M11.2', module: 'Research Repository on Data Protection Laws', section: 'Repository', number: '2', text: 'International laws + best practices + amendments.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/GDPR_EU_2018', phase: 'P5' },
 
   // Cross-cutting (Annexure II — Technical)
-  { id: 'T.1', module: 'Technical', section: 'Hosting', number: '1', text: 'High Availability with DR, min 99% uptime.', status: 'NA', phase: 'P5' },
+  { id: 'T.1', module: 'Technical', section: 'Hosting', number: '1', text: 'High Availability with DR, min 99% uptime. (Customisable — Vercel Hobby SLA + Neon free auto-suspend; production-grade HA requires paid tiers.)', status: 'CA', demoPath: '/admin/sbom', evidencePath: '/rfp-matrix', phase: 'P5' },
   { id: 'T.2', module: 'Technical', section: 'Security', number: '2', text: 'Encryption at rest, in use, in transit.', status: 'RA', demoPath: '/admin/security', evidencePath: '/admin/security#encryption', phase: 'P0' },
   { id: 'T.3', module: 'Technical', section: 'Security', number: '3', text: 'Secure API integrations.', status: 'RA', demoPath: '/admin/integrations', evidencePath: '/admin/audit', phase: 'P4' },
   { id: 'T.4', module: 'Technical', section: 'Security', number: '4', text: 'Audit logs and SIEM integration.', status: 'CA', demoPath: '/admin/audit', evidencePath: '/admin/audit/verify', phase: 'P0' },
@@ -75,6 +75,12 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'P0.3', module: 'POC Foundation', section: 'i18n', number: '3', text: '22 Schedule-8 Indian languages skeleton.', status: 'RA', demoPath: '/', evidencePath: '/rfp-matrix', phase: 'P0' },
   { id: 'P0.4', module: 'POC Foundation', section: 'AI', number: '4', text: 'Vercel AI Gateway wrapper with PII redaction + quota guard + audit log.', status: 'RA', demoPath: '/admin', evidencePath: '/admin/audit/verify', phase: 'P0' },
   { id: 'P0.5.1', module: 'POC Foundation', section: 'Navigation', number: '5.1', text: 'POC navigation chrome — admin + customer + public app shells, every module clickable.', status: 'RA', demoPath: '/admin', evidencePath: '/rfp-matrix', phase: 'P0' },
+
+  // P5 Polish — evidence rows for the final phase
+  { id: 'P5.1', module: 'POC Foundation', section: 'SBOM', number: '5.2', text: 'Software / Cryptographic Bill of Materials with CycloneDX JSON export.', status: 'RA', demoPath: '/admin/sbom', evidencePath: '/api/reports/sbom', phase: 'P5' },
+  { id: 'P5.2', module: 'POC Foundation', section: 'Reporting', number: '5.3', text: 'KPI dashboards (6 cards + 4 charts) with Board-pack JSON export.', status: 'RA', demoPath: '/admin/reporting', evidencePath: '/api/reports/board-pack', phase: 'P5' },
+  { id: 'P5.3', module: 'POC Foundation', section: 'Research', number: '5.4', text: 'Searchable research repository: DPDP Act, DPDP Rules, IT Act, SPDI Rules, GDPR.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/DPDP_2023', phase: 'P5' },
+  { id: 'P5.4', module: 'POC Foundation', section: 'i18n', number: '5.5', text: 'Top-bar language switcher across all 22 Schedule-8 locales.', status: 'RA', demoPath: '/', evidencePath: '/rfp-matrix', phase: 'P5' },
 ];
 
 export function summariseStatus() {
