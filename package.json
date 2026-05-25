@@ -2,10 +2,7 @@
   "name": "dpcms",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "packageManager": "npm@11.7.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
