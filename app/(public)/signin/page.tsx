@@ -43,8 +43,8 @@ export default async function SignInPage({ searchParams }: { searchParams: Searc
   return (
     <div className="-mx-4 -my-6 min-h-[calc(100vh-3.5rem)] sm:-mx-0">
       <div className="mx-auto grid min-h-[calc(100vh-3.5rem)] max-w-[1280px] grid-cols-1 lg:grid-cols-2">
-        {/* ─── BRAND PANEL ─── */}
-        <section className="relative overflow-hidden bg-paper px-6 py-10 sm:px-10 sm:py-14 lg:px-14 lg:py-16">
+        {/* ─── BRAND PANEL ─── (renders below the form on mobile; left half on lg+) */}
+        <section className="relative order-2 overflow-hidden bg-paper px-6 py-10 sm:px-10 sm:py-14 lg:order-1 lg:px-14 lg:py-16">
           {/* Atmospheric mesh */}
           <div
             aria-hidden="true"
@@ -124,15 +124,29 @@ export default async function SignInPage({ searchParams }: { searchParams: Searc
           </div>
         </section>
 
-        {/* ─── FORM PANEL ─── */}
-        <section className="flex items-center justify-center bg-card/40 px-6 py-10 sm:px-10 sm:py-14 lg:px-14 lg:py-16">
-          <div className="w-full max-w-[420px] space-y-7">
+        {/* ─── FORM PANEL ─── (renders first on mobile so login is above the fold; right half on lg+) */}
+        <section className="order-1 flex items-start justify-center bg-card/40 px-5 py-6 sm:items-center sm:px-10 sm:py-14 lg:order-2 lg:px-14 lg:py-16">
+          <div className="w-full max-w-[420px] space-y-6 sm:space-y-7">
             <div className="space-y-2">
+              {/* Compact brand stripe shown ONLY on mobile so the login header still
+                  carries the bank's identity without forcing a scroll past the full
+                  brand panel below. */}
+              <div className="flex items-center gap-2.5 sm:hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/logo-kerala-bank.png"
+                  alt="Kerala State Co-operative Bank"
+                  className="h-9 w-9"
+                />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                  Kerala State Co-operative Bank
+                </span>
+              </div>
               <Eyebrow teal>Sign in</Eyebrow>
-              <h2 className="text-[26px] font-semibold leading-[1.15] tracking-[-0.025em] [text-wrap:balance] sm:text-[30px]">
+              <h2 className="text-[24px] font-semibold leading-[1.15] tracking-[-0.025em] [text-wrap:balance] sm:text-[30px]">
                 Continue to your portal
               </h2>
-              <p className="text-[14px] text-muted-foreground sm:text-[14.5px]">
+              <p className="text-[13.5px] text-muted-foreground sm:text-[14.5px]">
                 Use your KSCB credentials. Two-factor optional but encouraged.
               </p>
             </div>
