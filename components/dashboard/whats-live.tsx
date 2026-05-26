@@ -27,7 +27,6 @@ const CAPABILITIES: Capability[] = [
   { label: 'Workflow engine',        icon: <GitBranch className="h-3.5 w-3.5" />,   status: 'live', detail: 'DSR · breach · DPIA' },
   { label: 'AI gateway',             icon: <Sparkles className="h-3.5 w-3.5" />,    status: 'conditional', detail: 'PII-redacted prompts' },
   { label: '22 Schedule-8 locales',  icon: <Languages className="h-3.5 w-3.5" />,   status: 'live', detail: 'en · ml · hi authored' },
-  { label: 'SBOM + CycloneDX',       icon: <Server className="h-3.5 w-3.5" />,      status: 'live', href: '/admin/sbom',  detail: '45 direct deps' },
 ];
 
 type Props = { delay?: number };

@@ -25,7 +25,6 @@ import {
   Plug,
   FileBarChart,
   KeyRound,
-  Code2,
   ChevronRight,
   ArrowRight,
   Users,
@@ -297,7 +296,7 @@ export default async function Landing() {
             <FeatureBox
               Icon={FileBarChart}
               title="Reports & board pack"
-              summary="11 widgets — 3 hero metrics, 6 secondary KPIs, filing gauge, integrity panel, 4 charts. One-click board-pack and SBOM exports."
+              summary="10 widgets — 3 hero metrics, 6 secondary KPIs, filing gauge, integrity panel, 4 charts, RFP coverage bar, board-pack export."
               href="/admin/reporting"
             />
           </div>
@@ -357,12 +356,6 @@ export default async function Landing() {
             title="Tenancy & settings"
             summary="One install for KSCB + every branch + every subsidiary."
             href="/admin/settings"
-          />
-          <FeatureBox
-            Icon={Code2}
-            title="SBOM"
-            summary="Live CycloneDX bill of materials for the whole stack."
-            href="/admin/sbom"
           />
         </div>
       </section>
@@ -487,7 +480,7 @@ export default async function Landing() {
               href="/admin"
               cta="Open the compliance portal"
               tone="neutral"
-              count="16 screens"
+              count="15 screens"
             />
           </div>
 
@@ -523,7 +516,7 @@ export default async function Landing() {
               <InventoryAccordion
                 eyebrow="For compliance teams"
                 title="Compliance cockpit"
-                count={16}
+                count={15}
                 items={[
                   ['Operations dashboard', '4 KPI tiles · 7-day consent telemetry · breach clock · DPIA pipeline · filing gauge · activity feed.'],
                   ['Consent management', 'purposes, lawful basis, retention, lifecycle.'],
@@ -535,12 +528,11 @@ export default async function Landing() {
                   ['Privacy assessments (PIA)', 'lightweight 6-question assessment for routine processing.'],
                   ['DPIA workbench', 'AI prefill, residual-risk meter, three-signature workflow.'],
                   ['Integrations', 'DigiLocker · Account Aggregator · CBS · NPCI · MeitY.'],
-                  ['Reports & board pack', '3 hero metrics, 6 KPIs, filing gauge, integrity panel, 4 charts, RFP coverage bar, JSON/SBOM exports.'],
+                  ['Reports & board pack', '3 hero metrics, 6 KPIs, filing gauge, integrity panel, 4 charts, RFP coverage bar, JSON board-pack export.'],
                   ['Research repository', 'DPDP / DPB India / RBI / NPCI / MeitY references.'],
                   ['Audit trail', 'tamper-evident SHA-256 hash chain; one-click integrity check.'],
                   ['RBAC viewer', 'every role, every permission, every user assignment.'],
                   ['Tenancy & settings', 'one install serves KSCB HQ and every branch.'],
-                  ['Software bill of materials', 'live CycloneDX inventory for the whole stack.'],
                 ]}
                 tone="neutral"
               />
@@ -592,13 +584,8 @@ export default async function Landing() {
               </Link>
             </li>
             <li>
-              <Link href="/admin/sbom" className="hover:text-foreground">
-                Architecture
-              </Link>
-            </li>
-            <li>
-              <Link href="/admin/sbom" className="hover:text-foreground">
-                Stack inventory
+              <Link href="/admin/reporting" className="hover:text-foreground">
+                Reporting
               </Link>
             </li>
           </ul>

@@ -21,7 +21,6 @@ import {
 import {
   FileBarChart,
   FileJson,
-  FileText,
   Download,
   Lock,
   ShieldCheck,
@@ -187,12 +186,6 @@ export default async function AdminReportingPage() {
             <Link href={'/api/reports/board-pack' as any} prefetch={false} target="_blank" rel="noopener">
               <span className="btn-pill-ghost h-10 px-4 text-[13px]">
                 <FileJson className="h-3.5 w-3.5" strokeWidth={1.5} /> Board pack · JSON
-              </span>
-            </Link>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            <Link href={'/api/reports/sbom' as any} prefetch={false} target="_blank" rel="noopener">
-              <span className="btn-pill-ghost h-10 px-4 text-[13px]">
-                <FileText className="h-3.5 w-3.5" strokeWidth={1.5} /> SBOM · JSON
               </span>
             </Link>
             <span className="inline-flex h-10 cursor-not-allowed items-center gap-2 rounded-full bg-muted/40 px-4 text-[13px] text-muted-foreground">
@@ -362,7 +355,7 @@ export default async function AdminReportingPage() {
       {/* What's inside the dashboard — feature index */}
       <RefinedCard className="p-6 sm:p-7">
         <Eyebrow>What this dashboard contains</Eyebrow>
-        <h3 className="title-md mt-1">11 widgets, one page</h3>
+        <h3 className="title-md mt-1">10 widgets, one page</h3>
         <ul className="mt-4 grid grid-cols-1 gap-3 text-[13px] sm:grid-cols-2 lg:grid-cols-3">
           {[
             { Icon: ShieldCheck, name: '3 hero metrics', desc: 'Active consents · DSR SLA · audit events' },
@@ -375,7 +368,6 @@ export default async function AdminReportingPage() {
             { Icon: Activity, name: 'Connector trend', desc: '7-day activity line across integrations' },
             { Icon: ShieldCheck, name: 'RFP coverage', desc: 'RA / CA / NA progress against the full requirements matrix' },
             { Icon: FileJson, name: 'Board-pack JSON', desc: 'Machine-readable snapshot for filing' },
-            { Icon: FileText, name: 'SBOM export', desc: 'CycloneDX inventory for vulnerability scanning' },
           ].map((w) => (
             <li
               key={w.name}

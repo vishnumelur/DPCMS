@@ -64,7 +64,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M11.2', module: 'Research Repository on Data Protection Laws', section: 'Repository', number: '2', text: 'International laws + best practices + amendments.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/GDPR_EU_2018', phase: 'P5' },
 
   // Cross-cutting (Annexure II — Technical)
-  { id: 'T.1', module: 'Technical', section: 'Hosting', number: '1', text: 'High availability with DR, minimum 99% uptime — runs on managed serverless infrastructure with 99.99% SLA available on paid tiers; the architecture is HA-ready with no code change required for upgrade.', status: 'RA', demoPath: '/admin/sbom', evidencePath: '/api/health', phase: 'P5' },
+  { id: 'T.1', module: 'Technical', section: 'Hosting', number: '1', text: 'High availability with DR, minimum 99% uptime — runs on managed serverless infrastructure with 99.99% SLA available on paid tiers; the architecture is HA-ready with no code change required for upgrade.', status: 'RA', demoPath: '/admin/reporting', evidencePath: '/api/health', phase: 'P5' },
   { id: 'T.2', module: 'Technical', section: 'Security', number: '2', text: 'Encryption at rest, in use, in transit.', status: 'RA', demoPath: '/admin/security', evidencePath: '/admin/security#encryption', phase: 'P0' },
   { id: 'T.3', module: 'Technical', section: 'Security', number: '3', text: 'Secure API integrations.', status: 'RA', demoPath: '/admin/integrations', evidencePath: '/admin/audit', phase: 'P4' },
   { id: 'T.4', module: 'Technical', section: 'Security', number: '4', text: 'Audit logs and SIEM integration — hash-chained immutable audit_log per stream, live verifier endpoint, RS256-signed consent artefacts. SIEM-ready via the audit chain export endpoint.', status: 'RA', demoPath: '/admin/audit', evidencePath: '/admin/audit/verify', phase: 'P0' },
@@ -78,7 +78,6 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'P0.5.1', module: 'Platform & operations', section: 'Navigation', number: '5.1', text: 'Navigation chrome — admin + customer + public app shells, every module clickable.', status: 'RA', demoPath: '/admin', evidencePath: '/rfp-matrix', phase: 'P0' },
 
   // Reporting & assurance
-  { id: 'P5.1', module: 'Platform & operations', section: 'SBOM', number: '5.2', text: 'Software / Cryptographic Bill of Materials with CycloneDX JSON export.', status: 'RA', demoPath: '/admin/sbom', evidencePath: '/api/reports/sbom', phase: 'P5' },
   { id: 'P5.2', module: 'Platform & operations', section: 'Reporting', number: '5.3', text: 'KPI dashboards (6 cards + 4 charts) with Board-pack JSON export.', status: 'RA', demoPath: '/admin/reporting', evidencePath: '/api/reports/board-pack', phase: 'P5' },
   { id: 'P5.3', module: 'Platform & operations', section: 'Research', number: '5.4', text: 'Searchable research repository: DPDP Act, DPDP Rules, IT Act, SPDI Rules, GDPR.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/DPDP_2023', phase: 'P5' },
   { id: 'P5.4', module: 'Platform & operations', section: 'i18n', number: '5.5', text: 'Top-bar language switcher across all 22 Schedule-8 locales.', status: 'RA', demoPath: '/', evidencePath: '/rfp-matrix', phase: 'P5' },

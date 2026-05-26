@@ -218,14 +218,6 @@
           "s3": "Deploy on KSCB infrastructure — each branch and subsidiary isolated by audit chain.",
           "cta": "View architecture"
         },
-        "sbom": {
-          "title": "Software bill of materials",
-          "summary": "A live SBOM (CycloneDX) for the whole stack. Know every dependency, every version, every licence.",
-          "s1": "Open /admin/sbom.",
-          "s2": "Browse direct + transitive dependencies with licence info.",
-          "s3": "Download CycloneDX JSON for vulnerability scanners.",
-          "cta": "Open SBOM"
-        },
         "tenancy": {
           "title": "Tenancy & branches",
           "summary": "One DPCMS install can serve KSCB + every branch + every subsidiary, each in its own audit chain.",
@@ -268,7 +260,7 @@
           { "when": "Setup", "what": "Add tenants and branches in /admin/settings. Assign DPO + admin roles." },
           { "when": "Setup", "what": "Wire each connector in /admin/integrations and test the handshake." },
           { "when": "Monthly", "what": "Run cookie scans on every public website in /admin/cookies." },
-          { "when": "Quarterly", "what": "Review RBAC roles. Check SBOM for new vulnerabilities." },
+          { "when": "Quarterly", "what": "Review RBAC roles. Audit user assignments." },
           { "when": "Continuously", "what": "Monitor audit volume — chain growth is the heartbeat of the system." }
         ]
       }
@@ -339,8 +331,7 @@
         { "name": "Research repository", "desc": "every DPDP / DPB India / RBI / NPCI / MeitY reference document, searchable and linked from compliance pages." },
         { "name": "Audit trail", "desc": "tamper-evident SHA-256 hash-chained log; one-click integrity verification across every stream." },
         { "name": "RBAC viewer", "desc": "every role, every permission, every user assignment — auditable and editable." },
-        { "name": "Tenancy & settings", "desc": "one install serves KSCB headquarters, every branch, every subsidiary — each with its own audit chain." },
-        { "name": "Software bill of materials", "desc": "live SBOM (CycloneDX) for the whole stack — every dependency, every version, every licence." }
+        { "name": "Tenancy & settings", "desc": "one install serves KSCB headquarters, every branch, every subsidiary — each with its own audit chain." }
       ]
     },
     "outro": {

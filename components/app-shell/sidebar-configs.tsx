@@ -64,8 +64,4 @@ export const ADMIN_SIDEBAR: SidebarSection[] = [
       { label: 'M11 · Research repository', href: '/admin/research', live: true },
     ],
   },
-  {
-    title: 'Settings & policy',
-    items: [{ label: 'SBOM / CBOM', href: '/admin/sbom', live: true }],
-  },
 ];
