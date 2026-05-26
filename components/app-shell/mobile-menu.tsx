@@ -75,6 +75,10 @@ export function MobileMenu({ sections, email, initialLocale, variant }: Props) {
             <img
               src="/logo-kerala-bank.png"
               alt="Kerala State Co-operative Bank · DPCMS"
+              width={500}
+              height={500}
+              loading="eager"
+              decoding="sync"
               className="h-14 w-14"
             />
           </SheetTitle>

@@ -447,6 +447,10 @@ export default async function Landing() {
             <img
               src="/logo-kerala-bank.png"
               alt="Kerala State Co-operative Bank"
+              width={500}
+              height={500}
+              loading="eager"
+              decoding="async"
               className="h-16 w-16 sm:h-20 sm:w-20"
             />
             <p className="break-words text-[11.5px] text-muted-foreground sm:text-[12px]">

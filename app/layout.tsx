@@ -22,6 +22,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const messages = await getMessages();
   return (
     <html lang={locale} className={cn('font-sans', geist.variable)}>
+      <head>
+        {/* Preload the bank logo so the brand image is in cache before any
+            <img> tag is parsed. Eliminates the alt-text-during-loading flash
+            on language switch + slow networks. */}
+        <link rel="preload" as="image" href="/logo-kerala-bank.png" fetchPriority="high" />
+      </head>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}

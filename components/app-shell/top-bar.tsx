@@ -47,12 +47,19 @@ export async function TopBar({ variant = 'public', mobileSidebarSections }: Prop
             className="flex items-center"
             aria-label="Kerala State Co-operative Bank · DPCMS"
           >
-            {/* Plain <img> — bypasses Next.js image optimisation cache for reliable
-                serving of the locally-managed logo. */}
+            {/* Plain <img> — bypasses Next.js image optimisation cache.
+                width/height + eager loading + sync decode + fetchpriority=high
+                + the layout preload tag guarantees the logo paints with the
+                first frame, eliminating the alt-text-during-load flash. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo-kerala-bank.png"
               alt="Kerala State Co-operative Bank"
+              width={500}
+              height={500}
+              loading="eager"
+              decoding="sync"
+              fetchPriority="high"
               className="h-10 w-auto sm:h-11 lg:h-12"
             />
           </Link>

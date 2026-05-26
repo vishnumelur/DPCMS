@@ -71,6 +71,11 @@ export default async function SignInPage({ searchParams }: { searchParams: Searc
                 <img
                   src="/logo-kerala-bank.png"
                   alt="Kerala State Co-operative Bank"
+                  width={500}
+                  height={500}
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
                   className="h-12 w-12"
                 />
                 <span className="flex flex-col leading-tight">
@@ -136,6 +141,11 @@ export default async function SignInPage({ searchParams }: { searchParams: Searc
                 <img
                   src="/logo-kerala-bank.png"
                   alt="Kerala State Co-operative Bank"
+                  width={500}
+                  height={500}
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
                   className="h-9 w-9"
                 />
                 <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
