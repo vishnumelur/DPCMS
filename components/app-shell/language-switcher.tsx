@@ -1,67 +1,70 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { useTranslations } from 'next-intl';
-import { LOCALES, LOCALE_LABELS, type Locale } from '@/i18n/routing';
+import { type Locale } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 
-// Hand-authored UI bundles. Every other code falls back to en at request time
-// (see i18n/request.ts). We surface that distinction in the dropdown.
-const AUTHORED: ReadonlySet<Locale> = new Set<Locale>(['en', 'ml', 'hi']);
+/**
+ * Segmented pill switcher — EN · മ · हि.
+ * Single tap commits the cookie + full reload so server components re-render.
+ */
+type Option = { code: Locale; short: string; full: string };
+const OPTIONS: Option[] = [
+  { code: 'en', short: 'EN', full: 'English' },
+  { code: 'ml', short: 'മ',  full: 'മലയാളം' },
+  { code: 'hi', short: 'हि', full: 'हिन्दी' },
+];
 
 type Props = {
   initial?: Locale;
-  /**
-   * When `true` (default), the switcher hides on mobile (`hidden md:flex`) and shows
-   * on tablet+ — desktop usage. When `false`, the switcher is always visible — used
-   * inside the mobile drawer.
-   */
   responsive?: boolean;
 };
 
 export function LanguageSwitcher({ initial = 'en', responsive = true }: Props) {
   const [value, setValue] = useState<Locale>(initial);
   const [isPending, startTransition] = useTransition();
-  const tNav = useTranslations('nav');
 
-  function onChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const next = e.target.value as Locale;
+  function pick(next: Locale) {
+    if (next === value || isPending) return;
     setValue(next);
     startTransition(() => {
-      // Persist for 1 year and force a fresh server render so request.ts picks up the cookie.
       document.cookie = `locale=${next}; path=/; max-age=31536000; samesite=lax`;
       window.location.reload();
     });
   }
 
   return (
-    <label
-      className={cn(
-        'items-center gap-2',
-        responsive ? 'hidden md:flex' : 'flex',
-      )}
+    <div
+      role="radiogroup"
       aria-label="Choose language"
+      className={cn(
+        'inline-flex items-center gap-0.5 rounded-full bg-muted/70 p-0.5',
+        responsive ? 'hidden md:inline-flex' : 'inline-flex',
+        isPending && 'opacity-70',
+      )}
     >
-      <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-        {tNav('lang')}
-      </span>
-      <select
-        value={value}
-        onChange={onChange}
-        disabled={isPending}
-        className="h-8 rounded border border-input bg-transparent px-2 text-xs shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
-      >
-        {LOCALES.map((code) => {
-          const label = LOCALE_LABELS[code];
-          const fallback = AUTHORED.has(code) ? '' : ' (en fallback)';
-          return (
-            <option key={code} value={code}>
-              {label} · {code}
-              {fallback}
-            </option>
-          );
-        })}
-      </select>
-    </label>
+      {OPTIONS.map((opt) => {
+        const active = opt.code === value;
+        return (
+          <button
+            key={opt.code}
+            type="button"
+            role="radio"
+            aria-checked={active}
+            aria-label={opt.full}
+            onClick={() => pick(opt.code)}
+            disabled={isPending}
+            className={cn(
+              'inline-flex min-w-[34px] items-center justify-center rounded-full px-2.5 py-1.5 text-[12.5px] font-semibold transition-colors',
+              active
+                ? 'bg-background text-primary shadow-[0_1px_2px_rgba(0,0,0,0.06)]'
+                : 'text-muted-foreground hover:text-foreground',
+            )}
+          >
+            {opt.short}
+          </button>
+        );
+      })}
+    </div>
   );
 }

@@ -56,7 +56,7 @@ export function AssessmentListView({
   const summary =
     kind === 'pia'
       ? 'Lightweight PIA workflow for routine processing — 6 questions, weighted scoring, DPO approval.'
-      : 'Full DPIA workflow for high-risk processing — 10 questions plus AI-prefill from Vercel AI Gateway.';
+      : 'Full DPIA workflow for high-risk processing — 10 questions plus AI-prefill from a managed AI gateway.';
 
   let draft = 0;
   let inReview = 0;

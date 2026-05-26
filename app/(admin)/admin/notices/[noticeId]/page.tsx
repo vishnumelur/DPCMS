@@ -93,8 +93,8 @@ export default async function AdminNoticeDetailPage({
         <CardContent className="space-y-3">
           {translations.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              No translations yet. Generate them below — Gemini will produce drafts in every
-              Schedule-8 language for DPO review before customers see them.
+              No translations yet. Generate them below — the managed AI gateway will produce
+              drafts in every Schedule-8 language for DPO review before customers see them.
             </p>
           ) : (
             <ul className="space-y-2">
@@ -180,11 +180,11 @@ export default async function AdminNoticeDetailPage({
                 Tick any subset above to scope the run, or leave all unticked to translate every
                 pending locale.
               </p>
-              <Button type="submit">Generate via Gemini</Button>
+              <Button type="submit">Generate translations</Button>
               <p className="text-[10px] text-muted-foreground">
-                Runs through <code>lib/ai/gateway.ts</code> with PII redaction. If
-                <code className="mx-1">AI_GATEWAY_API_KEY</code>
-                is unset, a deterministic placeholder is written so the demo always works.
+                Prompts are PII-redacted before being sent to the managed AI gateway. If the
+                gateway is unreachable, a deterministic placeholder is written so the workflow
+                never blocks.
               </p>
             </form>
           )}

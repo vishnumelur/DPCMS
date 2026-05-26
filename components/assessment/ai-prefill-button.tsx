@@ -25,7 +25,7 @@ export function AiPrefillButton({
         setSource(result.source);
         setMessage(
           `Prefilled ${result.count} responses via ${
-            result.source === 'ai' ? 'AI gateway (Gemini)' : 'deterministic fallback'
+            result.source === 'ai' ? 'AI gateway' : 'deterministic fallback'
           }.`,
         );
       } else {

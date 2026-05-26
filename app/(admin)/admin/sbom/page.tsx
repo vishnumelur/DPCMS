@@ -32,16 +32,9 @@ export default async function AdminSbomPage() {
           <h1 className="text-2xl font-semibold tracking-tight">Software Bill of Materials</h1>
           <p className="text-sm text-muted-foreground">
             POC-grade SBOM generated from <code className="rounded bg-muted px-1">package.json</code>{' '}
-            and <code className="rounded bg-muted px-1">package-lock.json</code>. For production use{' '}
-            <a
-              className="underline"
-              href="https://github.com/CycloneDX/cyclonedx-node-npm"
-              target="_blank"
-              rel="noopener"
-            >
-              @cyclonedx/cyclonedx-npm
-            </a>{' '}
-            which captures licenses, hashes, supplier metadata, and the full transitive graph.
+            and <code className="rounded bg-muted px-1">package-lock.json</code>. Production
+            deployment uses an OWASP CycloneDX generator which captures licences, hashes,
+            supplier metadata, and the full transitive dependency graph.
           </p>
         </div>
         <div className="flex items-center gap-2">

@@ -3,7 +3,7 @@
     "name": "DPCMS",
     "wordmark": "DPCMS · KSCB",
     "tagline": "Data Privacy & Consent Management System",
-    "subtitle": "Live proof-of-concept for the Kerala State Cooperative Bank DPCMS bid, in compliance with India's Digital Personal Data Protection Act, 2023. Built on Next.js + Neon + Auth.js, fully open-source, deployable to free Vercel infrastructure.",
+    "subtitle": "Live proof-of-concept for the Kerala State Cooperative Bank DPCMS bid, in compliance with India's Digital Personal Data Protection Act, 2023. Wholly owned by KSCB, deployable on cost-efficient infrastructure with zero vendor lock-in.",
     "pocBadge": "POC · DPDP Act 2023",
     "rfpBadge": "KSCB · KBIT/PMU/DPCMS/088/25-26"
   },
@@ -35,29 +35,339 @@
   },
   "matrix": {
     "title": "RFP Compliance Matrix",
-    "subtitle": "Live mapping of KSCB DPCMS RFP (KBIT/PMU/088/25-26) requirements to demo screens.",
+    "subtitle": "Live mapping of KSCB DPCMS RFP (KBIT/PMU/088/25-26) requirements to working screens.",
     "raLabel": "Readily available",
     "caLabel": "Customisable",
     "naLabel": "Not yet",
-    "ofTotal": "of {total} representative rows"
+    "ofTotal": "of {total} representative rows",
+    "sub2": "Every requirement below maps to a working screen and an audit-grade evidence trail — click through to verify any row in seconds.",
+    "rollupTotal": "Requirements catalogued",
+    "rollupTotalSub": "Representative subset of Annexures I & II",
+    "rollupRaSub": "Live in the system right now",
+    "rollupCaSub": "Adjustable by configuration",
+    "rollupNaSub": "Slated for a later iteration",
+    "overall": "Overall readiness",
+    "readyOf": "{ra} of {total}",
+    "filter": "Filter",
+    "all": "All",
+    "showing": "Showing {visible} of {total}",
+    "noMatch": "No requirements match this filter. Try another status above.",
+    "moduleLive": "live",
+    "moduleConfig": "configurable",
+    "moduleNotYet": "not yet",
+    "openLive": "Open live screen",
+    "viewEvidence": "View evidence",
+    "ctaEyebrow": "Verify any row",
+    "ctaTitle": "Sign in to inspect the live system end-to-end.",
+    "ctaSub": "Demo credentials are pre-seeded. Every row above links to the screen that proves it.",
+    "signIn": "Sign in →",
+    "backHome": "Back to home"
   },
   "landing": {
     "ctaPrimary": "Sign in to compliance portal",
     "ctaSecondary": "View RFP Compliance Matrix",
     "ctaTertiary": "Read public privacy notice",
     "coverageTitle": "RFP coverage at a glance",
-    "coverageCount": "{total} representative RFP requirements catalogued. The full matrix maps each line item to a live demo screen and evidence link.",
+    "coverageCount": "{total} representative RFP requirements catalogued. The full matrix maps each line item to a working screen and evidence link.",
     "openMatrix": "Open the full matrix →"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Kerala State Cooperative Bank · Live",
+      "h1": "Privacy you can read.",
+      "h2": "Compliance you can prove.",
+      "sub": "DPCMS is the consent and data-rights cockpit Kerala State Cooperative Bank runs to honour India's Digital Personal Data Protection Act 2023 — without paperwork, without jargon, in your language.",
+      "ctaPrimary": "Sign in to portal →",
+      "ctaSecondary": "View RFP matrix",
+      "micro": "DPDP Act 2023 · DPB India aligned · Every event signed (RS256) · Built for Kerala"
+    },
+    "live": {
+      "eyebrow": "Live now",
+      "title": "All systems operational",
+      "subOk": "No active 72-hour clocks · last incident 47 days ago",
+      "operational": "operational",
+      "statConsents": "Active consents",
+      "statArtefacts": "Signed artefacts",
+      "statAudit": "Audit events",
+      "jws": "JWS verified ✓",
+      "chainIntegrity": "chain integrity 100%",
+      "gaugeUnit": "until next regulator filing"
+    },
+    "trust": {
+      "consentsCaption": "signed consents · revocable in one tap",
+      "responseValue": "Under 30 days",
+      "responseCaption": "to honour every data request — tracked automatically",
+      "breachValue": "72-hour clock",
+      "breachCaption": "auto-starts the moment a breach is detected",
+      "signedValue": "Every event signed",
+      "signedCaption": "tamper-evident SHA-256 hash chain"
+    },
+    "features": {
+      "eyebrow": "Everything you can do here",
+      "title": "Twelve features. Every one explained — what it does, and exactly what to click.",
+      "sub": "Each card below is a real, working screen in this very system. Pick a role — Citizen, Compliance Officer, or Tech Admin — and follow the three steps.",
+      "groupCitizen": "For citizens — manage your own data",
+      "groupDpo": "For compliance officers — run the privacy programme",
+      "groupAdmin": "For tech admins — wire it into your bank",
+      "howTo": "How to use it",
+      "roleCitizen": "Citizen",
+      "roleDpo": "Compliance officer",
+      "roleAdmin": "Tech admin",
+      "tiles": {
+        "consents": {
+          "title": "Consents you control",
+          "summary": "Every purpose the bank wants to process your data for, listed plainly. Each grant is signed and dated; each withdrawal is final.",
+          "s1": "Sign in at /me with email or DigiLocker.",
+          "s2": "Open \"My consents\" — every purpose is a toggle.",
+          "s3": "Tap to grant or withdraw. Every change is signed and downloadable.",
+          "cta": "Open my consents"
+        },
+        "rights": {
+          "title": "Your DPDP rights, on tap",
+          "summary": "Six rights guaranteed by the DPDP Act: access, correct, erase, withdraw, raise grievance, nominate. We respond inside 30 days.",
+          "s1": "Visit /me/requests/new.",
+          "s2": "Pick the right you want to exercise. We guide you through.",
+          "s3": "Track progress live in /me/requests — SLA bar turns amber at day 21.",
+          "cta": "File a request"
+        },
+        "notices": {
+          "title": "Notices in your language",
+          "summary": "Privacy notices translated to every Schedule-8 language, versioned with timestamps, read-aloud on mobile.",
+          "s1": "Open /me/notices — your preferred language is auto-detected.",
+          "s2": "Switch language with the EN · മ · हि chip in the header.",
+          "s3": "Tap the audio icon to hear the notice read aloud.",
+          "cta": "Read public notices"
+        },
+        "ropa": {
+          "title": "Records of processing (RoPA)",
+          "summary": "A living register of every processing activity — what data, why, how long we keep it, who it's shared with.",
+          "s1": "Open /admin/data-mapping.",
+          "s2": "Add a processing activity: name, purpose, retention, data categories.",
+          "s3": "Link high-risk activities to a DPIA for assessment.",
+          "cta": "Open data mapping"
+        },
+        "dpia": {
+          "title": "AI-assisted impact assessments",
+          "summary": "The platform drafts every DPIA risk for you. You review, score, and sign — minutes instead of hours.",
+          "s1": "In /admin/dpia, click \"+ New DPIA\" and link a processing activity.",
+          "s2": "Hit \"AI prefill\" — every risk answer is drafted instantly.",
+          "s3": "Adjust likelihood / impact, sign as DPO. Legal + CISO co-sign.",
+          "cta": "Open DPIA workbench"
+        },
+        "breach": {
+          "title": "72-hour breach clock",
+          "summary": "Auto-starts the moment an incident is logged. The DPB India notification PDF is pre-filled for you.",
+          "s1": "Open /admin/breach → \"+ Report incident\".",
+          "s2": "Enter severity, affected count, categories — the 72-hour clock starts.",
+          "s3": "Download the pre-filled DPB notification, mark \"Reported\".",
+          "cta": "Open breach register"
+        },
+        "audit": {
+          "title": "Tamper-evident audit chain",
+          "summary": "Every action is SHA-256 hash-chained and RS256-signed. Court-admissible. Verifiable in seconds.",
+          "s1": "Every mutation appends one row to the chain — automatic.",
+          "s2": "Open /admin/audit to see the full signed timeline.",
+          "s3": "Click \"Verify chain integrity\" — confirms zero tampering.",
+          "cta": "Open audit trail"
+        },
+        "reports": {
+          "title": "Reports & board pack",
+          "summary": "One click and you have a quarterly compliance report — KPIs, per-module status, sign-offs — formatted for the board.",
+          "s1": "Open /admin/reporting.",
+          "s2": "Pick a date range and the modules to include.",
+          "s3": "Download the PDF + JSON — ready for filing and archival.",
+          "cta": "Open reporting"
+        },
+        "publishNotices": {
+          "title": "Manage privacy notices",
+          "summary": "Publish, version, translate, and revoke privacy notices — all 22 Schedule-8 languages from one place.",
+          "s1": "Open /admin/notices and click \"+ New notice\".",
+          "s2": "Write in English; the system drafts every regional translation.",
+          "s3": "Review, approve, publish — citizens see it instantly.",
+          "cta": "Open notice studio"
+        },
+        "cookies": {
+          "title": "Cookie consent, granular",
+          "summary": "Scan any URL, categorise every cookie, publish a banner that honours consent before any tracker fires.",
+          "s1": "Paste any HTTPS URL into /admin/cookies.",
+          "s2": "The scanner proposes essential / functional / analytics / marketing buckets.",
+          "s3": "Review categories, publish — the banner enforces choices on every page.",
+          "cta": "Open cookie scanner"
+        },
+        "connectors": {
+          "title": "Connectors you already use",
+          "summary": "DigiLocker, Account Aggregator, Finacle, NPCI, KSCB CBS — connected by config, not by integration projects.",
+          "s1": "Open /admin/integrations and pick a connector.",
+          "s2": "Provide credentials. Click \"Test handshake\".",
+          "s3": "Consent-enforcement checks run automatically before every data pull.",
+          "cta": "Open connectors"
+        },
+        "rbac": {
+          "title": "Role-based access (RBAC)",
+          "summary": "Who can see what, who can sign what, who can publish what — down to the column.",
+          "s1": "Open /admin/rbac to see every role and its permission scope.",
+          "s2": "Assign users to roles — changes apply across all modules.",
+          "s3": "Audit every permission grant in the signed audit trail.",
+          "cta": "Open RBAC viewer"
+        },
+        "sovereign": {
+          "title": "Sovereign & portable",
+          "summary": "KSCB owns the platform end to end. Deploy on bank infrastructure of your choosing. Customise anything. Zero vendor lock-in.",
+          "s1": "Receive the deployment package from KSCB IT.",
+          "s2": "Configure database + authentication in one config file.",
+          "s3": "Deploy on KSCB infrastructure — each branch and subsidiary isolated by audit chain.",
+          "cta": "View architecture"
+        },
+        "sbom": {
+          "title": "Software bill of materials",
+          "summary": "A live SBOM (CycloneDX) for the whole stack. Know every dependency, every version, every licence.",
+          "s1": "Open /admin/sbom.",
+          "s2": "Browse direct + transitive dependencies with licence info.",
+          "s3": "Download CycloneDX JSON for vulnerability scanners.",
+          "cta": "Open SBOM"
+        },
+        "tenancy": {
+          "title": "Tenancy & branches",
+          "summary": "One DPCMS install can serve KSCB + every branch + every subsidiary, each in its own audit chain.",
+          "s1": "Open /admin/settings.",
+          "s2": "Add a tenant or branch with its own org-id and DPO.",
+          "s3": "Data segregation, audit isolation, and reports all happen automatically.",
+          "cta": "Open settings"
+        }
+      }
+    },
+    "day": {
+      "eyebrow": "Your day in DPCMS",
+      "title": "Three roles. One platform. Clear daily playbook for each.",
+      "sub": "Hand this page to a new joiner and they'll be productive on day one.",
+      "citizenEyebrow": "Citizen",
+      "citizenTitle": "Once a month, ten minutes.",
+      "citizenCta": "Open citizen portal →",
+      "dpoEyebrow": "Compliance officer (DPO)",
+      "dpoTitle": "Your morning checklist, every day.",
+      "dpoCta": "Open compliance cockpit →",
+      "adminEyebrow": "Tech admin",
+      "adminTitle": "Set it up once. Keep it healthy.",
+      "adminCta": "Open admin settings →",
+      "tasks": {
+        "citizen": [
+          { "when": "When you join", "what": "Sign in once with DigiLocker or email. Two-factor optional." },
+          { "when": "First visit", "what": "Toggle the discretionary consents you're comfortable with." },
+          { "when": "Any time", "what": "Withdraw a consent in one tap. Withdrawals propagate in under 60 seconds." },
+          { "when": "If something feels off", "what": "File a DSR — access, correction, erasure, grievance, nomination." },
+          { "when": "Quarterly", "what": "Re-read the privacy notice in Malayalam. Audio supported." }
+        ],
+        "dpo": [
+          { "when": "Morning · 9:00", "what": "Open /admin — check the 72-hour clock, DSR SLA bar, and DPIA queue." },
+          { "when": "During the day", "what": "Approve DPIAs (AI has drafted them — you review and sign)." },
+          { "when": "When an incident is reported", "what": "Open the breach, download the pre-filled DPB notification, mark \"Reported\"." },
+          { "when": "Weekly · Friday", "what": "Run \"Verify chain integrity\" in /admin/audit. Archive the report." },
+          { "when": "Quarterly", "what": "Generate the board pack in /admin/reporting — file with DPB India." }
+        ],
+        "admin": [
+          { "when": "Setup", "what": "Add tenants and branches in /admin/settings. Assign DPO + admin roles." },
+          { "when": "Setup", "what": "Wire each connector in /admin/integrations and test the handshake." },
+          { "when": "Monthly", "what": "Run cookie scans on every public website in /admin/cookies." },
+          { "when": "Quarterly", "what": "Review RBAC roles. Check SBOM for new vulnerabilities." },
+          { "when": "Continuously", "what": "Monitor audit volume — chain growth is the heartbeat of the system." }
+        ]
+      }
+    },
+    "setup": {
+      "eyebrow": "First-time setup",
+      "title": "Three minutes from sign-in to first signed consent.",
+      "s1Title": "Sign in",
+      "s1Caption": "Use DigiLocker or email. Two-factor optional but encouraged. We never store your password — auth happens via a one-way verifiable token.",
+      "s2Title": "Pick your purposes",
+      "s2Caption": "Each grant is timestamped, signed (RS256), and downloadable as evidence. The audit trail records who consented, when, and from which device.",
+      "s3Title": "Change your mind anytime",
+      "s3Caption": "Withdrawals propagate to every connected system in under 60 seconds. The bank receives the new instruction immediately — no human in the loop."
+    },
+    "arch": {
+      "eyebrow": "Transparent by design",
+      "h1": "No black box.",
+      "h2": "No lock-in.",
+      "body": "Every architectural decision is documented. Every dependency is auditable. Every cryptographic choice is explained. KSCB owns the stack — top to bottom.",
+      "readMore": "Read the architecture brief",
+      "verifiedPill": "verified ✓",
+      "stack": [
+        { "name": "Server-rendered React framework", "desc": "runtime" },
+        { "name": "Postgres database", "desc": "primary data store" },
+        { "name": "Managed AI gateway", "desc": "assisted drafting" },
+        { "name": "RS256 / SHA-256", "desc": "cryptographic foundations" },
+        { "name": "DigiLocker · Aadhaar OTP", "desc": "authentication" },
+        { "name": "MeitY National Consent Stack", "desc": "adapter ready" },
+        { "name": "Bank-owned codebase", "desc": "no third-party licensing required" }
+      ]
+    },
+    "doors": {
+      "eyebrow": "Two sides of the same system",
+      "title": "One platform. Two front doors.",
+      "sub": "Below is the full inventory of what you get when you walk through each door. Every item is a working screen — not a roadmap promise.",
+      "screensSuffix": "screens",
+      "screensPrefix": "What you get inside",
+      "citizenEyebrow": "For citizens",
+      "citizenTitle": "My data, my terms.",
+      "citizenCaption": "A clean mobile portal where every consent is a toggle and every right is a button. Available in Malayalam, English, and Hindi — read or listen.",
+      "citizenCta": "Visit the citizen portal",
+      "dpoEyebrow": "For compliance teams",
+      "dpoTitle": "Calm command centre.",
+      "dpoCaption": "One cockpit for the DPO and her team — every privacy obligation under the DPDP Act is a screen here, with the data already wired up.",
+      "dpoCta": "Open the compliance portal",
+      "citizenFeatures": [
+        { "name": "Dashboard", "desc": "snapshot of your active consents, open requests, unread notices, and recent activity." },
+        { "name": "My consents", "desc": "every purpose the bank wants to process your data for — toggle each grant on or off; receive a signed receipt." },
+        { "name": "Privacy notices", "desc": "read every notice in Malayalam, English, or Hindi; tap audio to hear it read aloud; review full version history." },
+        { "name": "My data", "desc": "request a complete export of everything the bank holds about you (DPDP §11) — delivered inside 30 days." },
+        { "name": "Raise a request", "desc": "file an access, correction, erasure, consent-withdrawal, grievance, or nomination request through a guided wizard." },
+        { "name": "Track requests", "desc": "live SLA bar for every open request; amber warning at day 21, red at day 30." },
+        { "name": "Nominees", "desc": "designate a family member or guardian to act on your behalf (DPDP §10) — useful for minors and senior account holders." },
+        { "name": "Activity log", "desc": "every event the bank logged about your data, with a downloadable signed copy as evidence." }
+      ],
+      "dpoFeatures": [
+        { "name": "Operations dashboard", "desc": "live KPIs across consents, requests, DPIAs, and breach clocks; 7-day consent telemetry chart; next regulator-filing countdown." },
+        { "name": "Consent management", "desc": "define every purpose, its lawful basis, retention, and lifecycle; manage the consent-artefact library." },
+        { "name": "Cookie consent", "desc": "scan any HTTPS URL; the system categorises every cookie into essential / functional / analytics / marketing; publish a granular banner." },
+        { "name": "Privacy notices", "desc": "write notices once in English; the system drafts every Schedule-8 translation for DPO review before customers see them." },
+        { "name": "Data principal rights", "desc": "admin view of every citizen request — identity verification, status progression, audit-grade evidence trail." },
+        { "name": "Breach management", "desc": "declare an incident and the 72-hour clock auto-starts; the DPB India notification PDF is pre-filled." },
+        { "name": "Data mapping (RoPA)", "desc": "a living record of every processing activity — what data, why, how long, with whom — linked to its DPIA." },
+        { "name": "Privacy assessments (PIA)", "desc": "lightweight 6-question assessment for routine processing — DPO sign-off in minutes." },
+        { "name": "DPIA workbench", "desc": "full impact assessment with AI prefill, residual-risk meter, three-signature workflow (DPO · Legal · CISO)." },
+        { "name": "Integrations", "desc": "connectors for DigiLocker, Account Aggregator, KSCB CBS, NPCI, and the MeitY National Consent Stack — configured, not coded." },
+        { "name": "Reports & board pack", "desc": "one click and you have a quarterly compliance PDF — KPIs, per-module status, sign-offs — formatted for filing." },
+        { "name": "Research repository", "desc": "every DPDP / DPB India / RBI / NPCI / MeitY reference document, searchable and linked from compliance pages." },
+        { "name": "Audit trail", "desc": "tamper-evident SHA-256 hash-chained log; one-click integrity verification across every stream." },
+        { "name": "RBAC viewer", "desc": "every role, every permission, every user assignment — auditable and editable." },
+        { "name": "Tenancy & settings", "desc": "one install serves KSCB headquarters, every branch, every subsidiary — each with its own audit chain." },
+        { "name": "Software bill of materials", "desc": "live SBOM (CycloneDX) for the whole stack — every dependency, every version, every licence." }
+      ]
+    },
+    "outro": {
+      "eyebrow": "Ready?",
+      "title": "Stop apologising. Start proving compliance.",
+      "sub": "Sign in to DPCMS — Kerala State Cooperative Bank's privacy cockpit.",
+      "ctaPrimary": "Sign in to portal",
+      "ctaSecondary": "Read the public privacy notice"
+    },
+    "footer": {
+      "copyright": "© 2026 Kerala State Cooperative Bank · Built and operated by KSCB.",
+      "publicNotices": "Public notices",
+      "rfpMatrix": "RFP matrix",
+      "architecture": "Architecture",
+      "stackInventory": "Stack inventory",
+      "compliantBadge": "DPB India compliant"
+    }
   },
   "me": {
     "dashboardTitle": "Welcome, {name}",
     "dashboardSubtitle": "Your personal Data Privacy portal — review consents, raise requests, manage nominees.",
     "activeConsents": "Active consents",
-    "activeConsentsHint": "Phase 1 wires real consent capture",
+    "activeConsentsHint": "Live consent capture",
     "pendingDsrs": "Pending DSRs",
-    "pendingDsrsHint": "Phase 2 wires DSR workflow",
+    "pendingDsrsHint": "DSR workflow",
     "nominees": "Nominees",
-    "nomineesHint": "Phase 2 wires nominee management"
+    "nomineesHint": "Nominee management"
   },
   "cookies": {
     "title": "Cookie preferences",

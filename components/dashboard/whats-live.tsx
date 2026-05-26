@@ -25,7 +25,7 @@ const CAPABILITIES: Capability[] = [
   { label: 'Tenancy + branches',     icon: <Building2 className="h-3.5 w-3.5" />,   status: 'live', href: '/admin/settings', detail: 'KSCB + 3 branches' },
   { label: 'Credentials + JWT',      icon: <KeyRound className="h-3.5 w-3.5" />,    status: 'live', detail: 'TOTP MFA opt-in' },
   { label: 'Workflow engine',        icon: <GitBranch className="h-3.5 w-3.5" />,   status: 'live', detail: 'DSR · breach · DPIA' },
-  { label: 'AI gateway',             icon: <Sparkles className="h-3.5 w-3.5" />,    status: 'conditional', detail: 'PII-redacted Gemini' },
+  { label: 'AI gateway',             icon: <Sparkles className="h-3.5 w-3.5" />,    status: 'conditional', detail: 'PII-redacted prompts' },
   { label: '22 Schedule-8 locales',  icon: <Languages className="h-3.5 w-3.5" />,   status: 'live', detail: 'en · ml · hi authored' },
   { label: 'SBOM + CycloneDX',       icon: <Server className="h-3.5 w-3.5" />,      status: 'live', href: '/admin/sbom',  detail: '45 direct deps' },
 ];
@@ -44,9 +44,9 @@ export function WhatsLive({ delay = 0 }: Props) {
         </span>
         <div>
           <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            Foundation
+            Platform
           </p>
-          <h2 className="text-base font-semibold">What's live in P0</h2>
+          <h2 className="text-base font-semibold">What&rsquo;s live today</h2>
         </div>
       </div>
 

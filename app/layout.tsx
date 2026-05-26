@@ -10,9 +10,6 @@ const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 export const metadata: Metadata = {
   title: 'DPCMS — Kerala State Cooperative Bank',
   description: 'Data Privacy & Consent Management System aligned to DPDP Act 2023',
-  icons: {
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
-  },
 };
 
 // Next 16: themeColor must live on `viewport`, not `metadata`.

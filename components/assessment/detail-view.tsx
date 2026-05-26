@@ -82,18 +82,20 @@ export function AssessmentDetailView({
 
   return (
     <div className="space-y-6">
-      <header className="flex items-start justify-between gap-4">
-        <div className="space-y-1">
+      <header className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+        <div className="min-w-0 space-y-1">
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <Link href={base as any} className="text-xs underline">
             ← Back to {kind.toUpperCase()} register
           </Link>
-          <h1 className="text-2xl font-semibold tracking-tight">{assessment.title}</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="break-words text-[22px] leading-[1.15] font-semibold tracking-[-0.015em] [text-wrap:balance] sm:text-2xl">
+            {assessment.title}
+          </h1>
+          <p className="break-words text-[13px] text-muted-foreground sm:text-sm">
             {assessment.description || `${kind.toUpperCase()} for review.`}
           </p>
           {linkedActivityName && (
-            <p className="text-xs text-muted-foreground">
+            <p className="break-words text-xs text-muted-foreground">
               Linked activity:{' '}
               {assessment.processingActivityId && (
                 <Link
@@ -112,19 +114,17 @@ export function AssessmentDetailView({
             </Badge>
           )}
         </div>
-        <div className="space-y-1 text-right">
+        <div className="flex shrink-0 flex-wrap items-center gap-2 sm:flex-col sm:items-end sm:gap-1">
           <Badge variant={STATUS_VARIANT[assessment.status] ?? 'outline'}>
             {assessment.status}
           </Badge>
           {assessment.riskLevel && (
-            <div>
-              <Badge
-                variant={RISK_VARIANT[assessment.riskLevel as RiskLevel] ?? 'outline'}
-                className="text-[10px]"
-              >
-                {assessment.riskLevel} · {assessment.riskScore ?? 0}/100
-              </Badge>
-            </div>
+            <Badge
+              variant={RISK_VARIANT[assessment.riskLevel as RiskLevel] ?? 'outline'}
+              className="text-[10px] whitespace-nowrap"
+            >
+              {assessment.riskLevel} · {assessment.riskScore ?? 0}/100
+            </Badge>
           )}
         </div>
       </header>
@@ -132,12 +132,12 @@ export function AssessmentDetailView({
       {isDpia && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">AI prefill (Gemini)</CardTitle>
+            <CardTitle className="text-base">AI prefill</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <p className="text-sm text-muted-foreground">
               Suggest answers for every question on this DPIA by sending the linked processing
-              activity through the Vercel AI Gateway. PII redaction is applied to the prompt.
+              activity through a managed AI gateway. PII redaction is applied to the prompt.
               Existing answers are preserved — clear them first to re-run.
             </p>
             <AiPrefillButton assessmentId={assessment.id} kind={kind} />
@@ -208,18 +208,18 @@ export function AssessmentDetailView({
                   const r = responseByKey.get(q.key);
                   return (
                     <div key={q.key} className="space-y-1 rounded border px-3 py-2">
-                      <div className="flex items-start justify-between gap-2">
-                        <p className="text-sm font-medium">{q.label}</p>
-                        <div className="flex items-center gap-1">
-                          <Badge variant="outline" className="text-[10px]">
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <p className="min-w-0 break-words text-sm font-medium">{q.label}</p>
+                        <div className="flex shrink-0 flex-wrap items-center gap-1">
+                          <Badge variant="outline" className="text-[10px] whitespace-nowrap">
                             weight {q.weight}
                           </Badge>
-                          <Badge variant="secondary" className="text-[10px]">
+                          <Badge variant="secondary" className="text-[10px] whitespace-nowrap">
                             score {r?.score ?? 0}
                           </Badge>
                         </div>
                       </div>
-                      <p className="text-sm whitespace-pre-wrap text-muted-foreground">
+                      <p className="break-words text-sm whitespace-pre-wrap text-muted-foreground">
                         {r?.answer || '(no answer)'}
                       </p>
                     </div>
@@ -308,11 +308,11 @@ export function AssessmentDetailView({
             <ol className="space-y-3">
               {actions.map((a) => (
                 <li key={a.id} className="rounded border px-3 py-2 text-sm">
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span className="font-mono">{a.createdAt.toISOString()}</span>
-                    <span>{a.kind}</span>
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+                    <span className="break-all font-mono">{a.createdAt.toISOString()}</span>
+                    <span className="shrink-0">{a.kind}</span>
                   </div>
-                  <p className="mt-1">{a.notes}</p>
+                  <p className="mt-1 break-words">{a.notes}</p>
                 </li>
               ))}
             </ol>

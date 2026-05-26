@@ -25,15 +25,16 @@ export async function TopBar({ variant = 'public', mobileSidebarSections }: Prop
   const email = session?.user?.email ?? null;
   const cookieStore = await cookies();
   const localeCookie = cookieStore.get('locale')?.value;
-  const cookieSet = (LOCALES as readonly string[]).includes(localeCookie ?? '');
-  const initialLocale: Locale = cookieSet ? (localeCookie as Locale) : DEFAULT_LOCALE;
+  const initialLocale: Locale = (LOCALES as readonly string[]).includes(localeCookie ?? '')
+    ? (localeCookie as Locale)
+    : DEFAULT_LOCALE;
 
   const tNav = await getTranslations('nav');
   const tApp = await getTranslations('app');
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-2 px-4 sm:gap-4">
+    <header className="frosted sticky top-0 z-40">
+      <div className="mx-auto flex h-14 max-w-[1320px] items-center justify-between gap-2 px-4 sm:gap-4 sm:px-6">
         <div className="flex items-center gap-2 sm:gap-4">
           <MobileMenu
             sections={mobileSidebarSections}
@@ -43,50 +44,55 @@ export async function TopBar({ variant = 'public', mobileSidebarSections }: Prop
           />
           <Link
             href="/"
-            className="flex items-center gap-2 text-sm font-bold"
-            aria-label={`${tApp('wordmark')} home`}
+            className="flex items-center"
+            aria-label="Kerala State Co-operative Bank · DPCMS"
           >
-            <svg
-              viewBox="0 0 28 28"
-              className="h-7 w-7"
-              fill="none"
-              role="img"
-              aria-label="KSCB"
-            >
-              <circle cx="14" cy="14" r="13" className="fill-primary" />
-              <path
-                d="M9 8 L9 20 M9 14 L15 8 M9 14 L15 20"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="stroke-primary-foreground"
-              />
-              <circle cx="20" cy="9" r="1.5" className="fill-primary-foreground" />
-            </svg>
-            <span>{tApp('wordmark')}</span>
+            {/* Plain <img> — bypasses Next.js image optimisation cache for reliable
+                serving of the locally-managed logo. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-kerala-bank.png"
+              alt="Kerala State Co-operative Bank"
+              className="h-10 w-auto sm:h-11 lg:h-12"
+            />
           </Link>
           <Badge variant="outline" className="hidden text-[10px] sm:inline-flex">
             {tApp('pocBadge')}
           </Badge>
         </div>
 
-        <nav className="hidden gap-1 md:flex">
-          <Link href="/" className="rounded px-3 py-1.5 text-sm hover:bg-accent">
+        <nav className="hidden min-w-0 flex-1 justify-center gap-0.5 lg:flex">
+          <Link
+            href="/"
+            className="whitespace-nowrap rounded-[10px] px-3 py-1.5 text-[13.5px] hover:bg-accent"
+          >
             {tNav('home')}
           </Link>
-          <Link href="/rfp-matrix" className="rounded px-3 py-1.5 text-sm hover:bg-accent">
+          <Link
+            href="/rfp-matrix"
+            className="whitespace-nowrap rounded-[10px] px-3 py-1.5 text-[13.5px] hover:bg-accent"
+          >
             {tNav('rfpMatrix')}
           </Link>
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          <Link href={'/notices' as any} className="rounded px-3 py-1.5 text-sm hover:bg-accent">
+          <Link
+            /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+            href={'/notices' as any}
+            className="whitespace-nowrap rounded-[10px] px-3 py-1.5 text-[13.5px] hover:bg-accent"
+          >
             {tNav('privacyNotices')}
           </Link>
           {email ? (
             <>
-              <Link href="/me" className="rounded px-3 py-1.5 text-sm hover:bg-accent">
+              <Link
+                href="/me"
+                className="whitespace-nowrap rounded-[10px] px-3 py-1.5 text-[13.5px] hover:bg-accent"
+              >
                 {tNav('myPortal')}
               </Link>
-              <Link href="/admin" className="rounded px-3 py-1.5 text-sm hover:bg-accent">
+              <Link
+                href="/admin"
+                className="whitespace-nowrap rounded-[10px] px-3 py-1.5 text-[13.5px] hover:bg-accent"
+              >
                 {tNav('compliance')}
               </Link>
             </>
@@ -94,13 +100,8 @@ export async function TopBar({ variant = 'public', mobileSidebarSections }: Prop
         </nav>
 
         <div className="flex items-center gap-3">
-          <div className="hidden flex-col items-end gap-0.5 md:flex">
+          <div className="hidden md:flex">
             <LanguageSwitcher initial={initialLocale} />
-            {!cookieSet ? (
-              <p className="hidden text-[10px] text-muted-foreground md:block">
-                ml is the default for KSCB customers — change anytime
-              </p>
-            ) : null}
           </div>
           {email ? (
             <UserMenu email={email} />

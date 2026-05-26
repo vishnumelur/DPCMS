@@ -70,11 +70,13 @@ export function MobileMenu({ sections, email, initialLocale, variant }: Props) {
       </SheetTrigger>
       <SheetContent side="left" className="w-[88%] max-w-xs overflow-y-auto p-0" closeLabel={tNav('closeMenu')}>
         <SheetHeader className="border-b px-5 py-4">
-          <SheetTitle className="flex items-center gap-2 text-sm font-bold">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
-              <span className="text-xs font-semibold">K</span>
-            </span>
-            <span>{tApp('wordmark')}</span>
+          <SheetTitle>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-kerala-bank.png"
+              alt="Kerala State Co-operative Bank · DPCMS"
+              className="h-14 w-14"
+            />
           </SheetTitle>
           <Badge variant="outline" className="w-fit text-[10px]">
             {tApp('pocBadge')}
@@ -111,36 +113,38 @@ export function MobileMenu({ sections, email, initialLocale, variant }: Props) {
           ) : null}
 
           {sections && sections.length > 0 ? (
-            <div className="space-y-5 border-t pt-4">
+            <div className="space-y-5 hairline-t pt-5">
               {sections.map((section) => (
                 <MenuSection key={section.title} title={section.title}>
-                  {section.items.map((item) => (
-                    <MenuLink
-                      key={item.href}
-                      href={item.href}
-                      active={pathname === item.href}
-                      onClick={closeAndGo}
-                    >
-                      <span className="flex flex-1 items-center justify-between gap-2">
-                        <span>{item.label}</span>
+                  {section.items.map((item) => {
+                    const active =
+                      pathname === item.href ||
+                      (item.href !== '/admin' &&
+                        item.href !== '/me' &&
+                        pathname.startsWith(item.href + '/'));
+                    return (
+                      <MenuLink
+                        key={item.href}
+                        href={item.href}
+                        active={active}
+                        onClick={closeAndGo}
+                      >
+                        <span className="truncate">{item.label}</span>
                         {item.live ? (
-                          <Badge variant="default" className="text-[10px]">
-                            Live
-                          </Badge>
-                        ) : item.phase && item.phase !== 'P0' ? (
-                          <Badge variant="outline" className="text-[10px]">
-                            {item.phase}
-                          </Badge>
+                          <span
+                            className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                            aria-hidden="true"
+                          />
                         ) : null}
-                      </span>
-                    </MenuLink>
-                  ))}
+                      </MenuLink>
+                    );
+                  })}
                 </MenuSection>
               ))}
             </div>
           ) : null}
 
-          <div className="space-y-3 border-t pt-4">
+          <div className="space-y-3 hairline-t pt-4">
             <LanguageSwitcher initial={initialLocale} responsive={false} />
             {email ? (
               <form action={signOutAction}>
@@ -176,10 +180,8 @@ function MenuSection({
   children: React.ReactNode;
 }) {
   return (
-    <div className="space-y-2">
-      <p className="px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-        {title}
-      </p>
+    <div className="space-y-1.5">
+      <p className="eyebrow px-3 text-[10px]">{title}</p>
       <ul className="space-y-0.5">{children}</ul>
     </div>
   );
@@ -202,12 +204,8 @@ function MenuLink({
         /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
         href={href as any}
         onClick={onClick}
-        className={cn(
-          'flex min-h-11 items-center gap-2 rounded px-3 py-2 text-sm transition-colors',
-          active
-            ? 'bg-accent text-accent-foreground font-medium'
-            : 'text-foreground hover:bg-accent/60',
-        )}
+        data-active={active ? 'true' : 'false'}
+        className={cn('nav-pill min-h-11 justify-between')}
       >
         {children}
       </Link>
