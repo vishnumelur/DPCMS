@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { useTranslations } from 'next-intl';
 import { LOCALES, LOCALE_LABELS, type Locale } from '@/i18n/routing';
+import { cn } from '@/lib/utils';
 
 // Hand-authored UI bundles. Every other code falls back to en at request time
 // (see i18n/request.ts). We surface that distinction in the dropdown.
@@ -9,11 +11,18 @@ const AUTHORED: ReadonlySet<Locale> = new Set<Locale>(['en', 'ml', 'hi']);
 
 type Props = {
   initial?: Locale;
+  /**
+   * When `true` (default), the switcher hides on mobile (`hidden md:flex`) and shows
+   * on tablet+ — desktop usage. When `false`, the switcher is always visible — used
+   * inside the mobile drawer.
+   */
+  responsive?: boolean;
 };
 
-export function LanguageSwitcher({ initial = 'en' }: Props) {
+export function LanguageSwitcher({ initial = 'en', responsive = true }: Props) {
   const [value, setValue] = useState<Locale>(initial);
   const [isPending, startTransition] = useTransition();
+  const tNav = useTranslations('nav');
 
   function onChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const next = e.target.value as Locale;
@@ -26,9 +35,15 @@ export function LanguageSwitcher({ initial = 'en' }: Props) {
   }
 
   return (
-    <label className="hidden items-center gap-2 md:flex" aria-label="Choose language">
+    <label
+      className={cn(
+        'items-center gap-2',
+        responsive ? 'hidden md:flex' : 'flex',
+      )}
+      aria-label="Choose language"
+    >
       <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-        Lang
+        {tNav('lang')}
       </span>
       <select
         value={value}

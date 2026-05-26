@@ -15,7 +15,7 @@ export function AuthShell({ sections, children }: Props) {
       >
         Skip to main content
       </a>
-      <TopBar variant="auth" />
+      <TopBar variant="auth" mobileSidebarSections={sections} />
       <div className="mx-auto flex max-w-7xl gap-6 px-4 py-6">
         <aside className="hidden w-64 shrink-0 md:block">
           <SidebarNav sections={sections} />

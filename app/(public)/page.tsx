@@ -1,67 +1,69 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { buttonVariants } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { summariseStatus, RFP_REQUIREMENTS } from '@/lib/rfp/matrix-data';
 
-export default function Landing() {
+export default async function Landing() {
   const counts = summariseStatus();
   const total = RFP_REQUIREMENTS.length;
+  const tApp = await getTranslations('app');
+  const tLanding = await getTranslations('landing');
+  const tMatrix = await getTranslations('matrix');
+  const tSignIn = await getTranslations('signin');
 
   return (
     <div className="space-y-12 py-8">
       <section className="grid gap-8 lg:grid-cols-[3fr_2fr]">
         <div className="space-y-6">
-          <Badge variant="secondary">KSCB · KBIT/PMU/DPCMS/088/25-26</Badge>
+          <Badge variant="secondary">{tApp('rfpBadge')}</Badge>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Data Privacy & Consent Management System
+            {tApp('tagline')}
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Live proof-of-concept for the Kerala State Cooperative Bank DPCMS bid, in compliance with
-            India&rsquo;s Digital Personal Data Protection Act, 2023. Built on Next.js + Neon + Auth.js,
-            fully open-source, deployable to free Vercel infrastructure.
-          </p>
+          <p className="text-lg text-muted-foreground">{tApp('subtitle')}</p>
           <div className="flex flex-wrap gap-3">
             <Link href="/signin" className={buttonVariants({ size: 'lg' })}>
-              Sign in to compliance portal
+              {tLanding('ctaPrimary')}
             </Link>
             <Link href="/rfp-matrix" className={buttonVariants({ variant: 'outline', size: 'lg' })}>
-              View RFP Compliance Matrix
+              {tLanding('ctaSecondary')}
             </Link>
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             <Link href={'/notices' as any} className={buttonVariants({ variant: 'ghost', size: 'lg' })}>
-              Read public privacy notice
+              {tLanding('ctaTertiary')}
             </Link>
           </div>
           <p className="text-xs text-muted-foreground">
-            Demo administrator: <code>dpcmsadmin</code> / <code>dpcms@2026</code>
+            {tSignIn('demoLabel')}: <code>dpcmsadmin</code> / <code>dpcms@2026</code>
           </p>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>RFP coverage at a glance</CardTitle>
+            <CardTitle>{tLanding('coverageTitle')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-3 gap-3 text-center">
               <div className="rounded border p-3">
                 <p className="text-2xl font-semibold">{counts.RA}</p>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Readily available</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">{tMatrix('raLabel')}</p>
               </div>
               <div className="rounded border p-3">
                 <p className="text-2xl font-semibold">{counts.CA}</p>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Customisable</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">{tMatrix('caLabel')}</p>
               </div>
               <div className="rounded border p-3">
                 <p className="text-2xl font-semibold">{counts.NA}</p>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Not yet</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">{tMatrix('naLabel')}</p>
               </div>
             </div>
             <p className="text-sm text-muted-foreground">
-              {total} representative RFP requirements catalogued. The full matrix maps each line item to a
-              live demo screen and evidence link.
+              {tLanding('coverageCount', { total })}
             </p>
-            <Link href="/rfp-matrix" className="text-sm font-medium underline">Open the full matrix →</Link>
+            <Link href="/rfp-matrix" className="text-sm font-medium underline">
+              {tLanding('openMatrix')}
+            </Link>
           </CardContent>
         </Card>
       </section>

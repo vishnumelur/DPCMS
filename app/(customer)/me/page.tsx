@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import { auth } from '@/auth';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -6,23 +7,24 @@ import Link from 'next/link';
 export default async function MeHome() {
   const session = await auth();
   const email = session?.user?.email ?? 'guest';
+  const t = await getTranslations('me');
 
   return (
     <div className="space-y-6">
       <header className="flex items-start justify-between gap-4">
         <div className="space-y-1">
-          <h1 className="text-2xl font-semibold tracking-tight">Welcome, {email}</h1>
-          <p className="text-sm text-muted-foreground">
-            Your personal Data Privacy portal — review consents, raise requests, manage nominees.
-          </p>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            {t('dashboardTitle', { name: email })}
+          </h1>
+          <p className="text-sm text-muted-foreground">{t('dashboardSubtitle')}</p>
         </div>
         <Badge variant="default">Live · P0</Badge>
       </header>
 
       <section className="grid gap-4 sm:grid-cols-3">
-        <Stat label="Active consents" value="0" hint="Phase 1 wires real consent capture" />
-        <Stat label="Pending DSRs" value="0" hint="Phase 2 wires DSR workflow" />
-        <Stat label="Nominees" value="0" hint="Phase 2 wires nominee management" />
+        <Stat label={t('activeConsents')} value="0" hint={t('activeConsentsHint')} />
+        <Stat label={t('pendingDsrs')} value="0" hint={t('pendingDsrsHint')} />
+        <Stat label={t('nominees')} value="0" hint={t('nomineesHint')} />
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">

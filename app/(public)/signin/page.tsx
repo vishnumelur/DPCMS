@@ -1,13 +1,16 @@
+import { getTranslations } from 'next-intl/server';
 import { signIn } from '@/auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { DemoFillButton } from './demo-fill-button';
 
 type SearchParams = Promise<{ callbackUrl?: string; error?: string }>;
 
 export default async function SignInPage({ searchParams }: { searchParams: SearchParams }) {
   const { callbackUrl, error } = await searchParams;
+  const t = await getTranslations('signin');
 
   async function handleSignIn(formData: FormData) {
     'use server';
@@ -25,18 +28,21 @@ export default async function SignInPage({ searchParams }: { searchParams: Searc
     <div className="mx-auto max-w-md py-12">
       <Card>
         <CardHeader>
-          <CardTitle>Sign in to DPCMS</CardTitle>
+          <CardTitle>{t('title')}</CardTitle>
         </CardHeader>
         <CardContent>
           {error ? (
-            <p className="mb-4 rounded border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
-              Invalid username or password.
+            <p
+              role="alert"
+              className="mb-4 rounded border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
+            >
+              {t('error')}
             </p>
           ) : null}
           <form action={handleSignIn} className="space-y-4">
             <input type="hidden" name="callbackUrl" value={callbackUrl ?? '/admin'} />
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">{t('username')}</Label>
               <Input
                 id="username"
                 name="username"
@@ -46,7 +52,7 @@ export default async function SignInPage({ searchParams }: { searchParams: Searc
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('password')}</Label>
               <Input
                 id="password"
                 name="password"
@@ -56,11 +62,12 @@ export default async function SignInPage({ searchParams }: { searchParams: Searc
               />
             </div>
             <Button type="submit" className="w-full">
-              Sign in
+              {t('submit')}
             </Button>
           </form>
+          <DemoFillButton label={t('useDemo')} username="dpcmsadmin" password="dpcms@2026" />
           <p className="mt-6 text-xs text-muted-foreground">
-            Demo admin: <code>dpcmsadmin</code> / <code>dpcms@2026</code>
+            {t('demoHint')}
           </p>
         </CardContent>
       </Card>

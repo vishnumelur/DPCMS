@@ -200,6 +200,26 @@ single squash commit on `main`:
 See `/rfp-matrix` for the live, per-row mapping. The legend is RA = ready-to-show,
 CA = customisable in a paid engagement, NA = explicitly out of POC.
 
+## i18n coverage
+
+Top-bar navigation, landing page, sign-in form, customer dashboard (`/me`), RFP
+matrix headings, and the cookie banner are fully translated into **en / ml / hi**.
+The admin module internals (M1–M11 forms, tables, status badges, audit chain
+viewer) remain English in the POC — full translation across every admin surface
+is a phase-6 polish task and would multiply the translation surface by ~11.
+
+The remaining 19 Schedule-8 languages declared in `i18n/routing.ts` fall back to
+`en` strings until an admin runs an AI-bootstrapped translation pass (Gemini 2.5
+Flash via the Vercel AI Gateway).
+
+## Mobile / responsive coverage
+
+The compliance and customer portals are now fully mobile-usable. The top-bar
+hamburger (`md:hidden`) opens a drawer (`@base-ui/react/dialog`-backed
+`<Sheet>`) containing the public links, account links, the full sidebar of
+modules, the language switcher, and the sign-out button. Tap targets are ≥44px
+per WCAG 2.5.5.
+
 ### Known POC limitations (carried forward)
 
 - Vercel Hobby SLA + Neon free-tier auto-suspend — production-grade HA / DR

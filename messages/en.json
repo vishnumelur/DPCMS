@@ -1,7 +1,64 @@
 {
-  "app": { "name": "DPCMS", "tagline": "Data Privacy & Consent Management System" },
-  "nav": { "signIn": "Sign in", "rfpMatrix": "RFP Compliance Matrix" },
-  "matrix": { "title": "RFP Compliance Matrix", "subtitle": "Live mapping of KSCB RFP requirements to demo screens" },
+  "app": {
+    "name": "DPCMS",
+    "wordmark": "DPCMS · KSCB",
+    "tagline": "Data Privacy & Consent Management System",
+    "subtitle": "Live proof-of-concept for the Kerala State Cooperative Bank DPCMS bid, in compliance with India's Digital Personal Data Protection Act, 2023. Built on Next.js + Neon + Auth.js, fully open-source, deployable to free Vercel infrastructure.",
+    "pocBadge": "POC · DPDP Act 2023",
+    "rfpBadge": "KSCB · KBIT/PMU/DPCMS/088/25-26"
+  },
+  "nav": {
+    "home": "Home",
+    "rfpMatrix": "RFP Matrix",
+    "privacyNotices": "Privacy Notices",
+    "myPortal": "My Portal",
+    "compliance": "Compliance",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "lang": "Lang",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "publicSection": "Public",
+    "myAccountSection": "My account",
+    "modulesSection": "Modules"
+  },
+  "signin": {
+    "title": "Sign in to DPCMS",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Sign in",
+    "error": "Invalid username or password.",
+    "demoLabel": "Demo administrator",
+    "useDemo": "Use demo credentials",
+    "demoHint": "Demo admin: dpcmsadmin / dpcms@2026"
+  },
+  "matrix": {
+    "title": "RFP Compliance Matrix",
+    "subtitle": "Live mapping of KSCB DPCMS RFP (KBIT/PMU/088/25-26) requirements to demo screens.",
+    "raLabel": "Readily available",
+    "caLabel": "Customisable",
+    "naLabel": "Not yet",
+    "ofTotal": "of {total} representative rows"
+  },
+  "landing": {
+    "ctaPrimary": "Sign in to compliance portal",
+    "ctaSecondary": "View RFP Compliance Matrix",
+    "ctaTertiary": "Read public privacy notice",
+    "coverageTitle": "RFP coverage at a glance",
+    "coverageCount": "{total} representative RFP requirements catalogued. The full matrix maps each line item to a live demo screen and evidence link.",
+    "openMatrix": "Open the full matrix →"
+  },
+  "me": {
+    "dashboardTitle": "Welcome, {name}",
+    "dashboardSubtitle": "Your personal Data Privacy portal — review consents, raise requests, manage nominees.",
+    "activeConsents": "Active consents",
+    "activeConsentsHint": "Phase 1 wires real consent capture",
+    "pendingDsrs": "Pending DSRs",
+    "pendingDsrsHint": "Phase 2 wires DSR workflow",
+    "nominees": "Nominees",
+    "nomineesHint": "Phase 2 wires nominee management"
+  },
   "cookies": {
     "title": "Cookie preferences",
     "description": "We use essential cookies to make this site work. With your consent we also use optional cookies for the categories below. You can change your choice any time.",

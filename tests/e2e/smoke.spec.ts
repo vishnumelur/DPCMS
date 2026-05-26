@@ -1,5 +1,18 @@
 import { test, expect } from '@playwright/test';
 
+// Force English UI for the whole suite. The product default locale is `ml`
+// (Malayalam) for KSCB customers; the smoke suite was written against English
+// strings, so we set the locale cookie on every page before any navigation.
+test.beforeEach(async ({ context }) => {
+  await context.addCookies([
+    {
+      name: 'locale',
+      value: 'en',
+      url: 'http://localhost:3000',
+    },
+  ]);
+});
+
 test('landing renders with new hero', async ({ page }) => {
   await page.goto('/');
   await expect(
@@ -388,6 +401,24 @@ test('customer can add a nominee', async ({ page }) => {
   await expect(page.getByText(nomineeName)).toBeVisible();
   await page.screenshot({
     path: 'test-results/screenshots/22-customer-nominee-added.png',
+    fullPage: true,
+  });
+});
+
+test('mobile hamburger opens drawer with sidebar links', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto('/signin');
+  await page.getByLabel('Username').fill('dpcmsadmin');
+  await page.getByLabel('Password').fill('dpcms@2026');
+  await Promise.all([
+    page.waitForURL(/\/admin/, { timeout: 10_000 }),
+    page.getByRole('button', { name: /^Sign in$/ }).click(),
+  ]);
+  // Hamburger button is exposed via aria-label from the nav.openMenu i18n key.
+  await page.getByRole('button', { name: /Open menu/i }).click();
+  await expect(page.getByRole('link', { name: /M1 · Consent management/ })).toBeVisible();
+  await page.screenshot({
+    path: 'test-results/screenshots/23-mobile-drawer.png',
     fullPage: true,
   });
 });

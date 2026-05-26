@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import { RFP_REQUIREMENTS, summariseStatus } from '@/lib/rfp/matrix-data';
 import type { RfpRequirement, RfpStatus } from '@/lib/rfp/types';
 import { Badge } from '@/components/ui/badge';
@@ -12,27 +13,26 @@ function StatusBadge({ status }: { status: RfpStatus }) {
   return <Badge variant={variant[status]}>{status}</Badge>;
 }
 
-export default function RfpMatrixPage() {
+export default async function RfpMatrixPage() {
   const counts = summariseStatus();
   const total = RFP_REQUIREMENTS.length;
   const grouped = RFP_REQUIREMENTS.reduce<Record<string, RfpRequirement[]>>((acc, r) => {
     (acc[r.module] ??= []).push(r);
     return acc;
   }, {});
+  const t = await getTranslations('matrix');
 
   return (
     <div className="space-y-8 py-6">
       <header className="space-y-2">
-        <h1 className="text-3xl font-bold">RFP Compliance Matrix</h1>
-        <p className="text-muted-foreground">
-          Live mapping of KSCB DPCMS RFP (KBIT/PMU/088/25-26) requirements to demo screens.
-        </p>
-        <div className="flex gap-3 pt-2">
+        <h1 className="text-3xl font-bold">{t('title')}</h1>
+        <p className="text-muted-foreground">{t('subtitle')}</p>
+        <div className="flex flex-wrap gap-3 pt-2">
           <Badge variant="default">RA: {counts.RA}</Badge>
           <Badge variant="secondary">CA: {counts.CA}</Badge>
           <Badge variant="destructive">NA: {counts.NA}</Badge>
           <span className="text-sm text-muted-foreground self-center">
-            of {total} representative rows
+            {t('ofTotal', { total })}
           </span>
         </div>
       </header>
