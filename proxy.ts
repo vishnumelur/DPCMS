@@ -38,5 +38,12 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image).*)'],
+  // Skip the auth middleware for:
+  //   - Next.js internals (_next/static, _next/image)
+  //   - Any file in /public (matched as "last segment has a file extension")
+  // Without the file-extension exclusion, requests for static assets like
+  // /logo-kerala-bank.png were caught by the unauthenticated redirect and
+  // returned the /signin HTML — making images render as broken/alt-text
+  // for signed-out visitors while working fine when signed in.
+  matcher: ['/((?!_next/static|_next/image|.*\\.[a-zA-Z0-9]+$).*)'],
 };
