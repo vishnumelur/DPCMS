@@ -71,12 +71,14 @@ export function MobileMenu({ sections, email, initialLocale, variant }: Props) {
       <SheetContent side="left" className="w-[88%] max-w-xs overflow-y-auto p-0" closeLabel={tNav('closeMenu')}>
         <SheetHeader className="border-b px-5 py-4">
           <SheetTitle>
+            {/* Icon-only mark in the drawer header — recognisable at 56px
+                and matches the mobile top-bar rendering. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/logo-kerala-bank.png"
+              src="/logo-kerala-bank-mark.png"
               alt="Kerala State Co-operative Bank · DPCMS"
-              width={500}
-              height={500}
+              width={220}
+              height={220}
               loading="eager"
               decoding="sync"
               className="h-14 w-14"

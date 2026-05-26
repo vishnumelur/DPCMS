@@ -47,10 +47,23 @@ export async function TopBar({ variant = 'public', mobileSidebarSections }: Prop
             className="flex items-center"
             aria-label="Kerala State Co-operative Bank · DPCMS"
           >
-            {/* Plain <img> — bypasses Next.js image optimisation cache.
-                width/height + eager loading + sync decode + fetchpriority=high
-                + the layout preload tag guarantees the logo paints with the
-                first frame, eliminating the alt-text-during-load flash. */}
+            {/* Responsive split: icon-only mark on mobile (where a square
+                composite at 40px would render the wordmark at ~6px tall and
+                look like a placeholder), full composite from sm+ where the
+                wordmark is readable. Both variants are preloaded in the
+                document head + carry explicit dimensions + eager loading +
+                sync decode + high fetch priority. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-kerala-bank-mark.png"
+              alt="Kerala State Co-operative Bank"
+              width={220}
+              height={220}
+              loading="eager"
+              decoding="sync"
+              fetchPriority="high"
+              className="h-9 w-9 sm:hidden"
+            />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo-kerala-bank.png"
@@ -60,7 +73,7 @@ export async function TopBar({ variant = 'public', mobileSidebarSections }: Prop
               loading="eager"
               decoding="sync"
               fetchPriority="high"
-              className="h-10 w-auto sm:h-11 lg:h-12"
+              className="hidden h-11 w-auto sm:block lg:h-12"
             />
           </Link>
           <Badge variant="outline" className="hidden text-[10px] sm:inline-flex">
@@ -107,10 +120,10 @@ export async function TopBar({ variant = 'public', mobileSidebarSections }: Prop
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Language switcher is now visible on every viewport so mobile
-              visitors can pick their language without opening the drawer.
-              responsive=false bypasses the component's internal md+ hide. */}
-          <LanguageSwitcher initial={initialLocale} responsive={false} />
+          {/* Language switcher visible from md+ only — on mobile it lives
+              inside the side drawer (mobile-menu) to keep the top bar tidy
+              and avoid duplication. */}
+          <LanguageSwitcher initial={initialLocale} />
           {email ? (
             <UserMenu email={email} />
           ) : variant === 'public' ? (

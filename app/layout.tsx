@@ -23,10 +23,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={locale} className={cn('font-sans', geist.variable)}>
       <head>
-        {/* Preload the bank logo so the brand image is in cache before any
-            <img> tag is parsed. Eliminates the alt-text-during-loading flash
-            on language switch + slow networks. */}
-        <link rel="preload" as="image" href="/logo-kerala-bank.png" fetchPriority="high" />
+        {/* Preload BOTH logo variants so they're in cache before any <img>
+            tag is parsed. Mobile shows the small icon-only mark; sm+ shows
+            the full composite. Both are eager-fetched in parallel with HTML
+            parsing — eliminates the alt-text-during-loading flash on
+            language-switch reloads + slow networks. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/logo-kerala-bank-mark.png"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/logo-kerala-bank.png"
+          fetchPriority="high"
+        />
       </head>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
