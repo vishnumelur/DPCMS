@@ -99,14 +99,18 @@ export async function TopBar({ variant = 'public', mobileSidebarSections }: Prop
           ) : null}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <div className="hidden md:flex">
-            <LanguageSwitcher initial={initialLocale} />
-          </div>
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Language switcher is now visible on every viewport so mobile
+              visitors can pick their language without opening the drawer.
+              responsive=false bypasses the component's internal md+ hide. */}
+          <LanguageSwitcher initial={initialLocale} responsive={false} />
           {email ? (
             <UserMenu email={email} />
           ) : variant === 'public' ? (
-            <Link href="/signin" className={buttonVariants({ size: 'sm' })}>
+            <Link
+              href="/signin"
+              className={buttonVariants({ size: 'sm', className: 'whitespace-nowrap' })}
+            >
               {tNav('signIn')}
             </Link>
           ) : null}

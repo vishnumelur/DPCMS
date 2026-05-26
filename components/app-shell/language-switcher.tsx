@@ -55,7 +55,8 @@ export function LanguageSwitcher({ initial = 'en', responsive = true }: Props) {
             onClick={() => pick(opt.code)}
             disabled={isPending}
             className={cn(
-              'inline-flex min-w-[34px] items-center justify-center rounded-full px-2.5 py-1.5 text-[12.5px] font-semibold transition-colors',
+              // Tighter on mobile (where every pixel counts), grows from sm+
+              'inline-flex min-w-[30px] items-center justify-center rounded-full px-2 py-1 text-[11.5px] font-semibold transition-colors sm:min-w-[34px] sm:px-2.5 sm:py-1.5 sm:text-[12.5px]',
               active
                 ? 'bg-background text-primary shadow-[0_1px_2px_rgba(0,0,0,0.06)]'
                 : 'text-muted-foreground hover:text-foreground',
