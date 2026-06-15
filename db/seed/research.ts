@@ -127,6 +127,36 @@ const DOCS: readonly DocSeed[] = [
     ],
   },
 
+  // ─── IT (Amendment) Act 2008 ───────────────────────────────────────────────
+  {
+    code: 'IT_AMENDMENT_2008',
+    title: 'Information Technology (Amendment) Act, 2008',
+    jurisdiction: 'IN',
+    effectiveFrom: '2009-10-27',
+    summary:
+      'The 2008 amendment to the IT Act 2000 that introduced the principal data-protection and cyber-offence provisions still relied upon today — §43A (compensation for negligent handling of sensitive personal data), §72A (punishment for disclosure in breach of lawful contract), §66E (violation of privacy), and the strengthened §70B mandate for CERT-In. It is the statutory hook under which the SPDI Rules 2011 were framed.',
+    sections: [
+      {
+        sectionNumber: '43A (inserted)',
+        title: 'Insertion of §43A — compensation for failure to protect data',
+        tags: ['security', 'compensation', 'spdi'],
+        bodyMarkdown: `## §43A — inserted by the IT (Amendment) Act, 2008\n\nThe 2008 amendment **inserted Section 43A** into the IT Act 2000, creating — for the first time in Indian law — a statutory duty on a **body corporate** to implement and maintain *reasonable security practices and procedures* when it possesses, deals with or handles **sensitive personal data or information (SPDI)**. Negligence causing wrongful loss or wrongful gain attracts **uncapped compensation** to the affected person.\n\nThis section is the **enabling provision for the SPDI Rules 2011**, which prescribe what "reasonable security practices" mean (see [[SPDI_RULES_2011]]). Until the DPDP Act 2023 is fully notified, §43A remains a live basis for data-protection claims in India.`,
+      },
+      {
+        sectionNumber: '66E (inserted)',
+        title: 'Insertion of §66E — violation of privacy',
+        tags: ['privacy', 'criminal'],
+        bodyMarkdown: `## §66E — Violation of privacy (inserted 2008)\n\nWhoever, intentionally or knowingly captures, publishes or transmits the image of a private area of any person without his or her consent, under circumstances violating the privacy of that person, shall be punished with imprisonment which may extend to **three years** or with fine not exceeding **two lakh rupees**, or with both.\n\nThis was India's first explicit criminal privacy provision and is frequently cited alongside §72A in privacy-harm matters.`,
+      },
+      {
+        sectionNumber: '72A (inserted)',
+        title: 'Insertion of §72A — disclosure in breach of lawful contract',
+        tags: ['security', 'criminal'],
+        bodyMarkdown: `## §72A — inserted by the IT (Amendment) Act, 2008\n\nThe amendment **inserted Section 72A**, punishing any person (including an intermediary) who, while providing services under a lawful contract, discloses personal information without consent or in breach of contract, with intent to cause wrongful loss or gain — imprisonment up to **three years**, fine up to **five lakh rupees**, or both.\n\nTogether with §43A, this is the backbone of pre-DPDP personal-data enforcement in India.`,
+      },
+    ],
+  },
+
   // ─── SPDI Rules 2011 ───────────────────────────────────────────────────────
   {
     code: 'SPDI_RULES_2011',

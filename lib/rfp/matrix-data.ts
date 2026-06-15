@@ -19,14 +19,14 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   // M2 Cookie Consent
   { id: 'M2.A.1', module: 'Cookie Consent', section: 'Scanning', number: '1', text: 'Auto-scanning + cookie categorisation — paste any HTTPS URL, server parses Set-Cookie and proposes essential/functional/analytics/marketing via heuristic patterns (GA, Meta Pixel, Microsoft, etc.).', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P5' },
   { id: 'M2.B.2', module: 'Cookie Consent', section: 'Banner', number: '2', text: 'Auto-translation of cookie banner into 22 languages (in-banner locale selector + i18n strings).', status: 'RA', demoPath: '/', evidencePath: '/admin/cookies', phase: 'P5' },
-  { id: 'M2.C.1', module: 'Cookie Consent', section: 'GTM Integration', number: '1', text: 'IAB TCF-compliant cookie banner.', status: 'RA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
+  { id: 'M2.C.1', module: 'Cookie Consent', section: 'GTM Integration', number: '1', text: 'IAB TCF-compliant cookie banner with Google Tag Manager integration (configured to the Bank web properties).', status: 'CA', demoPath: '/admin/cookies', evidencePath: '/admin/audit', phase: 'P1' },
 
   // M3 Data Mapping
   { id: 'M3.1.1', module: 'Data Mapping Automation', section: 'Core', number: '1', text: 'Automated mapping of data processing activities to purpose, legal basis, retention.', status: 'RA', demoPath: '/admin/data-mapping', evidencePath: '/admin/audit', phase: 'P3' },
 
   // M4 Integrations
-  { id: 'M4.1', module: 'Integrations', section: 'Structured Data', number: '1', text: 'Metadata interoperability via standard APIs/connectors.', status: 'RA', demoPath: '/admin/integrations', evidencePath: '/admin/audit', phase: 'P4' },
-  { id: 'M4.2', module: 'Integrations', section: 'Structured Data', number: '2', text: 'Governance alignment with existing data lineage, classifications, business glossaries.', status: 'RA', demoPath: '/admin/integrations', evidencePath: '/admin/integrations/finacle', phase: 'P4' },
+  { id: 'M4.1', module: 'Integrations', section: 'Structured Data', number: '1', text: 'Metadata interoperability via standard APIs/connectors (mapped to the Bank EDC/data-catalog at production).', status: 'CA', demoPath: '/admin/integrations', evidencePath: '/admin/audit', phase: 'P4' },
+  { id: 'M4.2', module: 'Integrations', section: 'Structured Data', number: '2', text: 'Governance alignment with existing data lineage, classifications, business glossaries (aligned to the Bank EDC at production).', status: 'CA', demoPath: '/admin/integrations', evidencePath: '/admin/integrations/finacle', phase: 'P4' },
 
   // M5 DSR
   { id: 'M5.A.1', module: 'Data Principal Rights Management', section: 'Rights Handling', number: '1', text: 'User-friendly portal to view and manage consents.', status: 'RA', demoPath: '/admin/dsr', evidencePath: '/admin/audit', phase: 'P2' },
@@ -60,14 +60,17 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
   { id: 'M10.B.3', module: 'Controls, Reporting and Dashboard', section: 'Operational', number: '3', text: 'Dashboards for privacy metrics, compliance status, exportable reports.', status: 'RA', demoPath: '/admin/reporting', evidencePath: '/api/reports/board-pack', phase: 'P5' },
 
   // M11 Research Repository
-  { id: 'M11.1', module: 'Research Repository on Data Protection Laws', section: 'Repository', number: '1', text: 'Secure, user-friendly repository of Indian data protection laws (DPDP Act 2023, DPDP Rules 2025, IT Act, SPDI Rules).', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/DPDP_2023', phase: 'P5' },
+  { id: 'M11.1', module: 'Research Repository on Data Protection Laws', section: 'Repository', number: '1', text: 'Secure, user-friendly repository of Indian data protection laws (DPDP Act 2023, DPDP Rules 2025, IT Act 2000, IT (Amendment) Act 2008, SPDI Rules 2011).', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/DPDP_2023', phase: 'P5' },
   { id: 'M11.2', module: 'Research Repository on Data Protection Laws', section: 'Repository', number: '2', text: 'International laws + best practices + amendments.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/GDPR_EU_2018', phase: 'P5' },
 
+  // Privacy by Design (Annexure I §10)
+  { id: 'PBD.1', module: 'Privacy by Design', section: 'Core', number: '1', text: 'End-to-end mechanism for internal teams to raise a Privacy by Design (PbD) request for personal-data-impacting changes — evaluated, managed and monitored by the privacy team. Every request is hash-chained in the audit log.', status: 'RA', demoPath: '/admin/pbd', evidencePath: '/admin/audit', phase: 'P5' },
+
   // Cross-cutting (Annexure II — Technical)
-  { id: 'T.1', module: 'Technical', section: 'Hosting', number: '1', text: 'High availability with DR, minimum 99% uptime — runs on managed serverless infrastructure with 99.99% SLA available on paid tiers; the architecture is HA-ready with no code change required for upgrade.', status: 'RA', demoPath: '/admin/reporting', evidencePath: '/api/health', phase: 'P5' },
+  { id: 'T.1', module: 'Technical', section: 'Hosting', number: '1', text: 'High availability with DR, minimum 99% uptime — runs on managed serverless infrastructure with 99.99% SLA available on paid tiers; the architecture is HA-ready, configured to the Bank-approved RTO/RPO at production.', status: 'CA', demoPath: '/admin/reporting', evidencePath: '/api/health', phase: 'P5' },
   { id: 'T.2', module: 'Technical', section: 'Security', number: '2', text: 'Encryption at rest, in use, in transit.', status: 'RA', demoPath: '/admin/security', evidencePath: '/admin/security#encryption', phase: 'P0' },
   { id: 'T.3', module: 'Technical', section: 'Security', number: '3', text: 'Secure API integrations.', status: 'RA', demoPath: '/admin/integrations', evidencePath: '/admin/audit', phase: 'P4' },
-  { id: 'T.4', module: 'Technical', section: 'Security', number: '4', text: 'Audit logs and SIEM integration — hash-chained immutable audit_log per stream, live verifier endpoint, RS256-signed consent artefacts. SIEM-ready via the audit chain export endpoint.', status: 'RA', demoPath: '/admin/audit', evidencePath: '/admin/audit/verify', phase: 'P0' },
+  { id: 'T.4', module: 'Technical', section: 'Security', number: '4', text: 'Audit logs and SIEM integration — hash-chained immutable audit_log per stream, live verifier endpoint, RS256-signed consent artefacts. SIEM-ready via the audit chain export endpoint; wired to the Bank/SDC SOC-SIEM at production.', status: 'CA', demoPath: '/admin/audit', evidencePath: '/admin/audit/verify', phase: 'P0' },
   { id: 'T.6', module: 'Technical', section: 'Security', number: '6', text: 'Role-based access control.', status: 'RA', demoPath: '/admin', evidencePath: '/admin/rbac', phase: 'P0' },
 
   // Platform & operations
@@ -79,7 +82,7 @@ export const RFP_REQUIREMENTS: RfpRequirement[] = [
 
   // Reporting & assurance
   { id: 'P5.2', module: 'Platform & operations', section: 'Reporting', number: '5.3', text: 'KPI dashboards (6 cards + 4 charts) with Board-pack JSON export.', status: 'RA', demoPath: '/admin/reporting', evidencePath: '/api/reports/board-pack', phase: 'P5' },
-  { id: 'P5.3', module: 'Platform & operations', section: 'Research', number: '5.4', text: 'Searchable research repository: DPDP Act, DPDP Rules, IT Act, SPDI Rules, GDPR.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/DPDP_2023', phase: 'P5' },
+  { id: 'P5.3', module: 'Platform & operations', section: 'Research', number: '5.4', text: 'Searchable research repository: DPDP Act, DPDP Rules, IT Act 2000, IT (Amendment) Act 2008, SPDI Rules, GDPR.', status: 'RA', demoPath: '/admin/research', evidencePath: '/admin/research/DPDP_2023', phase: 'P5' },
   { id: 'P5.4', module: 'Platform & operations', section: 'i18n', number: '5.5', text: 'Top-bar language switcher across all 22 Schedule-8 locales.', status: 'RA', demoPath: '/', evidencePath: '/rfp-matrix', phase: 'P5' },
   { id: 'P5.5', module: 'Data Breach Management', section: 'Reporting', number: '5.6', text: 'DPB notification rendered as real PDF (DPDP Rules 2025 placeholder) — KSCB letterhead, severity badge, timeline, signature block. PDF generated server-side.', status: 'RA', demoPath: '/admin/breach', evidencePath: '/admin/audit', phase: 'P5' },
   { id: 'P5.6', module: 'Platform & operations', section: 'Design', number: '5.7', text: 'Design language + accessibility (UX for rural / low-literacy users) — KSCB brand theme, Malayalam-first default, Web Speech read-aloud on notices, large tap targets in customer portal, skip-to-content links, lang attribute on translated bodies, line-icon consent states.', status: 'RA', demoPath: '/', evidencePath: '/me/notices', phase: 'P5' },

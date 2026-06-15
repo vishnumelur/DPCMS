@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DPCMS · Kerala Bank — Skillnomads Presentation</title>
+<style>
+  :root{
+    --teal:#1d6470; --teal-d:#0f444d; --teal-l:#2f8b9c; --teal-x:#7fd3df;
+    --ink:#13312f; --paper:#f5f9f9; --mut:#5b7b80; --line:#d3e3e4;
+    --gold:#c9962e; --ok:#1f9d6b; --amber:#d08a1e; --red:#c0463b; --live:#1f9d6b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,sans-serif;
+    background:#04212600;background-color:#042126;color:var(--ink);overflow:hidden}
+  #stage{position:fixed;inset:0}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;
+    padding:5vh 6vw 6.5vh;background:var(--paper);animation:fade .45s cubic-bezier(.16,1,.3,1)}
+  .slide.active{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes drift-a{0%,100%{transform:translate(0,0)}50%{transform:translate(3vw,2vh)}}
+  @keyframes drift-b{0%,100%{transform:translate(0,0)}50%{transform:translate(-2vw,-3vh)}}
+  @keyframes rise{from{opacity:0;transform:translateY(40px) scale(.97)}to{opacity:1;transform:none}}
+
+  .mesh{background:
+    radial-gradient(58% 78% at 92% 6%, rgba(47,139,156,.20) 0%, transparent 60%),
+    radial-gradient(48% 68% at 6% 94%, rgba(29,100,112,.16) 0%, transparent 60%),
+    linear-gradient(135deg,#edf6f6 0%,#f5f9f9 58%,#e8f3f2 100%);}
+  .grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.04;mix-blend-mode:soft-light;z-index:1;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+  .orb{position:absolute;border-radius:50%;filter:blur(46px);pointer-events:none;z-index:0}
+  .orb.a{width:34vw;height:34vw;right:-6vw;top:-10vh;background:rgba(47,139,156,.22);animation:drift-a 22s ease-in-out infinite}
+  .orb.b{width:30vw;height:30vw;left:-8vw;bottom:-12vh;background:rgba(29,100,112,.18);animation:drift-b 28s ease-in-out infinite}
+
+  /* recurring app top-bar with the REAL logo */
+  .appbar{display:flex;align-items:center;gap:1vw;height:5vh;min-height:36px;
+    border-bottom:1px solid var(--line);padding-bottom:1.4vh;margin-bottom:2.4vh;position:relative;z-index:3}
+  .appbar img.logo{height:4.4vh;min-height:30px;width:auto;display:block}
+  .appbar .sep{width:1px;height:3vh;background:var(--line)}
+  .appbar .brand{font-weight:800;color:var(--teal-d);font-size:1.7vh;letter-spacing:.3px}
+  .appbar .spacer{flex:1}
+  .appbar .poc{font-size:1.15vh;color:var(--mut);border:1px solid var(--line);border-radius:6px;padding:.35vh .7vh}
+  .live{display:inline-flex;align-items:center;gap:.45em;font-size:1.15vh;font-weight:700;color:var(--live);
+    background:rgba(31,157,107,.12);border:1px solid rgba(31,157,107,.3);border-radius:999px;padding:.3em .8em}
+  .live::before{content:"";width:.55em;height:.55em;border-radius:50%;background:var(--live);box-shadow:0 0 0 3px rgba(31,157,107,.2)}
+
+  .kicker{font-size:1.5vh;text-transform:uppercase;letter-spacing:2.5px;color:var(--teal-l);font-weight:800;margin-bottom:1.1vh}
+  .modtag{display:inline-block;font-size:1.4vh;font-weight:800;color:#fff;background:var(--teal);border-radius:6px;padding:.32em .75em;margin-bottom:1.6vh;letter-spacing:.5px}
+  h1{font-size:5.6vh;line-height:1.04;letter-spacing:-1.2px;color:var(--teal-d)}
+  h2{font-size:4vh;line-height:1.08;letter-spacing:-.6px;color:var(--teal-d)}
+  h2 .em{color:var(--gold)}
+  .lead{font-size:2.2vh;color:var(--ink);line-height:1.5;margin-top:1.8vh;max-width:48ch}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+  ul{list-style:none;margin-top:2.2vh}
+  li{font-size:2vh;line-height:1.5;padding-left:1.7em;position:relative;margin-bottom:1.4vh;max-width:52ch}
+  li:before{content:"";position:absolute;left:0;top:.5em;width:.72em;height:.72em;border-radius:4px;background:var(--teal-l)}
+  li b{color:var(--teal-d)}
+  .plainbox{margin-top:2.2vh;background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:1.5vh 1.3vw;max-width:50ch;box-shadow:0 8px 24px -16px rgba(15,68,77,.4)}
+  .plainbox .t{font-size:1.3vh;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.5vh}
+  .plainbox p{font-size:1.85vh;color:var(--ink);line-height:1.4}
+
+  .two{display:grid;grid-template-columns:0.92fr 1.08fr;gap:3vw;align-items:center;flex:1;position:relative;z-index:2}
+  .two.flip{grid-template-columns:1.08fr 0.92fr}
+  .two .txt{display:flex;flex-direction:column;justify-content:center}
+
+  .browser{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;
+    box-shadow:0 30px 70px -28px rgba(15,68,77,.55),0 2px 0 rgba(255,255,255,.6) inset}
+  .browser .chrome{display:flex;align-items:center;gap:.5vw;background:#e9f1f1;border-bottom:1px solid var(--line);padding:1vh .9vw}
+  .dot{width:1.2vh;height:1.2vh;border-radius:50%}
+  .dot.r{background:#e1655a}.dot.y{background:#e3b34d}.dot.g{background:#5fb98a}
+  .urlbar{flex:1;background:#fff;border:1px solid var(--line);border-radius:6px;color:var(--mut);
+    font:600 1.25vh ui-monospace,Menlo,Consolas,monospace;padding:.5vh .8vw;margin-left:.5vw;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .shot{display:block;width:100%;height:55vh;object-fit:cover;object-position:top center;background:#fff}
+  .cap{font-size:1.4vh;color:var(--mut);margin-top:1.1vh;text-align:center}
+
+  /* icon system */
+  .ico{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
+  .chip{display:inline-flex;align-items:center;justify-content:center;width:5.2vh;height:5.2vh;min-width:36px;min-height:36px;
+    border-radius:12px;background:linear-gradient(140deg,#e7f3f4,#d3e9eb);color:var(--teal);font-size:2.6vh;flex:none;
+    border:1px solid var(--line)}
+  .chip.gold{background:linear-gradient(140deg,#f7eccf,#f1dca6);color:#9a6f16}
+
+  /* icon cards grid */
+  .iconcards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vh 1.8vw;margin-top:2.4vh}
+  .iconcards.two-col{grid-template-columns:1fr 1fr}
+  .ic{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.8vh 1.3vw;
+    box-shadow:0 12px 30px -22px rgba(15,68,77,.5);display:flex;gap:1vw;align-items:flex-start}
+  .ic h3{font-size:1.85vh;color:var(--teal-d);margin-bottom:.35vh}
+  .ic p{font-size:1.45vh;color:var(--mut);line-height:1.4}
+  .ic .num{font-size:1.3vh;font-weight:800;color:var(--gold);letter-spacing:1px}
+
+  /* duty band (the law slide) */
+  .duties{display:grid;grid-template-columns:repeat(5,1fr);gap:1.4vw;margin-top:3vh}
+  .duty{background:#fff;border:1px solid var(--line);border-radius:16px;padding:2.4vh 1vw;text-align:center;
+    box-shadow:0 16px 36px -26px rgba(15,68,77,.55);position:relative;overflow:hidden}
+  .duty:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--teal-l))}
+  .duty .chip{margin:0 auto 1.4vh;width:6vh;height:6vh;font-size:3vh}
+  .duty h3{font-size:1.9vh;color:var(--teal-d);margin-bottom:.7vh}
+  .duty p{font-size:1.4vh;color:var(--mut);line-height:1.4}
+  .duty .no{position:absolute;top:1vh;right:1.1vw;font-size:1.5vh;font-weight:800;color:#dbe8e9}
+
+  .kpis{display:flex;gap:1.4vw;margin-top:1vh}
+  .kpi{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:1.8vh 1vw;text-align:center;backdrop-filter:blur(6px)}
+  .kpi b{display:block;font-size:4.6vh;color:#fff;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:1.3vh;color:#bfe6ea;letter-spacing:.5px;text-transform:uppercase}
+
+  .steps{display:flex;gap:.85vw;margin-top:3vh;position:relative}
+  .step{flex:1;background:#fff;border:1px solid var(--line);border-radius:13px;padding:1.8vh .9vw;position:relative}
+  .step:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--teal-l);border-radius:13px 13px 0 0}
+  .step .n{font-size:1.3vh;font-weight:800;color:var(--gold);letter-spacing:.8px}
+  .step h4{font-size:1.75vh;color:var(--teal-d);margin:.7vh 0}
+  .step p{font-size:1.4vh;color:var(--mut);line-height:1.35}
+
+  .pillrow{display:flex;gap:.7vw;flex-wrap:wrap;margin-top:2.4vh}
+  .pill{font-size:1.6vh;font-weight:700;color:var(--teal-d);background:#fff;border:1px solid var(--line);border-radius:999px;padding:.5em 1em;display:inline-flex;align-items:center;gap:.5em}
+  .pill .ico{font-size:1.7vh;color:var(--teal-l)}
+
+  /* QCBS bar */
+  .qcbs{display:flex;height:9vh;border-radius:14px;overflow:hidden;margin-top:2.6vh;border:1px solid var(--line);box-shadow:0 14px 34px -24px rgba(15,68,77,.5)}
+  .qcbs .q{background:linear-gradient(140deg,var(--teal),var(--teal-d));color:#eafafb;flex:0 0 70%;display:flex;flex-direction:column;justify-content:center;padding:0 1.6vw}
+  .qcbs .c{background:linear-gradient(140deg,#e8b94e,var(--gold));color:#3a2a05;flex:0 0 30%;display:flex;flex-direction:column;justify-content:center;padding:0 1.4vw}
+  .qcbs b{font-size:3vh;line-height:1}.qcbs span{font-size:1.4vh;opacity:.9;margin-top:.4vh}
+
+  /* architecture diagram */
+  .arch{display:flex;align-items:center;justify-content:center;gap:1.2vw;margin-top:3vh;flex-wrap:wrap}
+  .anode{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.6vh 1.2vw;text-align:center;min-width:11vw;box-shadow:0 12px 28px -22px rgba(15,68,77,.5)}
+  .anode .chip{margin:0 auto .8vh}
+  .anode h4{font-size:1.6vh;color:var(--teal-d)}.anode p{font-size:1.25vh;color:var(--mut);margin-top:.3vh}
+  .aarrow{color:var(--teal-l);font-size:3vh;font-weight:300}
+
+  /* ── HERO (title + close) ── */
+  .hero-slide{justify-content:flex-start;text-align:center;align-items:center;
+    background:radial-gradient(80% 90% at 50% -10%, #1d6470 0%, #0f444d 55%, #072a30 100%)}
+  .hero-slide *{position:relative;z-index:2}
+  .logo-pill{display:inline-flex;align-items:center;gap:.8vw;background:#fff;border-radius:16px;padding:1.4vh 1.6vw;
+    box-shadow:0 18px 44px -20px rgba(0,0,0,.5);animation:rise .6s both}
+  .logo-pill img{height:6.4vh;width:auto;display:block}
+  .hero-slide h1{color:#f3fcfd;font-size:8.4vh;margin-top:3vh;animation:rise .6s .05s both}
+  .hero-slide .sub{font-size:2.5vh;color:#c8edf0;margin-top:1.4vh;font-weight:500;animation:rise .6s .1s both}
+  .hero-slide .tagline{font-size:1.85vh;color:#9ed8de;margin-top:1.2vh;animation:rise .6s .15s both}
+  .hero-kpis{display:flex;gap:1.2vw;margin-top:3.4vh;animation:rise .6s .2s both}
+  .hero-frame{margin-top:3.2vh;width:62vw;max-width:1000px;animation:rise .8s .25s both}
+  .hero-frame .shot{height:30vh;object-position:top center}
+  .hero-foot{position:absolute;bottom:2.6vh;left:0;right:0;display:flex;justify-content:center;gap:1vw;align-items:center;
+    font-size:1.5vh;color:#bfe6ea}
+  .hero-foot b{color:#fff}
+  .by{position:absolute;top:3vh;left:6vw;font-size:1.5vh;color:#bfe6ea;letter-spacing:.5px}
+  .by b{color:#fff;font-weight:800}
+  .ref{position:absolute;top:3vh;right:6vw;font-size:1.3vh;color:#8fcdd4;text-align:right}
+
+  /* close slide */
+  .close-stats{display:flex;gap:.7vw;flex-wrap:wrap;justify-content:center;margin-top:2.8vh;animation:rise .6s .15s both}
+  .cs{font-size:1.7vh;font-weight:700;color:#eafafb;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.5em 1.1em}
+  .close-cta{font-size:3vh;color:#fff;font-weight:800;margin-top:3.4vh;animation:rise .6s .2s both}
+  .close-contact{margin-top:2.2vh;font-size:1.7vh;color:#bfe6ea;animation:rise .6s .25s both}
+  .close-contact b{color:#fff}
+  .url-mono{font-family:ui-monospace,Menlo,Consolas,monospace;color:#7fd3df}
+
+  .progress{position:fixed;top:0;left:0;height:5px;background:var(--gold);z-index:50;transition:width .3s}
+  .pageno{position:fixed;bottom:2.2vh;right:5.5vw;font-size:1.3vh;color:var(--mut);z-index:40}
+  .footline{position:fixed;bottom:2.2vh;left:5.5vw;font-size:1.3vh;color:var(--mut);z-index:40}
+  .hint{position:fixed;bottom:2.2vh;left:50%;transform:translateX(-50%);font-size:1.1vh;color:var(--mut);opacity:.6;z-index:40}
+</style>
+</head>
+<body>
+<div class="progress" id="bar"></div>
+<div id="stage">
+
+<!-- ═══ 1 · TITLE (modern hero with floating product) ═══ -->
+<section class="slide hero-slide grain active">
+  <div class="orb a"></div><div class="orb b"></div>
+  <div class="by">by <b>Skillnomads</b> · KSUM-registered startup</div>
+  <div class="ref">RFP KBIT/PMU/DPCMS/088/25-26<br/>Shortlisted presentation</div>
+  <span class="logo-pill"><img src="img/logo-kerala-bank.png" alt="Kerala Bank"/></span>
+  <h1>DPCMS</h1>
+  <div class="sub">Data Privacy &amp; Consent Management System</div>
+  <div class="tagline">Built for the DPDP Act 2023 · Live today, not a prototype</div>
+  <div class="hero-kpis">
+    <div class="kpi"><b>11</b><span>modules</span></div>
+    <div class="kpi"><b>22</b><span>languages</span></div>
+    <div class="kpi"><b>150+</b><span>RFP rows mapped</span></div>
+    <div class="kpi"><b>5 yr</b><span>support included</span></div>
+  </div>
+  <div class="hero-frame browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin</span></div>
+    <img class="shot" src="img/tour-04-dashboard.png" alt="DPCMS dashboard"/></div>
+</section>
+
+<!-- ═══ 2 · WHAT IS DPCMS (with product) ═══ -->
+<section class="slide mesh grain">
+  <div class="orb a"></div>
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="poc">DPDP Act 2023</span><span class="spacer"></span><span class="live">Live demo ready</span></div>
+  <div class="two">
+    <div class="txt">
+      <div class="kicker">In one sentence</div>
+      <h2>One system that helps the bank<br/><span class="em">obey the privacy law</span> — and prove it.</h2>
+      <p class="lead">Every time the bank collects or uses a customer's personal data, the law now needs permission, records, deadlines and proof. DPCMS handles all of it — for staff and customers alike.</p>
+      <div class="plainbox"><div class="t">Think of it as</div><p>A "permission &amp; privacy control room" — like a CCTV + logbook for personal data. Nothing happens without consent, and everything is recorded tamper-proof.</p></div>
+    </div>
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app</span></div>
+        <img class="shot" src="img/tour-01-landing.png" alt="DPCMS landing"/></div>
+      <div class="cap">The live public site — on Kerala Bank branding</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 3 · WHO WE ARE (icon cards) ═══ -->
+<section class="slide mesh grain">
+  <div class="orb b"></div>
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="poc">Skillnomads</span></div>
+  <div class="body">
+    <div class="kicker">Who we are</div>
+    <h2>Skillnomads — a Kerala startup built for <span class="em">Indian privacy law</span></h2>
+    <div class="iconcards">
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 21s-7-4.35-7-10a7 7 0 0 1 14 0c0 5.65-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg></span><div><h3>Local &amp; accountable</h3><p>KSUM-registered, based in Kerala. Support is here — not a foreign call-centre.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12"/></svg></span><div><h3>Purpose-built</h3><p>Made for the DPDP Act &amp; Indian languages from day one — not a foreign tool bent to fit.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 4.5a3 3 0 0 1 0 6M18 19a5 5 0 0 0-3-4.6"/></svg></span><div><h3>Senior people</h3><p>You get the engineers who actually built the system, on your account.</p></div></div>
+    </div>
+    <div class="plainbox" style="max-width:64ch"><div class="t">Why this matters to Kerala Bank</div><p>You're choosing a partner for years. A local, focused team that already built a working system is the safe, low-risk choice.</p></div>
+  </div>
+</section>
+
+<!-- ═══ 4 · WHAT THE LAW REQUIRES (rich duty band) ═══ -->
+<section class="slide mesh grain">
+  <div class="orb a"></div>
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="poc">DPDP Act 2023</span><span class="spacer"></span><span class="poc">Why this tender exists</span></div>
+  <div class="body">
+    <div class="kicker">What the law requires</div>
+    <h2>Five duties the bank must meet — <span class="em">DPCMS does all five</span></h2>
+    <div class="duties">
+      <div class="duty"><span class="no">01</span><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><h3>Take consent</h3><p>Ask, record &amp; honour permission for every use — and allow withdrawal.</p></div>
+      <div class="duty"><span class="no">02</span><span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span><h3>Honour rights</h3><p>Let customers see, correct &amp; delete data within legal deadlines.</p></div>
+      <div class="duty"><span class="no">03</span><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg></span><h3>Report breaches</h3><p>Notify the Data Protection Board fast if data is lost or leaked.</p></div>
+      <div class="duty"><span class="no">04</span><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 3v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span><h3>Prove it</h3><p>Show RBI / NABARD / CERT-In tamper-proof evidence of compliance.</p></div>
+      <div class="duty"><span class="no">05</span><span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 13.5 0 18M12 3c-3 3.5-3 13.5 0 18"/></svg></span><h3>Serve everyone</h3><p>Including rural &amp; Malayalam-speaking customers, with accessibility.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 5 · RFP MATRIX ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">/rfp-matrix · Live</span></div>
+  <div class="two">
+    <div class="txt">
+      <div class="kicker">The heart of our bid</div>
+      <h2>Every requirement <span class="em">mapped</span>,<br/>live &amp; clickable</h2>
+      <p class="lead">Your RFP — sections 1 to 17 — mapped to working screens. The live demo samples the highest-value requirements; the full row-by-row Annexure I &amp; II response (RA where built, CA for integration) is in our proposal.</p>
+      <div class="plainbox"><div class="t">Why it wins</div><p>Other bidders hand you a Word table of promises. We hand you a working index you can click through yourself.</p></div>
+    </div>
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/rfp-matrix</span></div>
+        <img class="shot" src="img/tour-02-rfp-matrix.png" alt="RFP compliance matrix"/></div>
+      <div class="cap">The live RFP Compliance Matrix — click any row to its evidence</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6 · COMPLIANCE DASHBOARD ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">Compliance portal · Live</span></div>
+  <div class="two flip">
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin</span></div>
+        <img class="shot" src="img/tour-04-dashboard.png" alt="Compliance dashboard"/></div>
+      <div class="cap">The compliance dashboard — the DPO's home screen</div>
+    </div>
+    <div class="txt">
+      <div class="kicker">For the bank's staff</div>
+      <h2>One <span class="em">control room</span> for the privacy team</h2>
+      <ul>
+        <li>Every module on the left — consent, rights, breach, reports.</li>
+        <li>Live counts at a glance: branches, users, audit events.</li>
+        <li>Each person sees only what their <b>role</b> allows.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 7 · M1 CONSENT ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">M1 · Live</span></div>
+  <div class="two">
+    <div class="txt">
+      <span class="modtag">M1 · Consent Management</span>
+      <h2>Customers control their <span class="em">own permissions</span></h2>
+      <ul>
+        <li>The customer sees every permission they've given the bank.</li>
+        <li>One tap to <b>withdraw</b> a permission — instantly.</li>
+        <li>Clear icons &amp; colours so anyone can understand it.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/me/consents</span></div>
+        <img class="shot" src="img/tour-09-me-consents.png" alt="Customer consent inbox"/></div>
+      <div class="cap">A customer's consent inbox — grant or withdraw in one tap</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 8 · M1 SIGNED ARTEFACT ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">M1 · Govt-compatible</span></div>
+  <div class="two flip">
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">consent artefact · digitally signed</span></div>
+        <img class="shot" src="img/tour-10-me-consents-jws.png" alt="Signed consent artefact"/></div>
+      <div class="cap">A downloadable, digitally-signed consent record</div>
+    </div>
+    <div class="txt">
+      <span class="modtag">M1 · Signed Consent Record</span>
+      <h2>A consent record that <span class="em">can't be faked</span></h2>
+      <ul>
+        <li>Each consent is sealed with a <b>digital signature</b>.</li>
+        <li>Anyone can verify it's genuine and unaltered.</li>
+        <li>Compatible with the Government's consent framework (DEPA / MeitY).</li>
+      </ul>
+      <div class="plainbox"><div class="t">In plain words</div><p>Like a tamper-proof wax seal — change one letter and the seal breaks.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 9 · M2/M8 NOTICES ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">M2 · M8 · Live</span></div>
+  <div class="two">
+    <div class="txt">
+      <span class="modtag">M2 Cookies · M8 Privacy Notices</span>
+      <h2>Clear notices, <span class="em">Malayalam-first</span></h2>
+      <ul>
+        <li>Plain-language privacy notices, versioned &amp; acknowledged.</li>
+        <li>Cookie consent banner with proper categories.</li>
+        <li><b>22 languages</b> + "read aloud" for low-literacy customers.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/notices</span></div>
+        <img class="shot" src="img/tour-03-notices.png" alt="Privacy notices"/></div>
+      <div class="cap">Privacy notices &amp; cookie consent — in 22 Indian languages</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 10 · M5 RIGHTS ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">M5 · SLA timers</span></div>
+  <div class="two flip">
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin/dsr</span></div>
+        <img class="shot" src="img/walk-05-m5-dsr.png" alt="DSR queue"/></div>
+      <div class="cap">The rights-request queue with live SLA timers</div>
+    </div>
+    <div class="txt">
+      <span class="modtag">M5 · Data Principal Rights</span>
+      <h2>Requests handled <span class="em">on the clock</span></h2>
+      <ul>
+        <li>Customers ask to access, correct, or delete their data.</li>
+        <li>Each request shows a <b>green / amber / red timer</b>.</li>
+        <li>Counts against the legal 30-day deadline — nothing missed.</li>
+      </ul>
+      <div class="plainbox"><div class="t">In plain words</div><p>Like parcel-tracking with a deadline — staff always see what's due.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 11 · M9 BREACH ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">M9 · 72-hour clock</span></div>
+  <div class="two">
+    <div class="txt">
+      <span class="modtag">M9 · Breach Management</span>
+      <h2>If data leaks, <span class="em">the bank is ready</span></h2>
+      <ul>
+        <li>Log an incident → a <b>72-hour deadline clock</b> starts.</li>
+        <li>Track containment steps &amp; who must be told.</li>
+        <li>One click generates the <b>official DPB report (PDF)</b> on letterhead.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin/breach</span></div>
+        <img class="shot" src="img/tour-13-breach-detail.png" alt="Breach detail"/></div>
+      <div class="cap">A breach incident — countdown + one-click official report</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 12 · AUDIT (WOW) ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">Audit chain · Verifiable live</span></div>
+  <div class="two flip">
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin/audit</span></div>
+        <img class="shot" src="img/tour-05-audit.png" alt="Audit chain verification"/></div>
+      <div class="cap">The tamper-evident audit chain — verified in real time</div>
+    </div>
+    <div class="txt">
+      <div class="kicker">★ The auditor's moment</div>
+      <h2>Records that <span class="em">cannot be tampered with</span></h2>
+      <ul>
+        <li>Every action is locked into a <b>chain</b> — each record seals the last.</li>
+        <li>We can <b>re-check the whole chain live</b> and prove nothing changed.</li>
+        <li>Edit one record and the chain instantly shows red.</li>
+      </ul>
+      <div class="plainbox"><div class="t">In plain words</div><p>A logbook where every page is glued to the last — you can't edit a page without it being obvious.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 13 · RBAC + MFA ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">Access control · Live</span></div>
+  <div class="two">
+    <div class="txt">
+      <div class="kicker">Security &amp; access</div>
+      <h2>Right people, <span class="em">right access</span></h2>
+      <ul>
+        <li>Roles for DPO, stewards, auditors, branch staff &amp; board.</li>
+        <li>Two-factor login (MFA) for all administrators.</li>
+        <li>Staff only see data for <b>their branch / region</b>.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin/rbac</span></div>
+        <img class="shot" src="img/tour-06-rbac.png" alt="Roles and permissions"/></div>
+      <div class="cap">Roles &amp; permissions — each person sees only their scope</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 14 · ASSESSMENTS ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">M3 · M6 · M7 · AI-assisted</span></div>
+  <div class="two flip">
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin/dpia</span></div>
+        <img class="shot" src="img/tour-11-dpia-detail.png" alt="DPIA detail"/></div>
+      <div class="cap">A Data Protection Impact Assessment, AI-prefilled</div>
+    </div>
+    <div class="txt">
+      <span class="modtag">M3 Mapping · M6 PIA · M7 DPIA</span>
+      <h2>Know your data, <span class="em">assess the risk</span></h2>
+      <ul>
+        <li>A register of what data the bank holds &amp; where.</li>
+        <li>Privacy risk assessments with automatic scoring.</li>
+        <li><b>AI pre-fills</b> the impact assessment to save officers hours.</li>
+      </ul>
+      <div class="plainbox"><div class="t">In plain words</div><p>The bank's "data health check" — lists every place data lives and flags the risky ones.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 15 · M4 INTEGRATIONS ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">M4 · Connectors</span></div>
+  <div class="two">
+    <div class="txt">
+      <span class="modtag">M4 · Integrations</span>
+      <h2>Plugs into the <span class="em">bank's systems</span></h2>
+      <ul>
+        <li>Ready for Finacle, NPCI, Aadhaar e-KYC, DigiLocker &amp; Account Aggregator.</li>
+        <li>Built to the <b>real data formats</b> these systems use.</li>
+        <li>Demo uses safe simulations; production connects the live systems.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin/integrations</span></div>
+        <img class="shot" src="img/tour-14-integrations.png" alt="Connectors"/></div>
+      <div class="cap">Connectors to the bank's core systems</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 16 · REPORTING + RESEARCH ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">M10 · M11 · Live</span></div>
+  <div class="two flip">
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin/reporting</span></div>
+        <img class="shot" src="img/tour-15-reporting.png" alt="Reporting dashboard"/></div>
+      <div class="cap">Board-level reporting dashboard</div>
+    </div>
+    <div class="txt">
+      <span class="modtag">M10 Reporting · M11 Research</span>
+      <h2>Reports for the board,<br/><span class="em">law library</span> for the team</h2>
+      <ul>
+        <li>Visual dashboards &amp; a one-click board pack.</li>
+        <li>A searchable library of the DPDP Act, Rules, IT Act &amp; more.</li>
+        <li>Everyone works from the same current legal reference.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 17 · SBOM ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="live">SBOM / CBOM · Live</span></div>
+  <div class="two">
+    <div class="txt">
+      <div class="kicker">Security maturity</div>
+      <h2>Full <span class="em">ingredient list</span> of the software</h2>
+      <ul>
+        <li>Every software component listed &amp; exportable (SBOM / CBOM).</li>
+        <li>Exactly what security auditors ask for.</li>
+        <li>Shows a mature, secure build process.</li>
+      </ul>
+      <div class="plainbox"><div class="t">In plain words</div><p>Like a food label listing every ingredient — so the security team knows what's inside.</p></div>
+    </div>
+    <div>
+      <div class="browser"><div class="chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="urlbar">dpcms-sigma.vercel.app/admin/sbom</span></div>
+        <img class="shot" src="img/tour-08-sbom.png" alt="SBOM export"/></div>
+      <div class="cap">Software Bill of Materials — one-click export</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 18 · WHY US (icon cards) ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="poc">Why choose us</span></div>
+  <div class="body">
+    <div class="kicker">Our edge</div>
+    <h2>Seven reasons to choose Skillnomads</h2>
+    <div class="iconcards">
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><div><span class="num">01</span><h3>It already works</h3><p>A live, clickable system — verify it today, zero risk.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12l2 2 4-4"/></svg></span><div><span class="num">02</span><h3>Built for DPDP</h3><p>Consent, rights, breach, minor consent — native.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><span class="num">03</span><h3>Govt-stack ready</h3><p>Signed records, DEPA/MeitY-compatible, future-proof.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 3v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span><div><span class="num">04</span><h3>Tamper-evident</h3><p>Audit verified live — the auditors' assurance.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 13.5 0 18M12 3c-3 3.5-3 13.5 0 18"/></svg></span><div><span class="num">05</span><h3>Malayalam-first</h3><p>22 languages + read-aloud for every customer.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 21s-7-4.35-7-10a7 7 0 0 1 14 0c0 5.65-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg></span><div><span class="num">06</span><h3>Local startup</h3><p>KSUM-backed, accountable, fast support.</p></div></div>
+    </div>
+    <p class="lead" style="margin-top:1.6vh;max-width:66ch"><b>07 · Low-risk &amp; capital-efficient</b> — you fund hardening &amp; integration, not an experiment. <b>And your data stays in India.</b></p>
+  </div>
+</section>
+
+<!-- ═══ 19 · HOW IT'S BUILT (diagram) ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="poc">Architecture · simplified</span></div>
+  <div class="body">
+    <div class="kicker">How it's built (simply)</div>
+    <h2>Modern, modular, microservice-<span class="em">ready</span></h2>
+    <div class="arch">
+      <div class="anode"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 7l3 3M17 7l-3 3M7 17l3-3M17 17l-3-3"/></svg></span><h4>Customers &amp; staff</h4><p>Web portals</p></div>
+      <span class="aarrow">→</span>
+      <div class="anode"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1.5"/><rect x="3" y="10.5" width="18" height="5" rx="1.5"/><rect x="3" y="17" width="11" height="4" rx="1.5"/></svg></span><h4>11 modules</h4><p>Each extractable</p></div>
+      <span class="aarrow">→</span>
+      <div class="anode"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 3v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-3z"/></svg></span><h4>Audit + RBAC</h4><p>Every action logged</p></div>
+      <span class="aarrow">→</span>
+      <div class="anode"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><h4>India database</h4><p>Encrypted, localised</p></div>
+    </div>
+    <div class="plainbox" style="max-width:70ch;margin-top:3vh"><div class="t">If asked "is this microservices?"</div><p>"It's modular and microservice-ready — we can split it into separate services with no rewrite. We avoided over-engineering on day one to keep your cost and risk down."</p></div>
+  </div>
+</section>
+
+<!-- ═══ 20 · SECURITY ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="poc">Security &amp; compliance</span></div>
+  <div class="body">
+    <div class="kicker">Audit-ready by design</div>
+    <h2>Built for RBI · NABARD · CERT-In scrutiny</h2>
+    <div class="iconcards two-col">
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 3v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span><div><h3>Tamper-evident audit</h3><p>Hash-chained logs, verifiable on demand (you saw it live).</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><h3>Access control + MFA</h3><p>Least-privilege roles, two-factor, privileged-action checks.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v6l8 4 8-4V7"/></svg></span><div><h3>Data minimisation</h3><p>PAN / Aadhaar stored only as hashes; last-4 shown.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span><div><h3>VAPT + CERT-In audit</h3><p>Independent security testing in the delivery plan.</p></div></div>
+    </div>
+    <div class="pillrow"><span class="pill"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg>India data residency</span><span class="pill">Encryption in transit &amp; at rest</span><span class="pill">BYOK / KMS</span><span class="pill">Source-code escrow</span><span class="pill">HA · DC + DR · no SPOF</span></div>
+  </div>
+</section>
+
+<!-- ═══ 21 · EXECUTION PLAN ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="poc">Delivery plan</span></div>
+  <div class="body">
+    <div class="kicker">From this demo to production · per RFP §7</div>
+    <h2>Go-live by <span class="em">T + 3 months</span> — on your schedule</h2>
+    <div class="steps">
+      <div class="step"><div class="n">T</div><h4>Purchase order</h4><p>Project kick-off.</p></div>
+      <div class="step"><div class="n">T + 1 mo</div><h4>Agreement</h4><p>Sign-off + implementation plan.</p></div>
+      <div class="step"><div class="n">T + 2 mo</div><h4>Infra + config</h4><p>Setup, install, integrate.</p></div>
+      <div class="step"><div class="n">T + 2.5 mo</div><h4>UAT + VAPT</h4><p>Testing + security audit.</p></div>
+      <div class="step"><div class="n">T + 3 mo</div><h4>Go-live</h4><p>Production rollout.</p></div>
+      <div class="step"><div class="n">T + 4 mo</div><h4>Acceptance</h4><p>Stabilisation + handover.</p></div>
+    </div>
+    <p class="lead" style="margin-top:2.6vh;max-width:66ch">We meet your timeline because the system <b>already exists</b> — this is hardening &amp; integration, not building from scratch.</p>
+  </div>
+</section>
+
+<!-- ═══ 22 · TEAM ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="poc">Team &amp; governance</span></div>
+  <div class="body">
+    <div class="kicker">Who delivers it</div>
+    <h2>One accountable team, <span class="em">one contact</span></h2>
+    <div class="iconcards">
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span><div><h3>Project Manager</h3><p>Your single point of contact.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6"/></svg></span><div><h3>Engineering</h3><p>Tech lead, full-stack &amp; DevSecOps.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 3v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-3z"/></svg></span><div><h3>Compliance + QA</h3><p>DPDP expert, QA, Malayalam localisation.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span><div><h3>CERT-In partner</h3><p>Independent security testing.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg></span><div><h3>Governance</h3><p>Weekly steering · fortnightly demo.</p></div></div>
+      <div class="ic"><span class="chip"><svg class="ico" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><div><h3>Requirement tracker</h3><p>Kept current throughout delivery.</p></div></div>
+    </div>
+    <p class="lead" style="margin-top:2vh;max-width:78ch"><b>On-site Facility Management:</b> minimum 2 L2 resources stationed at the Bank, 9 am–7 pm (per RFP §12), with extended hours on exigency.</p>
+  </div>
+</section>
+
+<!-- ═══ 23 · COMMERCIAL (QCBS visual) ═══ -->
+<section class="slide mesh grain">
+  <div class="appbar"><img class="logo" src="img/logo-kerala-bank.png" alt="Kerala Bank"/><div class="sep"></div><span class="brand">DPCMS</span><span class="spacer"></span><span class="poc">Commercial</span></div>
+  <div class="body">
+    <div class="kicker">Best value, lowest risk · CAPEX model</div>
+    <h2>A fair price on a <span class="em">quality-led</span> evaluation</h2>
+    <div class="qcbs">
+      <div class="q"><b>70%  ·  Quality</b><span>We lead here — the only bid with a working system</span></div>
+      <div class="c"><b>30% · Cost</b><span>Fair &amp; sustainable</span></div>
+    </div>
+    <ul style="margin-top:2vh">
+      <li><b>CAPEX model</b> — the Bank owns the platform; one-time licence + implementation, no per-user subscription.</li>
+      <li>Then annual AMC &amp; hosting across the <b>5-year</b> contract.</li>
+      <li>Regulatory-change support is <b>free for 5 years from Go-live</b> (per RFP §4) — DPDP &amp; MeitY updates covered, not re-quoted.</li>
+    </ul>
+    <div class="plainbox"><div class="t">Note</div><p>Detailed commercial figures are submitted in the RFP's required CAPEX format.</p></div>
+  </div>
+</section>
+
+<!-- ═══ 24 · THANK YOU (modern close) ═══ -->
+<section class="slide hero-slide grain">
+  <div class="orb a"></div><div class="orb b"></div>
+  <span class="logo-pill" style="margin-top:6vh"><img src="img/logo-kerala-bank.png" alt="Kerala Bank"/></span>
+  <h1 style="font-size:7vh;margin-top:3vh">Thank you</h1>
+  <div class="sub" style="max-width:58ch">The only bid that already works — built for Kerala, built for DPDP.</div>
+  <div class="close-stats">
+    <span class="cs">✓ Live working system</span>
+    <span class="cs">✓ DPDP-native</span>
+    <span class="cs">✓ Tamper-evident</span>
+    <span class="cs">✓ Malayalam-first</span>
+    <span class="cs">✓ Local &amp; low-risk</span>
+  </div>
+  <div class="close-cta">We'd be proud to deliver this for Kerala Bank.</div>
+  <div class="close-contact">
+    <span class="url-mono">dpcms-sigma.vercel.app</span><br/><br/>
+    <b>Skillnomads</b>
+  </div>
+</section>
+
+</div>
+
+<div class="footline" id="foot">Skillnomads · DPCMS for Kerala Bank</div>
+<div class="pageno" id="pageno">1 / 24</div>
+<div class="hint">← → move · F fullscreen · click right/left half</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const bar=document.getElementById('bar');
+  const pageno=document.getElementById('pageno');
+  const foot=document.getElementById('foot');
+  let i=0;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    bar.style.width=(i/(slides.length-1)*100)+'%';
+    pageno.textContent=(i+1)+' / '+slides.length;
+    const dark=slides[i].classList.contains('hero-slide');
+    pageno.style.color=dark?'#bfe6ea':'';
+    foot.style.color=dark?'#bfe6ea':'';
+  }
+  const next=()=>show(i+1), prev=()=>show(i-1);
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next();}
+    else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev();}
+    else if(e.key==='Home')show(0);
+    else if(e.key==='End')show(slides.length-1);
+    else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+  });
+  document.getElementById('stage').addEventListener('click',e=>{
+    if(e.target.closest('a'))return;
+    (e.clientX<window.innerWidth*0.28)?prev():next();
+  });
+  show(0);
+</script>
+</body>
+</html>
