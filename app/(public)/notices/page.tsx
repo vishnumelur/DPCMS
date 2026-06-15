@@ -4,12 +4,11 @@ import {
   StatusPill,
 } from '@/components/ui-refined/refined';
 import { ReadAloudButton } from '@/components/notice/read-aloud-button';
+import { PUBLIC_NOTICE_SPOKEN } from '@/lib/notice/public-notice-text';
 import { ShieldCheck, FileText, FileQuestion, Languages, Mail } from 'lucide-react';
 
 const NOTICE_VERSION = '0.0';
 const NOTICE_EFFECTIVE = '2026-05-25';
-
-const NOTICE_SPOKEN = `Kerala State Cooperative Bank — Privacy Notice. Effective date 25 May 2026. We collect personal data, financial data, and KYC artefacts under the Banking Regulation Act and process them per the DPDP Act 2023. You have rights to access, correction, erasure, consent withdrawal, grievance, and nomination. Contact our Data Protection Officer at dpo at kscb dot in.`;
 
 type Section = {
   Icon: typeof ShieldCheck;
@@ -135,7 +134,11 @@ export default function PublicNoticesPage() {
         </div>
         <div className="flex shrink-0 flex-wrap items-center gap-2 sm:flex-col sm:items-end">
           <StatusPill tone="info">Sample · v{NOTICE_VERSION}</StatusPill>
-          <ReadAloudButton text={NOTICE_SPOKEN} locale="en" />
+          <ReadAloudButton
+            text={PUBLIC_NOTICE_SPOKEN}
+            locale="en"
+            audioSrc="/tts/public-notice-en.mp3"
+          />
         </div>
       </section>
 
